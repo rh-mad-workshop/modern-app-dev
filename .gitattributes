@@ -1,2 +1,0 @@
-packages-mta/customers-tomcat-asis.war filter=lfs diff=lfs merge=lfs -text
-packages-mta/customers-tomcat-solution.war filter=lfs diff=lfs merge=lfs -text
