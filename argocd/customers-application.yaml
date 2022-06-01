@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: customers-tomcat-gitops
+  namespace: retail
+spec:
+  project: default
+  source:
+    repoURL: https://gitea.apps.cluster-wk.dynamic.opentlc.com/rromannissen/customers.git
+    targetRevision: main
+    path: customers-tomcat-gitops/helm
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: retail
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: true

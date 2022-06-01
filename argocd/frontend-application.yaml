@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: frontend
+  namespace: retail
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/rromannissen/appmod-enablement.git
+    targetRevision: main
+    path: frontend/helm
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: retail
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: true

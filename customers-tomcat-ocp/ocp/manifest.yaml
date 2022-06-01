@@ -1,0 +1,73 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: customers
+  labels:
+    app: customers
+spec:
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 20%
+  replicas: 1
+  selector:
+    matchLabels:
+      deployment: customers
+  template:
+    metadata:
+      name: customers
+      labels:
+        deployment: customers
+        app: customers
+    spec:
+      terminationGracePeriodSeconds: 60
+      containers:
+      - name: customers
+        image: 'image-registry.openshift-image-registry.svc:5000/retail/customers-tomcat-ocp:1.0.0'
+        imagePullPolicy: Always
+        ports:
+        - name: http
+          containerPort: 8080
+          protocol: TCP
+        resources: {}
+        readinessProbe:
+         httpGet:
+           path: /customers-tomcat-0.0.1-SNAPSHOT/actuator/health
+           port: 8080
+         initialDelaySeconds: 180
+         timeoutSeconds: 20
+        livenessProbe:
+         httpGet:
+           path: /customers-tomcat-0.0.1-SNAPSHOT/actuator/health
+           port: 8080
+         periodSeconds: 180
+         initialDelaySeconds: 180
+         timeoutSeconds: 20
+        volumeMounts:
+        - name: customers-secret-volume
+          mountPath: /opt/jws-5.6/tomcat/lib/persistence.properties
+          subPath: persistence.properties
+      volumes:
+        - name: customers-secret-volume
+          secret:
+            secretName: customers-secret
+            items:
+              - key: persistence.properties
+                path: persistence.properties
+
+kind: Service
+apiVersion: v1
+spec:
+  ports:
+  - name: web
+    port: 8080
+    targetPort: 8080
+  selector:
+    deployment: customers
+metadata:
+  name: customers
+  labels:
+    app: customers
+  annotations:
+    description: The web server's http port

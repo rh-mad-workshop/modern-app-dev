@@ -1,0 +1,19 @@
+applicationName: customers
+targetEnvironment: dev
+version: "d3b6035"
+port: 8080
+targetPort: 8080
+routes: []
+deploymentStrategy:
+  type: RollingUpdate
+  rollingMaxSurge: 25%
+  rollingMaxUnavailable: 20%
+replicaCount: 1
+health:
+  livenessEndpoint: /customers-tomcat-0.0.1-SNAPSHOT/actuator/health
+  readinessEndpoint: /customers-tomcat-0.0.1-SNAPSHOT/actuator/health
+  probeDelay: 180
+  probePeriod: 180
+  probeTimeout: 20
+imageURL: "image-registry.openshift-image-registry.svc:5000/retail/customers-tomcat-gitops"
+env: []
