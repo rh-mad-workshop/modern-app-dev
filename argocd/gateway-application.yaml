@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/rromannissen/appmod-enablement.git
+    repoURL: https://github.com/redhat-mw-demos/app-mod-projects.git
     targetRevision: main
     path: gateway/helm
   destination:

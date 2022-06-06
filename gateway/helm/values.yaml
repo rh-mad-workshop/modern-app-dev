@@ -15,5 +15,5 @@ health:
   probeDelay: 5
   probePeriod: 10
   probeTimeout: 2
-imageURL: "quay.io/rromanni/gateway:ame-0.1"
+imageURL: "quay.io/openshiftlabs/app-mod-gateway:1.0"
 env: []

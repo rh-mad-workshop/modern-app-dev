@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://gitea.apps.cluster-wk.dynamic.opentlc.com/rromannissen/customers.git
+    repoURL: https://github.com/redhat-mw-demos/app-mod-projects.git
     targetRevision: main
     path: customers-tomcat-gitops/helm
   destination:
