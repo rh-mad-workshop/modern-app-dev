@@ -10,8 +10,8 @@ deploymentStrategy:
   rollingMaxUnavailable: 20%
 replicaCount: 1
 health:
-  livenessEndpoint: /health/live
-  readinessEndpoint: /health/ready
+  livenessEndpoint: /q/health/live
+  readinessEndpoint: /q/health/ready
   probeDelay: 5
   probePeriod: 10
   probeTimeout: 2
