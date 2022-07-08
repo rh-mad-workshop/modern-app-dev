@@ -25,6 +25,8 @@ spec:
   template:
     metadata:
       name: {{ .Values.applicationName }}
+      annotations:
+        redeploy: "1"
       labels:
         deployment: {{ .Values.applicationName }}
         app: {{ .Values.applicationName }}
