@@ -3,6 +3,7 @@ apiVersion: tekton.dev/v1beta1
 kind: Pipeline
 metadata:
   name: java-deployment
+  namespace: {{ .Values.cicdNamespace }}
 spec:
   params:
   - name: git-url
@@ -12,7 +13,7 @@ spec:
   - name: app-subdir
     default: customers-tomcat-gitops
   - name: target-namespace
-    default: {{ .Values.targetNamespace }}
+    default: {{ .Values.demoNamespace }}
   - name: target-registry
     default: {{ .Values.targetRegistry }}
 

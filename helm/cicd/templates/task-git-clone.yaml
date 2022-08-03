@@ -3,6 +3,7 @@ apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
   name: git-clone
+  namespace: {{ .Values.cicdNamespace }}
   labels:
     app.kubernetes.io/version: "0.4"
   annotations:

@@ -2,7 +2,8 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: {{ .Values.namespacePermissions.user }}-{{ .Values.namespacePermissions.role }}
+  name: argocd-{{ .Values.namespacePermissions.user }}
+  namespace: {{ .Values.cicdNamespace }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole

@@ -3,6 +3,7 @@ apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
   name: maven-with-subdir
+  namespace: {{ .Values.cicdNamespace }}
 spec:
   description: >-
     This Task can be used to run a Maven build in a specified subdirectory.
