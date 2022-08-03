@@ -5,6 +5,10 @@
 targetNamespace: retail
 targetRegistry: image-registry.openshift-image-registry.svc:5000
 
+namespacePermissions:
+  user: user1
+  role: edit
+
 repo:
   url: http://gitea.gitea.svc:3000/user1/app-mod-projects
   tag: main
