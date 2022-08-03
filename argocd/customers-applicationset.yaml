@@ -1,0 +1,38 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: customers
+  namespace: openshift-gitops
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  generators:
+  - list:
+      elements:
+{% for n in range(1, ocp4_workload_ama_demo_shared_gitea_user_count | int + 1 ) %}
+      - user: {{ ocp4_workload_ama_demo_shared_gitea_user_prefix }}{{ n }}
+{% endfor %}
+  template:
+    metadata:
+      name: "customers-{% raw %}{{ user }}{% endraw %}"
+      namespace: "cicd-{% raw %}{{ user }}{% endraw %}"
+      finalizers:
+      - resources-finalizer.argocd.argoproj.io
+    spec:
+      project: default
+      syncPolicy:
+        automated:
+          prune: false
+          selfHeal: true
+      source:
+        repoURL: "http://gitea.gitea.svc:3000/{% raw %}{{ user }}{% endraw %}/app-mod-projects.git"
+        targetRevision: main
+        path: customers-tomcat-gitops/helm
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: "retail-{% raw %}{{ user }}{% endraw %}"
+      syncPolicy:
+        automated:
+          prune: false
+          selfHeal: true

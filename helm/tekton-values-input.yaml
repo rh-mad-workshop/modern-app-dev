@@ -1,0 +1,6 @@
+targetNamespace: retail-user3
+repo:
+  url: http://gitea.gitea.svc:3000/user3/app-mod-projects
+  user: user3
+  password: openshift
+

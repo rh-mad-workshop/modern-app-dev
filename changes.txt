@@ -1,0 +1,63 @@
+Namespace: cicd-user1, retail-user1
+Gitea URL:
+
+
+argocd/customers-application.yaml: repoURL, namespace (2x)
+argocd/frontend-application.yaml:  repoURL, namespace (2x)
+argocd/gateway-application.yaml:   repoURL, namespace (2x)
+argocd/inventory-application.yaml: repoURL, namespace (2x)
+argocd/orders-application.yaml: repoURL, namespace (2x)
+
+
+gateway/helm/config/application.yaml: url
+customers-tomcat-gitops/tekton/customers-deployment-pipeline.yaml: namepace
+customers-tomcat-gitops/helm/values.yaml: imageURL
+
+
+YAML Resources created from workload:
+- cicd/namespace-pipeline.yaml.j2
+- cicd/namespace-demo.yaml.j2
+- cicd/gitea-secret.yaml.j2
+- cicd/rolebinding-clusterview.yaml.j2
+- cicd/rolebinding-retail-pipeline.yaml.j2
+- cicd/service-account.yaml.j2
+- cicd/rolebinding-retail-user.yaml.j2
+- cicd/rolebinding-pipeline-user.yaml.j2
+
+Tekton Resources created from workload
+- /customers-tomcat-gitops/tekton/build-bot-sa.yaml
+- /customers-tomcat-gitops/tekton/git-user-secret.yaml
+- /customers-tomcat-gitops/tekton/buildah-task.yaml
+- /customers-tomcat-gitops/tekton/git-clone-task.yaml
+- /customers-tomcat-gitops/tekton/maven-with-subdir-task.yaml
+- /customers-tomcat-gitops/tekton/update-manifest-task.yaml
+- /customers-tomcat-gitops/tekton/customers-workspace-pvc.yaml
+- /customers-tomcat-gitops/tekton/customers-deployment-pipeline.yaml - This one got edited
+
+Deploy ArgoCD
+- cicd/argocd.yaml.j2
+
+ArgoCD Applications (all edited)
+- /argocd/customers-application.yaml -> Helm Chart customers-tomcat-gitops/helm, change imageURL parameter
+- /argocd/orders-application.yaml -> Helm Chart orders/helm
+- /argocd/inventory-application.yaml -> Helm Chart ingentory/helm
+- /argocd/gateway-application.yaml -> Helm Chart gateway/helm, change gateway/helm/config/application.yaml
+- /argocd/frontend-application.yaml -> Helm Chart frontend/helm
+
+
+Set up:
+5 applications
+- customers
+- gateway
+- orders
+- inventory
+- frontend
+
+
+New Logic:
+- OpenShift GitOps Namespace:
+  - ArgoCD ApplicationSet: Deploys ArgoCD and configurations into the retail-userX namespace
+  - CICD ApplicationSet: Deploys the Tekton Helm Chart into cicd-userX namespace
+  - Postgresql-inventory App Set: Deploys the Inventory Database into retail-userX namespace
+  - Postgresql-orders App Set: Deploys the orders database into retail-userX namespace
+  - RetailApp ApplicationSet: Deploys the argocd helm chart (consisting of 5 applications) into the retail-userX namespace

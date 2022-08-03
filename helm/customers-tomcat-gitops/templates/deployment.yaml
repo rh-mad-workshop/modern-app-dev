@@ -1,3 +1,4 @@
+---
 kind: Deployment
 apiVersion: apps/v1
 metadata:
@@ -75,9 +76,9 @@ spec:
           mountPath: /opt/jws-5.6/tomcat/lib/persistence.properties
           subPath: persistence.properties
       volumes:
-        - name: {{ .Values.applicationName }}-secret-volume
-          secret:
-            secretName: {{ .Values.applicationName }}-secret
-            items:
-              - key: persistence.properties
-                path: persistence.properties
+      - name: {{ .Values.applicationName }}-secret-volume
+        secret:
+          secretName: {{ .Values.applicationName }}-secret
+          items:
+            - key: persistence.properties
+              path: persistence.properties
