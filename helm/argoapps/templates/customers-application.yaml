@@ -3,29 +3,27 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: customers-tomcat-gitops
-  namespace: retail-user1
+  namespace: retail-{{ .Values.user }}
   finalizers:
   - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
   destination:
     server: https://kubernetes.default.svc
-    namespace: retail-user1
+    namespace: retail-{{ .Values.user }}
   syncPolicy:
     automated:
       prune: false
       selfHeal: true
   source:
-    repoURL: http://gitea.gitea.svc:3000/user1/app-mod-projects.git
+    repoURL: http://gitea.gitea.svc:3000/{{ .Values.user }}/app-mod-projects.git
     targetRevision: main
     path: helm/customers-tomcat-gitops
   helm:
     values: |
       customerDatabase:
-        hostname: oracle-database
-        user: customer
         password: redhat
       image:
         registry: image-registry.openshift-image-registry.svc:5000
-        account: retail-user1
+        account: retail-{{ .Values.user }}
         repository: customers-tomcat-gitops

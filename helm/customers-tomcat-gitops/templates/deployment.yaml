@@ -35,7 +35,7 @@ spec:
       terminationGracePeriodSeconds: {{ .Values.terminationGracePeriod | default 60 }}
       containers:
       - name: {{ .Values.applicationName }}
-        image: '{{ .Values.imageURL }}:{{ .Values.version }}'
+        image: '{{ .Values.image.registry }}/{{ .Values.image.account }}/{{ .Values.image.repository }}:{{ .Values.version }}'
         imagePullPolicy: Always
         ports:
         - name: http

@@ -1,9 +1,10 @@
 applicationName: customers
 targetEnvironment: dev
-version: "d3b6035"
+
 port: 8080
 targetPort: 8080
 routes: []
+
 deploymentStrategy:
   type: RollingUpdate
   rollingMaxSurge: 25%
@@ -15,5 +16,16 @@ health:
   probeDelay: 180
   probePeriod: 180
   probeTimeout: 20
-imageURL: "image-registry.openshift-image-registry.svc:5000/retail/customers-tomcat-gitops"
+
+image:
+  registry: image-registry.openshift-image-registry.svc:5000
+  account: retail
+  repository: customers-tomcat-gitops
+version: "d3b6035"
+
 env: []
+
+customerDatabase:
+  hostname: oracle-vm-database
+  user: customer
+  password: ""
