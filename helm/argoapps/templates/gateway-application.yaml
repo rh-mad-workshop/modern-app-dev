@@ -8,10 +8,6 @@ metadata:
   - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
-  source:
-    repoURL: http://gitea.gitea.svc:3000/{{ .Values.user }}/app-mod-projects.git
-    targetRevision: main
-    path: helm/gateway
   destination:
     server: https://kubernetes.default.svc
     namespace: retail-{{ .Values.user }}
@@ -19,3 +15,8 @@ spec:
     automated:
       prune: false
       selfHeal: true
+  source:
+    repoURL: http://gitea.gitea.svc:3000/{{ .Values.user }}/app-mod-projects.git
+    targetRevision: main
+    path: helm/gateway
+        

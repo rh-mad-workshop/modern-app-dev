@@ -22,7 +22,7 @@ spec:
     helm:
       values: |
         customerDatabase:
-          password: redhat
+          password: {{ .Values.customerDatabase.password }}
         image:
           registry: image-registry.openshift-image-registry.svc:5000
           account: retail-{{ .Values.user }}
