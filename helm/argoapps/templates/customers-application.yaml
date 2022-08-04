@@ -19,11 +19,11 @@ spec:
     repoURL: http://gitea.gitea.svc:3000/{{ .Values.user }}/app-mod-projects.git
     targetRevision: main
     path: helm/customers-tomcat-gitops
-  helm:
-    values: |
-      customerDatabase:
-        password: redhat
-      image:
-        registry: image-registry.openshift-image-registry.svc:5000
-        account: retail-{{ .Values.user }}
-        repository: customers-tomcat-gitops
+    helm:
+      values: |
+        customerDatabase:
+          password: redhat
+        image:
+          registry: image-registry.openshift-image-registry.svc:5000
+          account: retail-{{ .Values.user }}
+          repository: customers-tomcat-gitops
