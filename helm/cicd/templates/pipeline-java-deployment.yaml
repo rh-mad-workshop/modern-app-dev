@@ -83,7 +83,7 @@ spec:
     - name: target-branch
       value: $(params.git-branch)
     - name: config-subdirectory
-      value: $(params.app-subdir)/helm
+      value: helm/$(params.app-subdir)
     - name: git-root-directory
       value: source
     workspaces:
