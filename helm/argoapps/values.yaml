@@ -4,5 +4,11 @@
 
 user: user1
 
+# Password for the customer Database
 customerDatabase:
+  hostname: oracle-db-database
+  user: customer
   password: ""
+
+# Hostname or IP of the customers service
+customersHost: customers

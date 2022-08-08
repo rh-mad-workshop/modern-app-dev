@@ -19,4 +19,6 @@ spec:
     repoURL: http://gitea.gitea.svc:3000/{{ .Values.user }}/app-mod-projects.git
     targetRevision: main
     path: helm/gateway
-        
+    helm:
+      values: |
+        customersHost: {{ .Values.customersHost }}

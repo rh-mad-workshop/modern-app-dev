@@ -1,10 +1,10 @@
 services:
   orders:
-    url: http://orders:8080/orders
+    url: http://{{ .Values.ordersHost }}:8080/orders
   inventory:
-    url: http://inventory:8080/products
+    url: http://{{ .Values.inventoryHost }}:8080/products
   customers:
-    url: http://customers:8080/customers-tomcat-0.0.1-SNAPSHOT/customers
+    url: http://{{ .Values.customersHost }}:8080/{{ .Values.customersApp }}/customers
 
 hystrix:
   command:
