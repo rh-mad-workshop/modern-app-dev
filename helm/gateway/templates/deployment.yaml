@@ -27,6 +27,7 @@ spec:
       name: {{ .Values.applicationName }}
       annotations:
         redeploy: "1"
+        rollme: {{ randAlphaNum 5 | quote }}
       labels:
         deployment: {{ .Values.applicationName }}
         app: {{ .Values.applicationName }}
