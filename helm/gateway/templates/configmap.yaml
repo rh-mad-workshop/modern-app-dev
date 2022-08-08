@@ -3,4 +3,7 @@ kind: ConfigMap
 metadata:
   name: {{ .Values.applicationName }}-config
 data:
-{{ (.Files.Glob "config/*").AsConfig | indent 2 }}
+{{- range $path, $bytes := .Files.Glob "config/*" }}
+{{ base $path | indent 2 }}: |
+{{ tpl ($.Files.Get $path) $ | indent 4 }}
+{{ end }}

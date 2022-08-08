@@ -4,5 +4,9 @@
 
 user: user1
 
+# Password for the customer Database
 customerDatabase:
   password: ""
+
+# Hostname or IP of the customers service
+customersHost: customers

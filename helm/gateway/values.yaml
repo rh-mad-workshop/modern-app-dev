@@ -17,3 +17,9 @@ health:
   probeTimeout: 2
 imageURL: "quay.io/openshiftlabs/app-mod-gateway:1.1"
 env: []
+
+# The hostname or IP of the various services
+customersHost: customers
+customersApp: customers-tomcat-0.0.1-SNAPSHOT
+ordersHost: orders
+inventoryHost: inventory
