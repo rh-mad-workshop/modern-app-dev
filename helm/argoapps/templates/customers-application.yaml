@@ -22,6 +22,8 @@ spec:
     helm:
       values: |
         customerDatabase:
+          hostname: {{ .Values.customerDatabase.hostname }}
+          user: {{ .Values.customerDatabase.user }}
           password: {{ .Values.customerDatabase.password }}
         image:
           registry: image-registry.openshift-image-registry.svc:5000
