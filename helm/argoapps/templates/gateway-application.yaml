@@ -16,7 +16,7 @@ spec:
       prune: false
       selfHeal: true
   source:
-    repoURL: http://gitea.gitea.svc:3000/{{ .Values.user }}/app-mod-projects.git
+    repoURL: http://gitea.gitea.svc:3000/{{ .Values.user }}/modern-app-dev.git
     targetRevision: main
     path: helm/gateway
     helm:
