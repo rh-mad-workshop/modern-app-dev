@@ -5,8 +5,12 @@ metadata:
   name: argocd
   namespace: {{ .Values.demoNamespace }}
 spec:
-  dex:
-    openShiftOAuth: true
+  sso:
+    dex:
+      openShiftOAuth: true
+    provider: dex
+  notifications:
+    enabled: true
   rbac:
     policy: |
       g, system:cluster-admins, role:admin
