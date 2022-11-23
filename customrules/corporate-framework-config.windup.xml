@@ -56,8 +56,8 @@
                         will take precedence over the files available in the lib directory. It would be advisable to remove these files on the WAR to be deployed in Kubernetes.
                         A good way to do this would be by configuring a kubernetes profile in Maven that excludes the properties files:
 
-                        <![CDATA[
                         ```xml
+                        <![CDATA[
                         <profiles>
                       		<profile>
                       			<id>local</id>
