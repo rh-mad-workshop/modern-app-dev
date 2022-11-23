@@ -56,8 +56,8 @@
                         will take precedence over the files available in the lib directory. It would be advisable to remove these files on the WAR to be deployed in Kubernetes.
                         A good way to do this would be by configuring a kubernetes profile in Maven that excludes the properties files:
 
-
                         ```xml
+                        <![CDATA[
                         <profiles>
                       		<profile>
                       			<id>local</id>
@@ -80,6 +80,7 @@
                         		</build>
                       		</profile>
                       	</profiles>
+                        ]]>
                         ```
                         
                         This would ensure that the properties files that the application uses are the ones inside the ConfigMap or Secret objects to be injected in the Tomcat lib directory at deployment time.
