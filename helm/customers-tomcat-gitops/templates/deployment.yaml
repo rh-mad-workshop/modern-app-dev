@@ -73,7 +73,7 @@ spec:
         {{- end }}
         volumeMounts:
         - name: {{ .Values.applicationName }}-secret-volume
-          mountPath: /opt/jws-5.6/tomcat/lib/persistence.properties
+          mountPath: /opt/jws-5.7/tomcat/lib/persistence.properties
           subPath: persistence.properties
       volumes:
       - name: {{ .Values.applicationName }}-secret-volume
