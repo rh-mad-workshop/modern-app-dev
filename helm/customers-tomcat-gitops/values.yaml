@@ -26,6 +26,6 @@ version: "d3b6035"
 env: []
 
 customerDatabase:
-  hostname: oracle-vm-database
-  user: customer
+  hostname: postgresql-vm-database
+  user: redhat
   password: ""
