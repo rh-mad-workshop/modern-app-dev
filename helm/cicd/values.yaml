@@ -13,7 +13,7 @@ namespacePermissions:
 
 repo:
   url: http://gitea.gitea.svc:3000/user1/app-mod-projects
-  tag: main
+  tag: patch-postgres
   user: user1
   password: ""
 

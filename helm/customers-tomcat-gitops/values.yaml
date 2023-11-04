@@ -11,8 +11,8 @@ deploymentStrategy:
   rollingMaxUnavailable: 20%
 replicaCount: 1
 health:
-  livenessEndpoint: /customers-tomcat-0.0.1-SNAPSHOT/actuator/health
-  readinessEndpoint: /customers-tomcat-0.0.1-SNAPSHOT/actuator/health
+  livenessEndpoint: /customers/actuator/health
+  readinessEndpoint: /customers/actuator/health
   probeDelay: 10
   probePeriod: 30
   probeTimeout: 10

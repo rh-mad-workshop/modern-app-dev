@@ -20,6 +20,6 @@ env: []
 
 # The hostname or IP of the various services
 customersHost: customers
-customersApp: customers-tomcat-0.0.1-SNAPSHOT
+customersApp: customers
 ordersHost: orders
 inventoryHost: inventory
