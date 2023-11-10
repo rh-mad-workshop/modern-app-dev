@@ -17,7 +17,7 @@ spec:
       selfHeal: true
   source:
     repoURL: http://gitea.gitea.svc:3000/{{ .Values.user }}/modern-app-dev.git
-    targetRevision: main
+    targetRevision: patch-postgres
     path: helm/gateway
     helm:
       values: |
