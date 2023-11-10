@@ -21,6 +21,7 @@ spec:
     path: helm/customers-tomcat-gitops
     helm:
       values: |
+        user: {{ .Values.user }}
         customerDatabase:
           hostname: {{ .Values.customerDatabase.hostname }}
           user: {{ .Values.customerDatabase.user }}
