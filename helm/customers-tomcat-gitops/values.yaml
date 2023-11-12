@@ -10,12 +10,6 @@ deploymentStrategy:
   rollingMaxSurge: 25%
   rollingMaxUnavailable: 20%
 replicaCount: 1
-health:
-  livenessEndpoint: /customers-tomcat-0.0.1-SNAPSHOT/actuator/health
-  readinessEndpoint: /customers-tomcat-0.0.1-SNAPSHOT/actuator/health
-  probeDelay: 10
-  probePeriod: 30
-  probeTimeout: 10
 
 image:
   registry: image-registry.openshift-image-registry.svc:5000
