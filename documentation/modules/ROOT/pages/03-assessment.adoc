@@ -1,0 +1,157 @@
+= Assessment
+:imagesdir: ../assets/images
+
+== Goals of this lab
+
+As part of Globex's digital transformation and cloud adoption initiative, the development and devops teams embarked upon a journey to modernize their existing siloed services running on virtual machines on Red Hat Virtualization and containerized applications on Red Hat OpenShift separately.
+
+The goal of this lab is to assess the current application portfolio and identify potential issues and risks to implementing advanced cloud-native architectures with application modernization.
+
+== 2.1. Access the MTA Web Console
+
+To start the assessment of the existing applications we will use the https://access.redhat.com/documentation/en-us/migration_toolkit_for_applications/6.0/html-single/introduction_to_the_migration_toolkit_for_applications/index[Migration Toolkit for Applications (MTA)^]. We will use _MTA_ to assess the `Customers` service based on the _Tomcat_ server on Red Hat Virtualization.
+
+Open a new browser to access the https://mta-mta-%USERID%.%SUBDOMAIN%[MTA Web Console^].
+
+You will see existing application inventories such as *Customers*, *Orders*, *Inventory*, and more.
+
+image::application-inventory.png[application inventory]
+
+**MTA Application Inventory** is the vehicle which selects applications for assessment by https://github.com/konveyor/tackle-pathfinder[Tackle Pathfinder^] and analysis by https://github.com/windup/[Windup^]. It provides users four main functions:
+
+* Maintain a portfolio of applications.
+* Link applications to the business services they support.
+* Define interdependencies.
+* Add metadata using an extensible tagging model to describe and categorize applications in multiple dimensions.
+
+**Tackle Pathfinder** is an interactive questionnaire based tool that assesses the suitability of applications for modernization in order to deploy them into containers on an enterprise Kubernetes platform. The tool output includes:
+
+* An application's suitability for containerization and Kubernetes
+* A prioritized list of associated risks (based on answers to the questionnaire)
+* An Adoption plan with the application's prioritization, business criticality and dependencies.
+
+**Migration Waves management** is a small collection of workloads that deliver business value. MTA’s Migration Wave groups applications to be migrated on a specified schedule. In addition, a migration wave enables you to export a list of the wave’s applications to the Jira issue management system. This automatically creates a separate Jira issue for each application of the migration wave for tracking.
+
+For more information, see https://access.redhat.com/documentation/en-us/migration_toolkit_for_applications/6.2/html/user_interface_guide/working-with-applications-in-the-ui#mta-web-creating-migration-waves_user-interface-guide[Creating migration waves^] and https://access.redhat.com/documentation/en-us/migration_toolkit_for_applications/6.2/html/user_interface_guide/working-with-applications-in-the-ui#mta-web-creating-jira-issues-for-migration-wave_user-interface-guide[Creating Jira issues for a migration wave^].
+
+== 2.2. Controls
+
+*Controls* are a collection of entities that add value to Application Inventory and the Pathfinder assessment. They comprise _business services_, _stakeholders_, _stakeholder groups_, _job functions_, _tag types_, and _tags_.
+
+These controls provide useful metadata about the relationships between applications and their business stakeholders, and can be used to optimize a modernization plan across a portfolio.
+
+=== 2.2.1. Stakeholders
+
+Go to `Controls` on the left menu and you will see existing _stakeholders_ such as *Hank Scorpio* and *Homer Simpson*.
+
+image::mta-control-stakeholder.png[stakeholders]
+
+You can also find the existing _stakeholder groups_ such as *IT Management* and *Retail Management* for the application assessment.
+
+image::mta-stakeholder-groups.png[stakeholder-groups]
+
+=== 2.2.2. Business services
+
+Applications can be classified and grouped in multiple ways such as **business service**. We've created a business service for the legacy `Retail` applications.
+
+Go to `Controls` on the left menu and click on _Business services_ tab. You will see existing _business services_ such as *Finance and HR* and *Retail*.
+
+image::mta-control-business-service.png[business service]
+
+== 2.3. Application inventory
+
+Let's focus on the legacy application. We have added tags that represent its technology such as `Java`, `Tomcat` and `Oracle`, and decided to add a custom tag type that allows us to identify which custom architecture libraries are used by each application.
+
+=== 2.3.1. Confirm the Customers Application Inventory
+
+Go to `Application inventory` on the left menu in the *Migration* perspective and click on `pencil` (edit) icon for the customers inventory.
+
+image::app-inventory-landing.png[app-inventory-landing]
+
+When you click on `2 more` button, it shows 5 tags.
+
+* Oracle
+* Java
+* Tomcat
+* Corporate Custom Configuration Library
+* RHEL 8
+
+Click on `Cancel`.
+
+=== 2.3.2. Assess the Legacy Customers Application
+
+The assessment is driven by a questionnaire and aims to determine the suitability for containerization for each application. It covers all the different areas of the *application landscape*, including the *technology*, *application lifecycle management*, and *operations*. This questionnaire allow the tool to identify and present potential risks that might prevent the application from running in containers or would require extra steps to mitigate the risk.
+
+One stakeholder team has already assessed the retail service to identify technical problems. However, they couldn't answer the configuration model questions during the first assessment. So they just left the answer as `Unknown` at that time.
+
+Today, you'll run the *second* assessment to choose the proper answer in the `cross-cutting concerns` section for the _customers_ application. 
+
+Click on `Assess`.
+
+image::app-inventory-access.png[app-inventory-access]
+
+When you see *This application has already been assessed. Do you want to continue?* message, click on `Continue` to continue the assessment.
+
+image::edit-assessment.png[edit-assessment]
+
+The first step will be to select the stakeholders (_Homer Simpson_) and Stakeholder groups (_Retail Management_) involved with the assessment. Leave the default values.
+
+image::select-stakeholder.png[select-stakeholder]
+
+Click on `Next`.
+
+[NOTE]
+====
+Review the former answers in the initial assessment for each application assessment section such as `Details`, `Dependencies`, and `Observability`. You don't need to change any answers but keep clicking on `Next` button until you get into the `Application cross-cutting concerns` section.
+====
+
+image::app-details.png[app-details]
+
+=== 2.3.3. Application cross-cutting concerns
+
+Choose the following answer for the *How is the application configured?* question. The team finally figured out that the customers application currently has multiple configuration files in different folders/directories, so answer accordingly:
+
+* *Question* - How is the application configured?
+* *Answer* - `Multiple configuration files in multiple file system locations`
+
+image::app-cross-cutting-concerns.png[app-cross-cutting-concerns]
+
+Click on `Save and review`.
+
+== 2.4. Application Review
+
+You will be presented with the review screen. It allows you to find out which risks were identified during the assessment and decide which migration strategy to follow based those risks.
+
+image::review.png[review]
+
+Scroll down the screen to view the risks. This legacy application uses a static (fixed) discovery mechanism that is not cloud-friendly, which makes sense since it comes from a classic platform and accesses a database through a *static IP*.
+
+image::review-high-risk.png[review-high-risk]
+
+Now that we know we will need changes in the source code to adapt the application, we can decide that the strategy will be `Refactor`.
+
+* Proposed action: `Refactor`
+* Effort estimate: `Small`
+
+Since this is a key application in the architecture, we're going to set the criticality to `10` and priority to `9`.
+
+* Business criticality: `10`
+* Work priority: `9`
+
+Click on `Submit Review`.
+
+image::submit-review.png[submit-review]
+
+At this point you have completed the 2nd assessment to update the `Application cross-cutting concerns` section. You have also identified a new `high` risk along with the external configuration references and dependencies.
+
+image::complete-review.png[complete-review]
+
+Go to `Report` on the left menu. There you will be able to access the report details such as _Current landscape_, _Adoption candidate distribution_, _Suggested adoption plan_, and _Identified risks_.
+
+image::report-review.png[report-review]
+
+== Congratulations!
+
+You have now successfully begun the modernization process by assessing the current application portfolio and you identified issues and risks that will need to be considered in the next step: application analysis and code modification as part of modernization.
+
+Read more about use cases and migration paths at https://developers.redhat.com/products/mta/use-cases[Migration Toolkit for Applications^].

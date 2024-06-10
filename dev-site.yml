@@ -1,0 +1,35 @@
+runtime:
+  cache_dir: ./.cache/antora
+
+site:
+  title: OpenShift Roadshow Workshop 2024
+  url: http://localhost:3000/rhs-openshift-starter-guides/index.html
+  start_page: ocp-roadshow-workshop::index.adoc
+
+content:
+  sources:
+    - url: .
+      branches: HEAD
+      #branches: [ocp-4.7, ocp-4.8, ocp-4.9]
+      start_path: documentation
+      #- url: git@github.com:redhat-scholars/openshift-starter-guides-dotnet.git
+      #branches: ocp-4.6
+      #start_path: documentation
+
+asciidoc:
+  attributes:
+    app-group-name: layers
+    app-1: layer-1
+    app-2: layer-2
+    app-3: layer-3
+    app-4: layer-4
+  extensions:
+    - ./lib/remote-include-processor.js
+    - ./lib/tab-block.js
+ui:
+  bundle:
+    url: https://github.com/redhat-scholars/course-ui/releases/download/v0.1.8/ui-bundle.zip
+    snapshot: true
+  supplemental_files: ./supplemental-ui
+output:
+  dir: ./gh-pages

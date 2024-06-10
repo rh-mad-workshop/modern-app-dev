@@ -1,0 +1,5 @@
+* xref:01-modernisation-introduction.adoc[Application Migration & Modernisation]
+** xref:02-introduction.adoc[*01* - Migration Workshop Introduction]
+** xref:03-assessment.adoc[*02* - Migration Assessment]
+** xref:04-analyze.adoc[*03* - Migration Analysis]
+* 

@@ -1,0 +1,183 @@
+= Introduction
+:imagesdir: ../assets/images
+
+A common way of speaking about migrating or modernizing workloads to the cloud has been coined as the *6 Rs framework*. This framework can be broken down as follows.
+
+image::mod-strategies.png[Modernization Strategies]
+
+Red Hat helps our customers' application modernization journey with this approach:
+
+image::app-mod-approach.png[Modernization Approach]
+
+This module will walk you through 2 of the phases (_Assess_, _Rationalize_) as following steps:
+
+* Assessment and Analysis of the legacy application using https://access.redhat.com/documentation/en-us/migration_toolkit_for_applications/6.0/html-single/introduction_to_the_migration_toolkit_for_applications/index[Migration Toolkit for Applications (MTA)^]
+
+[NOTE]
+====
+Migration Toolkit for Applications (MTA) accelerates large-scale application modernization efforts across hybrid cloud environments on Red Hat OpenShift. This solution provides insight throughout the adoption process, at both the portfolio and application levels: inventory, assess, analyze, and manage applications for faster migration to OpenShift via the user interface.
+====
+
+== 1.1. Understand the Globex Retail System Architecture
+
+Globex is a fictional company we will use for this workshop. The Globex system in your workshop environment consists of microservices applications that are deployed across multiple platforms such as virtual machines and a container platform as depicted below.
+
+image::architecture_initial.png[architecture_initial]
+
+Your initial state for this workshop is an environment that is spread over Red Hat Virtualization and Red Hat OpenShift Container Platform.
+
+Your application has already been partially moved from your legacy environments to OpenShift.
+
+The Globex retail application consists of a _Node.js_ frontend service which is getting its data via a gateway service. The gateway service is connected to three backend services: customers, orders and inventory. Each service uses its own database to store data.
+
+The services running on OpenShift are deployed in a namespace `retail-%USERID%`. You will eventually manage these services using *OpenShift GitOps* and *Pipelines* in later modules.
+
+[NOTE]
+====
+You might see the customers pods are in a failed state due to _ImagePullBackOff Error_. It will be automatically fixed when you finish the OpenShift CI/CD and GitOps sections later.
+====
+
+All source code for the applications as well as the GitOps YAML manifests for all services are stored in a (Git-compatible) *Gitea* repository that for workshop purposes is hosted on the OpenShift cluster.
+
+The problem right now is in the *customers* service:
+
+* The customers service uses an old Java code base running on Apache Tomcat in a VM on Red Hat Virtualization. In this module you will assess and analyze this legacy Java application to learn the best way to modernize the Java code and then deploy the application to OpenShift on top of Red Hat JBoss Web Server.
+* The customers database is using an Oracle database running as a VM in Red Hat Virtualization. Because this is Oracle you can not deploy the database as a Pod on OpenShift. Instead you will lift and shift the VM to OpenShift Virtualization using the Migration Toolkit for Virtualization.
+
+Once you have finished the all of the modules in this workshop, your deployment architecture will look like this:
+
+image::architecture_completed.png[architecture_completed]
+
+== 1.2. Workshop Environment
+
+=== 1.2.1. Confirm Your Username!
+
+Look in the box at the top of your screen. Is your username set already? If so it will look like this:
+
+image::alreadyset.png[alreadyset]
+
+If your `username` is properly set, then you can move on. *If not, in the above box, enter the user ID you were assigned* like this:
+
+image::setuser.png[setuser]
+
+This will customize the links and copy/paste code for this workshop. If you accidentally type the wrong username, just update your username in the URL parameters (e.g. ` 1-introduction.html?USERID=%USERID% ` )
+
+[IMPORTANT]
+====
+You have to use *an unique username* (e.g. `%USERID%`) while you're running the hands-on labs. For example, you need to deploy applications to your own project (e.g. retail-%USERID%).
+====
+
+=== 1.2.2. OpenShift Cluster
+
+Your OpenShift cluster is already configured with everything you need. Here are the details:
+
+* `Gitea` to host the source code repositories
+* `OpenShift Virtualization` to ultimately run the migrated Oracle VM
+* `Migration Toolkit for Virtualization` to facilitate the migration of the Oracle VM to Red Hat OpenShift Container Platform
+* `OpenShift GitOps` to manage the deployed services using a GitOps approach through ArgoCD
+* `OpenShift Pipelines` to build the customer application from source code and deploy to the `retail` project using GitOps
+* `Migration Toolkit for Applications` to help modernize the customer service.
+
+=== 1.2.3. Visual Studio Code Server
+
+VSCode is already deployed in the OpenShift cluster for you you to use as your IDE. This means you don't need to install and configure anything on your system. This makes it easy to change source code and configuration files in the cloned repository.
+
+To get started, access the link:https://codeserver-codeserver-%USERID%.%SUBDOMAIN%[VS Code server instance^] and log in using the following `password`.
+
+* Password: `{openshift-password}`
+
+image::vscode-server-login.png[vscode-server-login]
+
+The graphical user interface (GUI) should look like:
+
+image::vscode.png[VSCode]
+
+== 1.3. Explore the Globex Retail Services (GUI)
+
+Confirm you're able to access the retail services application by accessing its frontend web application. To find the URL to access the *Frontend* application, you need to use the OpenShift command line tool (`oc`). Go to the VS Code server and Open a new terminal that already installed the _oc_ command by default.
+
+Click on `New Terminal` in Terminal menu in the VS Code. Once a new terminal is open, run the following _oc_ command.
+
+[.console-input]
+[source,bash]
+----
+oc login -u %USERID% -p openshift https://openshift.default.svc:443
+----
+
+image::vscode-terminal.png[vscode-terminal]
+
+[NOTE]
+====
+If you see a popup message about allowing copy/paste, *"See text and images copied to the clipboard"*, click on `Allow`. Then you might also see `"Use insecure connections?"` message in the terminal. In case, press `y`.
+====
+
+Find the `Route` URL for the *Frontend* application. Run the following `oc` command in the VS Code server terminal.
+
+[.console-input]
+[source,bash,subs="+attributes,macros+"]
+----
+oc get route ordersfrontend -n retail-%USERID%
+----
+
+The output should look like:
+
+[.console-output]
+[source,bash,subs="+attributes,macros+"]
+----
+NAME             HOST/PORT                                                                PATH   SERVICES         PORT   TERMINATION     WILDCARD
+ordersfrontend   ordersfrontend-retail-%USERID%.%SUBDOMAIN%          ordersfrontend   web    edge/Redirect   None
+----
+
+Navigate to the orders frontend route by entering the hostname listed above under `HOST/PORT` into your browser's address bar.
+
+image::frontend.png[Frontend]
+
+Click through the three panels on the left.
+
+* `Customers` shows the list of the customer information such as _fullname, city, country, and username_.
+* `Orders` shows current order information including relevant customer data.
+* `Products` shows the current inventory information.
+
+== 1.4. Access the Customer Data
+
+The RHV environment not only has the Oracle Database VM deployed but it also hosts another VM which runs the old customer application on top of Apache Tomcat.
+
+From a terminal window you can use `curl` to demonstrate that the application is connected to the database.
+
+Use the IP Address of the *Customer Service (Tomcat VM)* to access the customer service. Run the following _curl_ command in the VS Code server's terminal {or your local environment since the Tomcat IP address is publicly accessible).
+
+[.console-input]
+[source,bash]
+----
+curl http://%TOMCATIP%:8080/customers-tomcat-0.0.1-SNAPSHOT/customers/1 ; echo
+----
+
+The output should look like:
+
+[.console-output]
+[source,json]
+----
+{"id":1,"username":"phlegm_master_19","name":"Guybrush","surname":"Threepwood","address":"1060 West Addison","zipCode":"ME-001","city":"Melee Town","country":"Melee Island"}
+----
+
+Try to get another customer data.
+
+[.console-input]
+[source,bash]
+----
+curl http://%TOMCATIP%:8080/customers-tomcat-0.0.1-SNAPSHOT/customers/2 ; echo
+----
+
+The output should look like:
+
+[.console-output]
+[source,json]
+----
+{"id":2,"username":"hate_guybrush","name":"Pirate","surname":"Lechuck","address":"Caverns of Meat, no number","zipCode":"MO-666","city":"Giant Monkey Head","country":"Monkey Island"}
+----
+
+== Congratulations!
+
+You have now successfully learned about the architecture of the application and confirmed your workshop environment.
+
+In the next step, you'll begin the modernization process by assessing the siloed current application portfolio to identify issues and risks that will need to be considered as during the modernization journey.

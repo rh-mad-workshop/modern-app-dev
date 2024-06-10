@@ -1,0 +1,27 @@
+= Welcome to the OpenShift Roadshow Workshop
+:navtitle: Introduction
+
+This workshop will give you a hands on introduction to using OpenShift from the perspective of a developer, together with a view of specific topics on security, governance and management.
+
+image::04-topology-image.png[Example Topology Image]
+
+== Workshop Topics
+
+There are two paths through this workshop. 
+
+=== Application Migration & Modernisation
+
+The first option has a focus on modernisation; taking an application from 'heritage' platform to running in a containerised format on OpenShift. In this section you will perform the following steps :
+
+* Assess and Analyze an application for modernization
+* Learn how to refactor and deploy a modernized application on OpenShift
+* Learn how to implement CI/CD for an application on OpenShift
+
+=== Security, Governance and Cluster Management
+
+The second option has a focus on application and platform security, together with the management and compliance of multiple clusters. In this section you will perform the following steps :
+
+* Learn the fundamentals of operating OpenShift clusters: Application Storage, Application Networking, Project Management, Authentication
+* Learn how to discover security vulnerabilities across multi-cluster deployment
+* Learn how to enforce security policies to keep applications from being run
+* Learn how to deploy and manage multiple clusters with advanced cluster management
