@@ -57,3 +57,5 @@ In the top right corner of the command line window there are three buttons.
 * The cross will close the terminal.
 
 That is all the setup work done - you are now ready to start experimenting in the next chapters.
+
+This is a test

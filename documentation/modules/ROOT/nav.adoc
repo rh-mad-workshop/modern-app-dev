@@ -2,4 +2,21 @@
 ** xref:02-introduction.adoc[*01* - Migration Workshop Introduction]
 ** xref:03-assessment.adoc[*02* - Migration Assessment]
 ** xref:04-analyze.adoc[*03* - Migration Analysis]
-* 
+
+
+* xref:10-application-management-basics.adoc[Administering Applications on OpenShift]
+** xref:09-installation-and-verification.adoc[*01* - Installation and Verificiation]
+** xref:11-application-storage-basics.adoc[*02* - Application Storage Basics]
+** xref:12-machinesets-machines-nodes.adoc[*02* - MachineSets, Machines, and Nodes]
+** xref:13-infrastructure-nodes-and-operators.adoc[*03* - Infrastructure Nodes and Operators]
+** xref:14-openshift-logging-wth-loki.adoc[*04* - OpenShift Logging with Loki]
+** xref:15-external-authentication.adoc[*05* - External (LDAP) Authentication Providers, Users, and Groups]
+** xref:16-openshift-monitoring.adoc[*06* - OpenShift Monitoring with Prometheus]
+** xref:17-project-template-quota-limits.adoc[*07* - Project Request Template, Quotas, Limits]
+** xref:18-openshift-networking-networkpolicy.adoc[*08* - OpenShift Networking and NetworkPolicy]
+** xref:19-disable-self-project-provisioning.adoc[*09* - Disabling Project Self-Provisioning]
+** xref:20-cluster-resource-quota.adoc[*10* - Cluster Resource Quotas]
+** xref:21-taints-tolerations.adoc[*11* - Taints and Tolerations]
+** xref:22-vulnerability-scanning-acs.adoc[*12* - Vulnerability Scanning with ACS]
+** xref:23-devsecops-acs.adoc[*13* - DevSecOps with ACS]
+** xref:24-multicluster-with-acm.adoc[*14* - Multicluster management with ACM]

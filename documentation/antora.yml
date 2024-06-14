@@ -3,5 +3,4 @@ title: OCP Roadshow Workshop
 version: 4.15
 nav:
   - modules/ROOT/nav.adoc
-
 start_page: ROOT:index.adoc

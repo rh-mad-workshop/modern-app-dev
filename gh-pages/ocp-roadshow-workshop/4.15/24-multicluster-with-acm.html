@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Untitled :: OpenShift Roadshow Workshop 2024</title>
+    <link rel="canonical" href="http://localhost:3000/rhs-openshift-starter-guides/index.html/ocp-roadshow-workshop/4.15/24-multicluster-with-acm.html">
+    <meta name="generator" content="Antora 2.3.4">
+    <link rel="stylesheet" href="../../_/css/site.css">
+<link rel="icon" href="../../_/img/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function () { 
+      const urlParams = new URLSearchParams(window.location.search);
+      const clusterName = urlParams.get('CLUSTER_SUBDOMAIN');
+      const projectName = urlParams.get('PROJECT');
+      if (clusterName) {
+        showCluster( clusterName );
+      }
+      else {
+        showClusterForm();
+      }
+
+      if (projectName) {
+        showProject( projectName );
+      } else {
+        showProjectForm();
+      }
+    } );
+
+
+    function sliceCluster(clusterName){
+      if (clusterName.length > 70) {
+          return "..." + clusterName.slice(35);
+      } else {
+          return clusterName;
+      }
+    }
+
+    function showCluster( clusterName ) {
+      document.getElementById('navbar-form-empty').style.display = "none";
+      document.getElementById('navbar-form-filled').style.display = "flex";
+      document.getElementById('cluster_subdomain').textContent = sliceCluster(clusterName);
+      document.getElementById('clusterfield2').value = clusterName;
+
+    }
+
+    function showClusterForm( clusterName ) {
+      document.getElementById('navbar-form-empty').style.display = "flex";
+      document.getElementById('navbar-form-filled').style.display = "none";
+    }
+
+    function gowithcluster() {
+      elClusterInput = document.getElementById('clusterfield');
+      elProjectInput = document.getElementById('projectfield2');
+
+      window.location.search = ('&CLUSTER_SUBDOMAIN=' + elClusterInput.value + '&PROJECT=' + elProjectInput.value);
+    }
+
+    function showProject( projectName ) {
+      document.getElementById('navbar-form-project-empty').style.display = "none";
+      document.getElementById('navbar-form-project-filled').style.display = "flex";
+      document.getElementById('project').textContent = projectName;
+      document.getElementById('projectfield2').value = projectName;
+    }
+
+    function showProjectForm( projectName ) {
+      document.getElementById('navbar-form-project-empty').style.display = "flex";
+      document.getElementById('navbar-form-project-filled').style.display = "none";
+    }
+
+    function gowithproject() {
+      elProjectInput = document.getElementById('projectfield');
+      elClusterInput = document.getElementById('clusterfield2');
+      window.location.search = ('&CLUSTER_SUBDOMAIN=' + elClusterInput.value + '&PROJECT=' + elProjectInput.value);
+    }
+
+  </script>
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://developers.redhat.com" target="_blank"><img
+          src="../../_/img/header_logo.png" height="40px" alt="Red Hat Developer Program"></a>
+      <a class="navbar-item" href="http://localhost:3000/rhs-openshift-starter-guides/index.html">OpenShift Roadshow Workshop 2024</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <div class="navbar-item" id="navbar-form-empty">
+          <span class="navbar-text" style="margin-left: 1rem; margin-right: 1rem;">&nbsp;<i style="color: orange;"
+              class="fa fa-exclamation-triangle" aria-hidden="true"></i></span>
+
+          <form action="javascript:void(0);" onsubmit="gowithcluster();">
+            <input size="40" id="clusterfield" type="text" placeholder="Enter Cluster Subdomain">
+            <input type="hidden" id="projectfield2" name="projectfield2" value="">
+          </form>
+        </div>
+
+        <div class="navbar-item" id="navbar-form-filled" style="display: none;">
+          <span class="navbar-text" style="margin-left: 1rem; margin-right: 1rem;">|</span>
+          <span class="navbar-text" id="cluster_subdomain"></span>
+          <span class="navbar-text" style="margin-left: 1rem; margin-right: 1rem;">&nbsp;<i onclick="recycle();" style="color: green;" class="fa fa-recycle" aria-hidden="true"></i></span>
+        </div>
+
+         <div class="navbar-item" id="navbar-form-project-empty">
+          <span class="navbar-text" style="margin-left: 1rem; margin-right: 1rem;">&nbsp;<i style="color: orange;"
+              class="fa fa-exclamation-triangle" aria-hidden="true"></i></span>
+
+          <form action="javascript:void(0);" onsubmit="gowithproject();">
+            <input size="40" id="projectfield" type="text" placeholder="Enter Project Name">
+            <input type="hidden" id="clusterfield2" name="clusterfield2" value="">
+          </form>
+        </div>
+
+        <div class="navbar-item" id="navbar-form-project-filled" style="display: none;">
+          <span class="navbar-text" style="margin-left: 1rem; margin-right: 1rem;">|</span>
+          <span class="navbar-text" id="project"></span>
+          <span class="navbar-text" style="margin-left: 1rem; margin-right: 1rem;">&nbsp;<i onclick="recycle();" style="color: green;" class="fa fa-recycle" aria-hidden="true"></i></span>
+        </div>
+<!---
+        <a class="navbar-item" href="https://developers.redhat.com/ebooks/" target="_blank">Books</a>
+        <a class="navbar-item" href="https://developers.redhat.com/cheatsheets/" target="_blank">Cheat Sheets</a>
+        <a class="navbar-item" href="https://developers.redhat.com/events/" target="_blank">Upcoming Events</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">More Tutorials</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="https://redhat-scholars.github.io/kubernetes-tutorial/" target="_blank">Kubernetes</a>
+            <a class="navbar-item" href="https://redhat-scholars.github.io/istio-tutorial/" target="_blank">Istio</a>
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/quarkus-tutorial/" target="_blank">Quarkus</a>
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/knative-tutorial/" target="_blank">Knative</a>
+            <a class="navbar-item" href="https://redhat-scholars.github.io/tekton-tutorial/" target="_blank">Tekton</a>
+          </div>
+--->
+      </div>
+    </div>
+  </nav>
+</header><div class="body">
+<div class="nav-container" data-component="ocp-roadshow-workshop" data-version="4.15">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="index.html" class=" query-params-link">OCP Roadshow Workshop</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="01-modernisation-introduction.html">Application Migration &amp; Modernisation</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-introduction.html"><strong>01</strong> - Migration Workshop Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="03-assessment.html"><strong>02</strong> - Migration Assessment</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="04-analyze.html"><strong>03</strong> - Migration Analysis</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="10-application-management-basics.html">Administering Applications on OpenShift</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="09-installation-and-verification.html"><strong>01</strong> - Installation and Verificiation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="11-application-storage-basics.html"><strong>02</strong> - Application Storage Basics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="12-machinesets-machines-nodes.html"><strong>02</strong> - MachineSets, Machines, and Nodes</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="13-infrastructure-nodes-and-operators.html"><strong>03</strong> - Infrastructure Nodes and Operators</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="14-openshift-logging-wth-loki.html"><strong>04</strong> - OpenShift Logging with Loki</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="15-external-authentication.html"><strong>05</strong> - External (LDAP) Authentication Providers, Users, and Groups</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="16-openshift-monitoring.html"><strong>06</strong> - OpenShift Monitoring with Prometheus</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="17-project-template-quota-limits.html"><strong>07</strong> - Project Request Template, Quotas, Limits</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="18-openshift-networking-networkpolicy.html"><strong>08</strong> - OpenShift Networking and NetworkPolicy</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="19-disable-self-project-provisioning.html"><strong>09</strong> - Disabling Project Self-Provisioning</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="20-cluster-resource-quota.html"><strong>10</strong> - Cluster Resource Quotas</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="21-taints-tolerations.html"><strong>11</strong> - Taints and Tolerations</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="22-vulnerability-scanning-acs.html"><strong>12</strong> - Vulnerability Scanning with ACS</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="23-devsecops-acs.html"><strong>13</strong> - DevSecOps with ACS</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="24-multicluster-with-acm.html"><strong>14</strong> - Multicluster management with ACM</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">OCP Roadshow Workshop</span>
+    <span class="version">4.15</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <span class="title">OCP Roadshow Workshop</span>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="index.html">4.15</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">OCP Roadshow Workshop</a></li>
+    <li><a href="10-application-management-basics.html">Administering Applications on OpenShift</a></li>
+    <li><a href="24-multicluster-with-acm.html"><strong>14</strong> - Multicluster management with ACM</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="file:///Users/mkimberl/Documents/source/github/modern-app-dev/documentation/modules/ROOT/pages/24-multicluster-with-acm.adoc">Edit this Page</a></div>
+</div>
+  <div class="content">
+<article class="doc">
+<div class="paragraph">
+<p>Multicluster management with ACM</p>
+</div>
+<div class="paragraph">
+<p>Working with Clusters and Cluster Lifecycle
+At a high level Cluster Lifecycle management is about creating, upgrading, and destroying and importing clusters in a multi cloud environment.</p>
+</div>
+<div class="paragraph">
+<p>In the demo console you will find that ACM from 4.7 onwards is now intergrated with the OpenShift Cosnole.</p>
+</div>
+<div class="paragraph">
+<p>Please find your console located below:</p>
+</div>
+<div class="paragraph">
+<p><a href="https://console-openshift-console.apps.cluster-kswh5.kswh5.sandbox1208.opentlc.com" class="bare">https://console-openshift-console.apps.cluster-kswh5.kswh5.sandbox1208.opentlc.com</a></p>
+</div>
+<div class="paragraph">
+<p>If you navigate to Local-cluster then you should see the new ACM console when you select All Clusters.</p>
+</div>
+<div class="paragraph">
+<p>Once there you can proceed with the module.</p>
+</div>
+<div class="paragraph">
+<p>RHACM all cluster
+Once you have logged in to ACM, Navigate to Credentials menu and then select Add Credentials</p>
+</div>
+<div class="paragraph">
+<p>credentials
+add cred
+You will need to provide connection details:
+Cloud Provider Credentials: Choose Amazon Web Services</p>
+</div>
+<div class="paragraph">
+<p>aws cred
+Screen 1: Basic Info
+Credential Name: aws</p>
+</div>
+<div class="paragraph">
+<p>Namespace: open-cluster-management</p>
+</div>
+<div class="paragraph">
+<p>Base DNS Domain: This information is located on the demo console under the field rhacm_aws_subdomain. You can also find it on the creds page for this workshop under Top level domain.</p>
+</div>
+<div class="paragraph">
+<p>When copy and pasting this information, make sure you omit the dot on the url, for example it should read sandbox1536.opentlc.com not .sandbox1536.opentlc.com</p>
+</div>
+<div class="paragraph">
+<p>cred basicinfo
+Click NEXT</p>
+</div>
+<div class="paragraph">
+<p>Screen 2 Amazon Web Services
+Access Key ID: This information is located on the creds page for the demo console under the field AWS_ACCESS_KEY_ID</p>
+</div>
+<div class="paragraph">
+<p>Secret Access Key ID: This information is located on the creds page for the demo console under the field AWS_SECRET_ACCESS_KEY</p>
+</div>
+<div class="paragraph">
+<p>screen2
+Click NEXT - We don’t need to configure a Proxy so we can skip this screen</p>
+</div>
+<div class="paragraph">
+<p>Click NEXT</p>
+</div>
+<div class="paragraph">
+<p>Screen 4 Pull secret and SSH
+Red Hat OpenShift pull secret: Get the pull secret from cloud.redhat.com - RH login Required</p>
+</div>
+<div class="paragraph">
+<p>pull secret
+SSH private and public keys: Use an existing key pair or generate a new ssh key</p>
+</div>
+<div class="paragraph">
+<p>Please note you might need console.redhat.com access to get these keys
+Click NEXT</p>
+</div>
+<div class="paragraph">
+<p>screen4
+Verify the information and click ADD</p>
+</div>
+<div class="paragraph">
+<p>Create a new OpenShift cluster in AWS
+From the menu select Infrastructure → Clusters</p>
+</div>
+<div class="paragraph">
+<p>Click Create Cluster</p>
+</div>
+<div class="paragraph">
+<p>create cluster
+Select Amazon Web services</p>
+</div>
+<div class="paragraph">
+<p>aws cluster
+Select Standalone</p>
+</div>
+<div class="paragraph">
+<p>standalone
+Select the Infrastructure provider credential we just created called AWS</p>
+</div>
+<div class="paragraph">
+<p>Add the desired cluster name.</p>
+</div>
+<div class="paragraph">
+<p>Leave the Cluster set empty for now</p>
+</div>
+<div class="paragraph">
+<p>Select a Release Image, select the 4.12.26 version</p>
+</div>
+<div class="paragraph">
+<p>Add an Additional labels of environment=prod</p>
+</div>
+<div class="paragraph">
+<p>Click NEXT</p>
+</div>
+<div class="paragraph">
+<p>Change the region to see table below</p>
+</div>
+<div class="paragraph">
+<p>Your Location
+AWS Region to select
+NORTH AMERICA
+Select us-west-1 or us-west-2
+EUROPE / EMEA
+Select eu-west-2 or eu-west-3
+ASIA PACIFIC
+Select ap-southeast-2 or ap-northeast-2 or ap-east-1
+Click NEXT on the other screens or select 7 - Review on the menu and then click CREATE</p>
+</div>
+<div class="paragraph">
+<p>This process takes about 30 to 40 minutes depending on AWS traffic at the time this course is taken. Make sure you monitor for any failures and address as needed</p>
+</div>
+<div class="paragraph">
+<p>Creating a Single Node Cluster (SNO) in AWS
+While we wait for the main cluster to provision, lets go ahead and provision a Single Node Cluster. In this exercise we will show you how to create a single node cluster (OCP 4.8 and Above required) in order to save some time and resources when building clusters for testing.</p>
+</div>
+<div class="paragraph">
+<p>Please NOTE that provisioning SNO clusters in public clouds is not currently supported, we only support SNO clusters as bare metal, we leverage the public cloud in the example below to showcase the functionality only.</p>
+</div>
+<div class="paragraph">
+<p>From the menu select Infrastructure → Clusters</p>
+</div>
+<div class="paragraph">
+<p>Click Create Cluster</p>
+</div>
+<div class="paragraph">
+<p>Select Amazon Web services</p>
+</div>
+<div class="paragraph">
+<p>Select Standalone</p>
+</div>
+<div class="paragraph">
+<p>Please set it up as follows:</p>
+</div>
+<div class="paragraph">
+<p>Select the Infrastructure provider credential AWS</p>
+</div>
+<div class="paragraph">
+<p>Click NEXT</p>
+</div>
+<div class="paragraph">
+<p>Add the desired cluster name. Leave the Cluster set empty for now</p>
+</div>
+<div class="paragraph">
+<p>Select a Release Image, select a OCP 4.12.26 version</p>
+</div>
+<div class="paragraph">
+<p>Add an Additional label of environment=qa</p>
+</div>
+<div class="paragraph">
+<p>Click NEXT</p>
+</div>
+<div class="paragraph">
+<p>Change the region to see table below</p>
+</div>
+<div class="paragraph">
+<p>Your Location
+AWS Region to select
+NORTH AMERICA
+Select us-west-1 or us-west-2
+EUROPE / EMEA
+Select eu-west-2 or eu-west-3
+ASIA PACIFIC
+Select ap-southeast-2 or ap-northeast-2 or ap-east-1
+Expand the Worker Pools, and change the worker node count to 0</p>
+</div>
+<div class="paragraph">
+<p>node 0
+Click on step 7 to Review before proceeding, turn YAML: ON at the top of the screen.</p>
+</div>
+<div class="paragraph">
+<p>Click on the install-config tab in the YAML window pane and change the master replica number to 1 (will likely be 3). Double check that the worker replica is 0.</p>
+</div>
+<div class="paragraph">
+<p>install config
+Click back on the cluster tab in the YAML window pane and locate the section that defines an object of type: kind: MachinePool. Add the following line at the end of the MachinePool section.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>  skipMachinePools: true
+It should look something like this:</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>apiVersion: hive.openshift.io/v1
+kind: MachinePool
+metadata:
+  name: cluster2-worker
+  namespace: 'cluster2'
+spec:
+  clusterDeploymentRef:
+    name: 'cluster2'
+  name: worker
+  platform:
+    aws:
+      rootVolume:
+        iops: 2000
+        size: 100
+        type: io1
+      type: m5.xlarge
+  replicas: 0
+  skipMachinePools: true
+Be sure the new line is at the same indentation as the previous line.</p>
+</div>
+<div class="paragraph">
+<p>Click on “Create” and the single node cluster creation will go through.</p>
+</div>
+<div class="paragraph">
+<p>This process takes about 10 to 20 minutes depending on AWS traffic at the time this course is taken. Make sure you monitor for any failures and address as needed</p>
+</div>
+<div class="paragraph">
+<p>Creating and Managing Applications with Red Hat Advanced Cluster Management For Kubernetes
+In the previous lab, you explored the Cluster Lifecycle functionality in RHACM. This allowed you to create new OpenShift® clusters, which you can now use to deploy applications.</p>
+</div>
+<div class="paragraph">
+<p>Application Lifecycle functionality in RHACM provides the processes that are used to manage application resources on your managed clusters. This allows you to define a single or multi-cluster application using Kubernetes specifications, but with additional automation of the deployment and lifecycle management of resources to individual clusters. An application designed to run on a single cluster is straightforward and something you ought to be familiar with from working with OpenShift fundamentals. A multi-cluster application allows you to orchestrate the deployment of these same resources to multiple clusters, based on a set of rules you define for which clusters run the application components.</p>
+</div>
+<div class="paragraph">
+<p>This table describes the different components that the Application Lifecycle model in RHACM is composed of:</p>
+</div>
+<div class="paragraph">
+<p>Resource	*Purpose *
+Channel
+Defines a place where deployable resources are stored, such as an object store, Kubernetes namespace, Helm repository, or GitHub repository.
+Subscription
+Definitions that identify deployable resources available in a Channel resource that are to be deployed to a target cluster.
+PlacementRule
+Defines the target clusters where subscriptions deploy and maintain the application. It is composed of Kubernetes resources identified by the Subscription resource and pulled from the location defined in the Channel resource.
+Application
+A way to group the components here into a more easily viewable single resource. An Application resource typically references a Subscription resource.
+These are all Kubernetes custom resources, defined by a Custom Resource Definition (CRD), that are created for you when RHACM is installed. By creating these as Kubernetes native objects, you can interact with them the same way you would with a Pod. For instance, running oc get application retrieves a list of deployed RHACM applications just as oc get pods retrieves a list of deployed Pods.</p>
+</div>
+<div class="paragraph">
+<p>This may seem like a lot of extra resources to manage in addition to the deployables that actually make up your application. However, they make it possible to automate the composition, placement, and overall control of your applications when you are deploying to many clusters. With a single cluster, it is easy to log in and run oc create -f…​. If you need to do that on a dozen clusters, you want to make sure you do not make a mistake or miss a cluster, and you need a way to schedule and orchestrate updates to your applications. Leveraging the Application Lifecycle Builder in RHACM allows you to easily manage multi-cluster applications.</p>
+</div>
+<div class="paragraph">
+<p>Creating an Application
+Prerequisites:</p>
+</div>
+<div class="paragraph">
+<p>Navigate to Infrastructure → Clusters</p>
+</div>
+<div class="paragraph">
+<p>Click on the local-cluster</p>
+</div>
+<div class="paragraph">
+<p>Click the edit button under Labels and add a label : environment=dev</p>
+</div>
+<div class="paragraph">
+<p>Verify the new clusters you build have the correct labels, it should be as follows:</p>
+</div>
+<div class="paragraph">
+<p>Local-Cluster - environment=dev</p>
+</div>
+<div class="paragraph">
+<p>AWS 1st Cluster - environment=prod</p>
+</div>
+<div class="paragraph">
+<p>AWS 2nd Cluster - environment=qa</p>
+</div>
+<div class="paragraph">
+<p>env labels
+Navigate to Applications</p>
+</div>
+<div class="paragraph">
+<p>Click Create application, select Subscription.</p>
+</div>
+<div class="paragraph">
+<p>create sub app
+Enter the following information:</p>
+</div>
+<div class="paragraph">
+<p>Name: book-import</p>
+</div>
+<div class="paragraph">
+<p>Namespace: book-import</p>
+</div>
+<div class="paragraph">
+<p>Under repository types, select the GIT repository</p>
+</div>
+<div class="paragraph">
+<p>URL: <a href="https://github.com/hichammourad/book-import.git" class="bare">https://github.com/hichammourad/book-import.git</a></p>
+</div>
+<div class="paragraph">
+<p>Branch: master-no-pre-post</p>
+</div>
+<div class="paragraph">
+<p>Path: book-import</p>
+</div>
+<div class="paragraph">
+<p>Verify that Deploy application resources only on clusters matching specified labels is selected and enter the following information</p>
+</div>
+<div class="paragraph">
+<p>environment: dev. It may ask you to select a 'Cluster set' if it does please choose default.</p>
+</div>
+<div class="paragraph">
+<p>label sub
+You do not need the to include the colon (:)</p>
+</div>
+<div class="paragraph">
+<p>Verify all the information is correct. Click Create</p>
+</div>
+<div class="paragraph">
+<p>It will take a few minutes to deploy the application, Click on the Topology view and verify that all of the check marks are green.</p>
+</div>
+<div class="paragraph">
+<p>book topology
+Under the topology view, Select the Route and click on the Launch Route URL, this will take you to the Book Import application with several books available.</p>
+</div>
+<div class="paragraph">
+<p>book website
+Feel free to experiment with the application. Edit it and change the label to environment=prod. What happens to the application?</p>
+</div>
+<div class="paragraph">
+<p>You have now completed the overview of the Application Lifecycle functionality in RHACM.</p>
+</div>
+<div class="paragraph">
+<p>You successfully deployed an application to a target cluster using RHACM. This approach leveraged a Git repository which housed all of the manifests that defined your application. RHACM was able to take those manifests and use them as deployables, which were then deployed to the target cluster.</p>
+</div>
+<div class="paragraph">
+<p>You also leverage the power of labels and deploy the application to your imported cluster. I highly encourage you to play around with the labels and deploy this application to your local cluster. You can also create other clusters and or applications if you so desire.</p>
+</div>
+<div class="paragraph">
+<p>Governance, Risk, and Compliance (Security and compliance use case)
+Creating Policies in ACM
+At this point, you have completed the overview labs for Cluster Lifecycle and Application Lifecycle capabilities in RHACM. In the Cluster Lifecycle Lab, you learned how RHACM can help manage the lifecycles of your Kubernetes clusters, including both deploying new clusters and importing existing clusters. In that lab, you created new clsters and used your RHACM instance to manage them.</p>
+</div>
+<div class="paragraph">
+<p>In the Application Lifecycle Lab, you continued exploring RHACM functionality and learned how to deploy and configure an application. You used the cluster that you added in the first module as the target for deploying an application.</p>
+</div>
+<div class="paragraph">
+<p>Now that you have a cluster and a deployed application, you need to make sure that they do not drift from their original configurations. This kind of drift is a serious problem, because it can happen from benign and benevolent fixes and changes, as well as malicious activities that you might not notice but can cause significant problems. The solution that RHACM provides for this is the Governance, Risk, and Compliance, or GRC, functionality.</p>
+</div>
+<div class="paragraph">
+<p>Review GRC Functionality
+To begin, it is important to define exactly what GRC is. In RHACM, you build policies that are applied to managed clusters. These policies can do different things, which are described below, but they ultimately serve to govern the configurations of your clusters. This governance over your cluster configurations reduces risk and ensures compliance with standards defined by stakeholders, which can include security teams and operations teams</p>
+</div>
+<div class="paragraph">
+<p>This table describes the three types of policy controllers available in RHACM along with the remediation mode they support:</p>
+</div>
+<div class="paragraph">
+<p>Policy Controller	Purpose	Enforce or Inform
+Configuration
+Used to configure any Kubernetes resource across your clusters. Where these resources are created or configured is determined by the namespaces you include (or exclude) in the policy.
+Both
+Certificate
+Used to detect certificates that are close to expiring. You can configure the certificate policy controller by updating the minimum duration parameter in your controller policy. When a certificate expires in less than the minimum duration, the policy becomes noncompliant. Certificates are identified from secrets in the included namespaces.
+Inform
+Identity and Access Management (IAM)
+Used to receive notifications about IAM policies that are noncompliant. In the 1.0 version of RHACM, this checks for compliance with the number of cluster administrators you allow in your cluster.
+inform
+You need to create three different resources in order to implement the policy controllers:</p>
+</div>
+<div class="paragraph">
+<p>Resource	Function
+Policy
+The Policy defines what you actually want to check and possibly configure (with enforce). Policies include a policy-template which defines a list of objectDefinitions. The policy also determines the namespaces it is applied to, as well as the remediation actions it takes.
+Placement Rule
+Identifies a list of managed clusters that are targeted when using this PlacementRule.
+PlacementBinding
+Connect the policy to the PlacementRule.
+This is a complex topic, and this course is only providing an overview. Please consult the GRC product documentation for more details on any of these policy controllers.</p>
+</div>
+<div class="paragraph">
+<p>Navigate to the Governance screen and click create policy.</p>
+</div>
+<div class="paragraph">
+<p>Navigate to the GitHub Repo with all the policies and select the Etcd Encryption</p>
+</div>
+<div class="paragraph">
+<p>On the ETCD Encryption Policy click the RAW button on the policy.</p>
+</div>
+<div class="paragraph">
+<p>Copy the raw YAML.</p>
+</div>
+<div class="paragraph">
+<p>Under the Create Policy screen, enable the YAML. Copy and Paste the RAW YAML from the GitHub Repo</p>
+</div>
+<div class="paragraph">
+<p>It should look something like this:</p>
+</div>
+<div class="paragraph">
+<p>apiVersion: policy.open-cluster-management.io/v1
+kind: Policy
+metadata:
+  name: policy-etcdencryption
+  annotations:
+    policy.open-cluster-management.io/standards: NIST SP 800-53
+    policy.open-cluster-management.io/categories: SC System and Communications Protection
+    policy.open-cluster-management.io/controls: SC-28 Protection Of Information At Rest
+spec:
+  remediationAction: inform
+  disabled: false
+  policy-templates:
+    - objectDefinition:
+        apiVersion: policy.open-cluster-management.io/v1
+        kind: ConfigurationPolicy
+        metadata:
+          name: enable-etcd-encryption
+        spec:
+          remediationAction: inform
+          severity: low
+          object-templates:
+            - complianceType: musthave
+              objectDefinition:
+                apiVersion: config.openshift.io/v1
+                kind: APIServer
+                metadata:
+                  name: cluster
+                spec:
+                  encryption:
+                    type: aescbc
+    - objectDefinition:
+        apiVersion: policy.open-cluster-management.io/v1
+        kind: ConfigurationPolicy
+        metadata:
+          name: enable-etcd-encryption-status-kubeapi
+        spec:
+          remediationAction: inform
+          severity: low
+          object-templates:
+            - complianceType: musthave
+              objectDefinition:
+                apiVersion: operator.openshift.io/v1
+                kind: KubeAPIServer
+                metadata:
+                  name: cluster
+                status:
+                  conditions:
+                    - message: 'All resources encrypted: secrets, configmaps'
+                      reason: EncryptionCompleted
+---
+apiVersion: policy.open-cluster-management.io/v1
+kind: PlacementBinding
+metadata:
+  name: binding-policy-etcdencryption
+placementRef:
+  name: placement-policy-etcdencryption
+  kind: PlacementRule
+  apiGroup: apps.open-cluster-management.io
+subjects:
+- name: policy-etcdencryption
+  kind: Policy
+  apiGroup: policy.open-cluster-management.io
+---
+apiVersion: apps.open-cluster-management.io/v1
+kind: PlacementRule
+metadata:
+  name: placement-policy-etcdencryption
+spec:
+  clusterConditions:
+  - status: "True"
+    type: ManagedClusterConditionAvailable
+  clusterSelector:
+    matchExpressions:
+      - {key: environment, operator: In, values: ["dev"]}
+Continue filling out the infromation:</p>
+</div>
+<div class="paragraph">
+<p>Namespace: default</p>
+</div>
+<div class="paragraph">
+<p>Click on Step 5 and verify that everything looks correct.</p>
+</div>
+<div class="paragraph">
+<p>Click Submit.</p>
+</div>
+<div class="paragraph">
+<p>Navigate to the Results screen, allow the scan to complete, it shouldn’t take more than 3 minutes.</p>
+</div>
+<div class="paragraph">
+<p>Once complete notice the violations you have, since we created this policy as a Inform only it will not fix any of the violations, lets go ahead and fix them</p>
+</div>
+<div class="paragraph">
+<p>On the top of the policy click on the Actions → Edit Policy</p>
+</div>
+<div class="paragraph">
+<p>Select Step 2 and change the Remediation to Enforce</p>
+</div>
+<div class="paragraph">
+<p>Select Step 5 review that is under Remediation is set to Enforce</p>
+</div>
+<div class="paragraph">
+<p>Click Submit</p>
+</div>
+<div class="paragraph">
+<p>Navigate to the Results screen, allow the remediation to complete, it may take longer to enforce the policy.</p>
+</div>
+<div class="paragraph">
+<p>policy7
+Now you have succesfully created a Policy to scan your clusters, if you would like to play with other policies please visit the Policy Repo for more Policies you can test out.</p>
+</div>
+</article>
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <a class="rhd-logo" href="https://developers.redhat.com" target="_blank"></div>
+</footer>
+<script src="../../_/js/vendor/clipboard.js"></script>
+<script src="../../_/js/site.js"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

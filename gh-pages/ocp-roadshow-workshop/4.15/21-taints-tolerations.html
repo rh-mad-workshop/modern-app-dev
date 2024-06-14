@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Analyze :: OpenShift Roadshow Workshop 2024</title>
-    <link rel="canonical" href="http://localhost:3000/rhs-openshift-starter-guides/index.html/ocp-roadshow-workshop/4.15/04-analyze.html">
+    <title>Untitled :: OpenShift Roadshow Workshop 2024</title>
+    <link rel="canonical" href="http://localhost:3000/rhs-openshift-starter-guides/index.html/ocp-roadshow-workshop/4.15/21-taints-tolerations.html">
     <meta name="generator" content="Antora 2.3.4">
     <link rel="stylesheet" href="../../_/css/site.css">
 <link rel="icon" href="../../_/img/favicon.ico" type="image/x-icon">
@@ -160,7 +160,7 @@
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="03-assessment.html"><strong>02</strong> - Migration Assessment</a>
   </li>
-  <li class="nav-item is-current-page" data-depth="2">
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="04-analyze.html"><strong>03</strong> - Migration Analysis</a>
   </li>
 </ul>
@@ -202,7 +202,7 @@
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="20-cluster-resource-quota.html"><strong>10</strong> - Cluster Resource Quotas</a>
   </li>
-  <li class="nav-item" data-depth="2">
+  <li class="nav-item is-current-page" data-depth="2">
     <a class="nav-link" href="21-taints-tolerations.html"><strong>11</strong> - Taints and Tolerations</a>
   </li>
   <li class="nav-item" data-depth="2">
@@ -247,398 +247,247 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="index.html">OCP Roadshow Workshop</a></li>
-    <li><a href="01-modernisation-introduction.html">Application Migration &amp; Modernisation</a></li>
-    <li><a href="04-analyze.html"><strong>03</strong> - Migration Analysis</a></li>
+    <li><a href="10-application-management-basics.html">Administering Applications on OpenShift</a></li>
+    <li><a href="21-taints-tolerations.html"><strong>11</strong> - Taints and Tolerations</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="file:///Users/mkimberl/Documents/source/github/modern-app-dev/documentation/modules/ROOT/pages/04-analyze.adoc">Edit this Page</a></div>
+  <div class="edit-this-page"><a href="file:///Users/mkimberl/Documents/source/github/modern-app-dev/documentation/modules/ROOT/pages/21-taints-tolerations.adoc">Edit this Page</a></div>
 </div>
   <div class="content">
 <article class="doc">
-<h1 class="page">Analyze</h1>
-<div class="sect1">
-<h2 id="_goals_of_this_lab"><a class="anchor" href="#_goals_of_this_lab"></a>Goals of this lab</h2>
-<div class="sectionbody">
 <div class="paragraph">
-<p>As you have realized in the previous <strong>assessment</strong> exercise, you need to analyze the legacy applications in terms of identifying the actual lines of code for the modernization issues as well as estimating time and effort for the modernization project.</p>
+<p>Taints and Tolerations</p>
 </div>
 <div class="paragraph">
-<p>The goal of this exercise is to analyze the <em>customers</em> application by scanning its source code and properties using the <code>Analysis</code> capability in MTA. Then you&#8217;ll review the analysis report and get started with the actual code modification.</p>
+<p>Taints and Tolerations
+In a previous lab, you created "infra" nodes leveraging nodeSelector to control where the workload lands. You saw how you can set nodes to perform certain tasks. The nodeSelector in the nodePlacement attracts pods to a set of nodes. But what if you want the opposite? What if you want to repel pods?</p>
 </div>
 <div class="paragraph">
-<p>MTA <em>Analysis</em> is used by organizations for:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Planning and work estimation</p>
-</li>
-<li>
-<p>Identifying migration issues and providing solutions</p>
-</li>
-<li>
-<p>Detailed reporting</p>
-</li>
-</ul>
+<p>Having a taint in place will make sure a pod does NOT run on the tainted node.</p>
 </div>
 <div class="paragraph">
-<p>And has several capabilities such as:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Built-in rules and migration paths</p>
-</li>
-<li>
-<p>Rule extensibility and customization</p>
-</li>
-<li>
-<p>Ability to analyze source code or application archives</p>
-</li>
-</ul>
+<p>Some usecases include:</p>
 </div>
 <div class="paragraph">
-<p>Read more about it in the <a href="https://access.redhat.com/documentation/en-us/migration_toolkit_for_applications/6.0/html-single/introduction_to_the_migration_toolkit_for_applications/index#new-mta-features_getting-started-guide">MTA Features</a></p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_3_1_analyze_customers_application_using_mta"><a class="anchor" href="#_3_1_analyze_customers_application_using_mta"></a>3.1. Analyze Customers Application using MTA</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>First, you need to configure <strong>Git repositories</strong> to refer to your <a href="https://gitea.%SUBDOMAIN%/%USERID%/modern-app-dev" target="_blank" rel="noopener">Gitea repository</a> when you analyze your inventory and applications using MTA.</p>
+<p>A node (or a group of nodes) in the cluster is reserved for special purposes</p>
 </div>
 <div class="paragraph">
-<p>In <strong>Administration</strong> view, select <strong>Repositories &gt; Git</strong>. <code>Toggle</code> the <strong>Consume insecure Git repositories</strong> switch to the right.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/mta-admin-git.png" alt="admin git">
-</div>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>You can also log in to the Gitea repository with the following credentials.</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Username - <code>%USERID%</code></p>
-</li>
-<li>
-<p>Password - <code>{openshift-password}</code></p>
-</li>
-</ul>
-</div>
-</td>
-</tr>
-</table>
+<p>Nodes having specialized hardware for specific tasks (like a GPU)</p>
 </div>
 <div class="paragraph">
-<p>Go back to the <code>Application inventory</code> page in the <strong>Migration</strong> perspective. Click on pencil (edit) icon for the customers inventory.</p>
+<p>Some nodes may be licensed for some software running on it</p>
 </div>
 <div class="paragraph">
-<p>Update application with the following source code information.</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Repository type - <code>Git</code></p>
-</li>
-<li>
-<p>Source Repository - <code><a href="https://gitea.%SUBDOMAIN%/%USERID%/modern-app-dev.git" class="bare">https://gitea.%SUBDOMAIN%/%USERID%/modern-app-dev.git</a></code></p>
-</li>
-<li>
-<p>Branch - <code>main</code></p>
-</li>
-<li>
-<p>Root path - <code>package-legacy</code></p>
-</li>
-</ul>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/application-update-git.png" alt="application-update-git">
-</div>
+<p>Nodes can be in different network zones for compliance reasons</p>
 </div>
 <div class="paragraph">
-<p>Select <code>Save</code>.</p>
+<p>You may want to troubleshoot a misbehaving node</p>
 </div>
 <div class="paragraph">
-<p>Select the <code>Analysis</code> tab. When you click on the <code>Customers</code> application, <code>Analyze</code> button will be enabled. Then, click on <strong>Analyze</strong>.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/application-analysis.png" alt="application-analysis">
-</div>
-</div>
-<div class="sect2">
-<h3 id="_3_1_1_analysis_mode"><a class="anchor" href="#_3_1_1_analysis_mode"></a>3.1.1. Analysis mode</h3>
-<div class="paragraph">
-<p>Select <code>Source dode</code> in Analysis mode popup.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/add-applications.png" alt="Add applications">
-</div>
+<p>In this lab we’ll explore how to use taints and tolerations to control where workloads land.</p>
 </div>
 <div class="paragraph">
-<p>Click on <code>Next</code>.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_3_1_2_set_targets"><a class="anchor" href="#_3_1_2_set_targets"></a>3.1.2. Set targets</h3>
-<div class="paragraph">
-<p>You will now be presented with options for transformation targets. Here we will select several targets based on the technologies we are moving to:</p>
+<p>Background
+Taints and tolerations work in tandem to ensure that workloads are not scheduled onto certain nodes. Once a node is tainted, that node should not accept any workload that does not tolerate the taint(s). Tolerations that are applied to these workloads will allow (but do not require) the corresponding pods to schedule onto nodes with matching taints.</p>
 </div>
 <div class="paragraph">
-<p>Since this is going to be a linux container, it makes sense to do a sanity check to avoid things like Windows filesystem paths and other non-container- or non-Linux-friendly issues. We also going to investigate removing our reliance on a proprietary JDK distribution, so we going to select OpenJDK as a target.</p>
+<p>You will have to use nodeSelector along with taints and tolerations to have workloads ALWAYS land on a specific node.
+Examine node labels
+In order to examine the nodes, make sure you’re running as kubeadmin</p>
 </div>
 <div class="paragraph">
-<p>Click on <code>Containers</code>, <code>Linux</code>, and <code>OpenJDK</code> as the targets.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/configure-analysis-checked.png" alt="Configure Analysis">
-</div>
+<p>oc login -u kubeadmin -p 4nyNM-BZtvz-Btyng-dTexX
+List the current worker nodes, ignoring infra nodes and storage nodes.</p>
 </div>
 <div class="paragraph">
-<p>Click on <code>Next</code>.</p>
+<p>oc get nodes -l 'node-role.kubernetes.io/worker,!node-role.kubernetes.io/infra,!cluster.ocs.openshift.io/openshift-storage'
+Depending on which labs you’ve done, you may have 3 more more nodes with the worker label set.</p>
 </div>
 <div class="paragraph">
-<p>Select <code>Application and internal dependencies only</code> for the scope of dependencies.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/packages.png" alt="Select packages">
-</div>
+<p>Now, let’s look to see if there are any taints added to these workers.</p>
 </div>
 <div class="paragraph">
-<p>Click on <code>Next</code>.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_3_1_3_advanced"><a class="anchor" href="#_3_1_3_advanced"></a>3.1.3. Advanced</h3>
-<div class="paragraph">
-<p>You will now be presented with options for custom rules.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/custom-rules.png" alt="Custom rules">
-</div>
+<p>oc describe nodes -l 'node-role.kubernetes.io/worker,!node-role.kubernetes.io/infra,!cluster.ocs.openshift.io/openshift-storage' | grep Taint
+There shouldn’t be any taints assinged to these workers.</p>
 </div>
 <div class="paragraph">
-<p>MTA Analysis uses a custom rule engine for the analysis. It comes with many rules out of the box to support the different migration paths, but it can be extended. Custom rules can be developed with a very simple XML syntax and used as part of the analysis. We&#8217;ve provided some custom rules which will detect the usage of a specific library that we know has been used at Globex in the past and make suggestions for changes to be performed to remove it.</p>
+<p>Deploying test application
+For this exercise we will be deploying an app to test with.</p>
 </div>
 <div class="paragraph">
-<p>Select <code>Repository</code> tab to refer to a custom rule (<code>corporate-framework-config.windup.xml</code>) in the <strong>customrules</strong> directory of your Gitea repository.</p>
+<p>Before you deploy this app, you’ll need to label your nodes for the duration of this exercise. The application deploys on nodes labeled appnode=welcome-php.</p>
 </div>
 <div class="paragraph">
-<p>Key in the following information in the repository page.</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Repository type - <code>Git</code></p>
-</li>
-<li>
-<p>Source Repository - <code><a href="https://gitea.%SUBDOMAIN%/%USERID%/modern-app-dev.git" class="bare">https://gitea.%SUBDOMAIN%/%USERID%/modern-app-dev.git</a></code></p>
-</li>
-<li>
-<p>Branch - <code>main</code></p>
-</li>
-<li>
-<p>Root path - <code>customrules</code></p>
-</li>
-<li>
-<p>Associated credentials - <code>None</code></p>
-</li>
-</ul>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>In case you don&#8217;t see <code>None</code> in the <code>Associated credentials</code>, please leave it since the field is not mandatory.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/add-repository-customrules.png" alt="add-repository-customrules">
-</div>
+<p>oc get nodes -l 'node-role.kubernetes.io/worker,!node-role.kubernetes.io/infra,!cluster.ocs.openshift.io/openshift-storage' -o jsonpath='{range .items[*]}{.metadata.name}{"\n"}' | xargs -I{} oc label node {} appnode=welcome-php
+To label a node, you pass the node name with a key=value pair. Example: oc label node worker.example.com appnode=welcome-php
+Verify that the nodes were labeled, taking note of the name of the node(s).</p>
 </div>
 <div class="paragraph">
-<p>Click on <code>Next</code>.</p>
+<p>oc get nodes -l appnode=welcome-php
+You can now deploy the application using the YAML manifest that is provided in the home directory.</p>
 </div>
 <div class="paragraph">
-<p>Next, you will be presented with options to fine tune the analysis. For now we will stick with the default options.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/fine-tune.png" alt="Fine tuning">
-</div>
+<p>oc create -f ~/support/welcome-php.yaml
+This creates the following objects</p>
 </div>
 <div class="paragraph">
-<p>Click on <code>Next</code>.</p>
+<p>The namespace tt-lab</p>
 </div>
 <div class="paragraph">
-<p>Lastly, we are presented with a summary of the configuration for our analysis.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/finish-project.png" alt="Finish project">
-</div>
+<p>A deployment called welcome-php that’s running a sample php app</p>
 </div>
 <div class="paragraph">
-<p>Click on <code>Run</code>.</p>
+<p>A service called welcome-php that listens on port 8080</p>
 </div>
 <div class="paragraph">
-<p>The analysis begins, and once it is finished you will be able to access the reports. Stay on this view until the analysis is finished.</p>
+<p>A route called welcome-php</p>
 </div>
 <div class="paragraph">
-<p>Once it finishes, select <strong>Customers</strong> application. Then click on <code>Report</code> in the <strong>Reports</strong> tab on the right.</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>The analysis may take a few minutes as it must pull container images for Windup before executing the analysis.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/active-analysis.png" alt="Active analysis">
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_3_2_understanding_the_report"><a class="anchor" href="#_3_2_understanding_the_report"></a>3.2. Understanding the report</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>The Dashboard gives an overview of the entire application migration effort. It summarizes:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>The incidents and story points by category</p>
-</li>
-<li>
-<p>The incidents and story points by level of effort of the suggested changes</p>
-</li>
-<li>
-<p>The incidents by package</p>
-</li>
-</ul>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-Story points are an abstract metric commonly used in Agile software development to estimate the relative level of effort needed to implement a feature or change. Migration Toolkit for Application uses story points to express the level of effort needed to migrate particular application constructs, and the application as a whole. The level of effort will vary greatly depending on the size and complexity of the application(s) to migrate.
-</td>
-</tr>
-</table>
+<p>We will be working on the tt-lab project, so switch to it now.</p>
 </div>
 <div class="paragraph">
-<p>Once the report is finished, click on the link to access the report. Click on <code>customers-tomcat.war</code> application.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/report-view.png" alt="View report">
-</div>
+<p>oc project tt-lab
+Now scale the pods to equal to the number of nodes we have. The default scheduler will attempt to evenly distribute the app. Also we’ll wait for the rollout to complete.</p>
 </div>
 <div class="paragraph">
-<p>The reports provide all kinds of information about the application, like the technologies it uses, dependencies, but most importantly issues that need to get fixed.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/report-dashboard.png" alt="report dashboard">
-</div>
-</div>
-<div class="paragraph">
-<p>Click on the <code>Issues</code> tab.</p>
+<p>NODE_NUMBER=$(oc get nodes --no-headers -l appnode=welcome-php | wc -l)
+oc scale deploy welcome-php --replicas=${NODE_NUMBER}
+oc rollout status deploy welcome-php
+If the pods are not evenly distributed between nodes, you may have to run oc delete pods --all to let them rebalance.
+Verify that the pods are spread evenly accross workers. There should be one pod for each node.</p>
 </div>
 <div class="paragraph">
-<p>This view shows us the list of issues that could prevent an application to successfully run on the target runtime. We can see that the application has a few mandatory issues that need to be addressed.</p>
+<p>clear
+oc get pods -o=custom-columns=NAME:.metadata.name,NODE:.spec.nodeName
+oc get nodes -l appnode=welcome-php
+Tainting nodes
+We will now taint a node, so it’ll reject workloads. First, we will go over what each taint does. There are 3 basic taints that you can set.</p>
 </div>
 <div class="paragraph">
-<p>Click on <code>Hard coded IP address</code>.</p>
+<p>key=value:NoSchedule</p>
 </div>
 <div class="paragraph">
-<p>By choosing the issue we can see where it was detected and view a hint on how to solve it.  It looks like the config files are pointing to some static IPs. That&#8217;s not good in a cloud / container environment!</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/report-hint.png" alt="report hint">
-</div>
+<p>key=value:NoExecute</p>
 </div>
 <div class="paragraph">
-<p>Click on <code>File system issue</code>.</p>
+<p>key=value:PreferNoSchedule</p>
 </div>
 <div class="paragraph">
-<p>It looks like a problem has been detected on some class coming from the config library. We are analyzing the binary, so the dependencies have been analyzed as well.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/report-hint-fs.png" alt="report hint file system">
-</div>
+<p>The key in this case is any string, up to 253 characters. The key must begin with a letter or number, and may contain letters, numbers, hyphens, dots, and underscores.</p>
 </div>
 <div class="paragraph">
-<p>Click on <code>Legacy configuration issue</code>.</p>
+<p>The value here is any string, up to 63 characters. The value must begin with a letter or number, and may contain letters, numbers, hyphens, dots, and underscores.</p>
 </div>
 <div class="paragraph">
-<p>It looks like the custom rule got triggered and found some issues with the source code.  This rule detects the use of a custom configuration library and gives some hints about what needs to be done to fix it.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/report-hint-custom.png" alt="report hint custom rule">
-</div>
+<p>The 3 "effects" do the following:</p>
 </div>
 <div class="paragraph">
-<p>Click on the <code>io.konveyor.demo.ordermanagement.config.PersistenceConfig</code> file.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/report-code.png" alt="report code">
-</div>
+<p>NoSchedule - New pods that do not match the taint are not scheduled onto that node. Existing pods on the node remain.</p>
 </div>
 <div class="paragraph">
-<p>You can now see exactly where the issue is located in the source code.</p>
+<p>NoExecute - New pods that do not match the taint cannot be scheduled onto that node. Existing pods on the node that do not have a matching toleration are removed.</p>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_summary"><a class="anchor" href="#_summary"></a>Summary</h2>
-<div class="sectionbody">
 <div class="paragraph">
-<p>You have now successfully analyzed the legacy application to learn what migration issues you have. You&#8217;ll refactor the application to fix the issues in the next module. Then, you&#8217;ll deploy the modernized application to Red Hat OpenShift. Let&#8217;s go!</p>
+<p>PreferNoSchedule - New pods that do not match the taint might be scheduled onto that node, but the scheduler tries not to. Existing pods on the node remain.</p>
 </div>
+<div class="paragraph">
+<p>There is another component called the operator. We’ll go over the operator in detail in the "tolerations" section.</p>
 </div>
+<div class="paragraph">
+<p>For this lab we will taint the first node that’s not an infra or storage node with welcome-php=run:NoSchedule. This ensures all new pods (without a proper toleration) will NOT schedule to this node.</p>
+</div>
+<div class="paragraph">
+<p>TTNODE=$(oc get nodes -l 'node-role.kubernetes.io/worker,!node-role.kubernetes.io/infra,!cluster.ocs.openshift.io/openshift-storage' -o jsonpath='{range .items[0]}{.metadata.name}')
+oc adm taint node ${TTNODE} welcome-php=run:NoSchedule
+The syntax is: oc adm taint node ${nodename} key=value:Effect
+Examine the nodes we deployed on and see that the taint is applied to one of the nodes.</p>
+</div>
+<div class="paragraph">
+<p>oc describe nodes -l appnode=welcome-php | grep Taint
+We used NoSchedule for the effect, so a pod should still be there. Remember that NoSchedule only stops new pods from spawning on the node (the command should return a 1)</p>
+</div>
+<div class="paragraph">
+<p>oc get pods -o wide | grep -c ${TTNODE}
+Let’s delete the pods and wait for the replicaSet to redeploy them.</p>
+</div>
+<div class="paragraph">
+<p>oc delete pods --all
+oc rollout status deploy welcome-php
+Since our deployment doesn’t have a toleration, the scheduler will deploy the pods on all nodes except the one with a taint. This command should return a 0</p>
+</div>
+<div class="paragraph">
+<p>oc get pods -o wide | grep -c ${TTNODE}
+Examine where the pods are running.</p>
+</div>
+<div class="paragraph">
+<p>clear
+oc get pods -o=custom-columns=NAME:.metadata.name,NODE:.spec.nodeName
+oc get nodes -l appnode=welcome-php
+Tolerations
+A toleration is a way for pods to "tolerate" (or "ignore") a node’s taint during scheduling. Tolerations are applied in the podSpec, and is in the following form.</p>
+</div>
+<div class="paragraph">
+<p>tolerations:
+- key: "welcome-php"
+  operator: "Equal"
+  value: "run"
+  effect: "NoSchedule"
+If the toleration "matches" then the scheduler will schedule the workload on this node (if need be…​remember, it’s not a guarantee). Note that you have to match the key, value, and effect. There is also something called an operator.</p>
+</div>
+<div class="paragraph">
+<p>The operator can be set to Equal or Exists, depending on the fuction you want.</p>
+</div>
+<div class="paragraph">
+<p>Equal - The key, value, and effect parameters must match. This is the default setting if nothing is provided.</p>
+</div>
+<div class="paragraph">
+<p>Exists - The key and the effect parameters must match. You must leave a blank value parameter, which matches any.</p>
+</div>
+<div class="paragraph">
+<p>We’ll apply this toleration in the spec.template.spec section of the deployment.</p>
+</div>
+<div class="paragraph">
+<p>oc patch deployment welcome-php --patch '{"spec":{"template":{"spec":{"tolerations":[{"key":"welcome-php","operator":"Equal","value":"run","effect":"NoSchedule"}]}}}}'
+Patching triggers another deployment so we’ll wait for it to finish rolling out.</p>
+</div>
+<div class="paragraph">
+<p>oc rollout status deploy welcome-php
+You can see the toleration config under .spec.template.spec.tolerations in the deployment YAML</p>
+</div>
+<div class="paragraph">
+<p>oc get deployment welcome-php -o yaml
+Now, since we have the toleration in place, we should be running on the node with the taint (this should return 1)</p>
+</div>
+<div class="paragraph">
+<p>oc get pods -o wide | grep -c ${TTNODE}
+Now when you list all pods, they should be now spread evenly.</p>
+</div>
+<div class="paragraph">
+<p>clear
+oc get pods -o=custom-columns=NAME:.metadata.name,NODE:.spec.nodeName
+oc get nodes -l appnode=welcome-php
+To read more about taints and tolerations, you can take a look at the Official Documentation.</p>
+</div>
+<div class="paragraph">
+<p>Clean Up
+Make sure you login as kubeadmin for the next lab.</p>
+</div>
+<div class="paragraph">
+<p>oc login -u kubeadmin -p 4nyNM-BZtvz-Btyng-dTexX
+Other labs may be affected by taints, so let’s undo what we did:</p>
+</div>
+<div class="paragraph">
+<p>oc delete project tt-lab
+oc adm taint node ${TTNODE} welcome-php-
+oc get nodes -l 'node-role.kubernetes.io/worker,!node-role.kubernetes.io/infra,!cluster.ocs.openshift.io/openshift-storage' -o jsonpath='{range .items[*]}{.metadata.name}{"\n"}' | xargs -I{} oc label node {} appnode-
+Make sure the nodes have that taint removed</p>
+</div>
+<div class="paragraph">
+<p>oc describe nodes -l 'node-role.kubernetes.io/worker,!node-role.kubernetes.io/infra,!cluster.ocs.openshift.io/openshift-storage' | grep Taint
+Also, verify that the label does not exist on the nodes we were working on. This command shouldn’t return any nodes.</p>
+</div>
+<div class="paragraph">
+<p>oc get nodes -l appnode=welcome-php</p>
 </div>
 </article>
 <aside class="toc sidebar" data-title="Contents" data-levels="2">

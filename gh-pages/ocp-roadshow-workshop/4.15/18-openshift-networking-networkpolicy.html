@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Application Migration &amp; Mondernisation Workshop :: OpenShift Roadshow Workshop 2024</title>
-    <link rel="canonical" href="http://localhost:3000/rhs-openshift-starter-guides/index.html/ocp-roadshow-workshop/4.15/01-modernisation-introduction.html">
+    <title>Untitled :: OpenShift Roadshow Workshop 2024</title>
+    <link rel="canonical" href="http://localhost:3000/rhs-openshift-starter-guides/index.html/ocp-roadshow-workshop/4.15/18-openshift-networking-networkpolicy.html">
     <meta name="generator" content="Antora 2.3.4">
     <link rel="stylesheet" href="../../_/css/site.css">
 <link rel="icon" href="../../_/img/favicon.ico" type="image/x-icon">
@@ -150,7 +150,7 @@
 <ul class="nav-list">
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
-  <li class="nav-item is-current-page" data-depth="1">
+  <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
     <a class="nav-link" href="01-modernisation-introduction.html">Application Migration &amp; Modernisation</a>
 <ul class="nav-list">
@@ -193,7 +193,7 @@
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="17-project-template-quota-limits.html"><strong>07</strong> - Project Request Template, Quotas, Limits</a>
   </li>
-  <li class="nav-item" data-depth="2">
+  <li class="nav-item is-current-page" data-depth="2">
     <a class="nav-link" href="18-openshift-networking-networkpolicy.html"><strong>08</strong> - OpenShift Networking and NetworkPolicy</a>
   </li>
   <li class="nav-item" data-depth="2">
@@ -247,105 +247,197 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="index.html">OCP Roadshow Workshop</a></li>
-    <li><a href="01-modernisation-introduction.html">Application Migration &amp; Modernisation</a></li>
+    <li><a href="10-application-management-basics.html">Administering Applications on OpenShift</a></li>
+    <li><a href="18-openshift-networking-networkpolicy.html"><strong>08</strong> - OpenShift Networking and NetworkPolicy</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="file:///Users/mkimberl/Documents/source/github/modern-app-dev/documentation/modules/ROOT/pages/01-modernisation-introduction.adoc">Edit this Page</a></div>
+  <div class="edit-this-page"><a href="file:///Users/mkimberl/Documents/source/github/modern-app-dev/documentation/modules/ROOT/pages/18-openshift-networking-networkpolicy.adoc">Edit this Page</a></div>
 </div>
   <div class="content">
 <article class="doc">
-<h1 class="page">Application Migration &amp; Mondernisation Workshop</h1>
-<div id="preamble">
-<div class="sectionbody">
-<div class="imageblock">
-<div class="content">
-<img src="_images/app-topology.png" alt="Example Topology Image">
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_workshop_environment"><a class="anchor" href="#_workshop_environment"></a>Workshop Environment</h2>
-<div class="sectionbody">
 <div class="paragraph">
-<p>In this workshop you will use the OpenShift graphical user interface via a browser, and you will also use a command line interface.</p>
-</div>
-<div class="sect2">
-<h3 id="_web_user_interface"><a class="anchor" href="#_web_user_interface"></a>Web user interface</h3>
-<div class="paragraph">
-<p>The OpenShift web user interface is accessible at this URL :</p>
-</div>
-<div class="listingblock console-input">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">https://console-openshift-console.%CLUSTER_SUBDOMAIN%/</code></pre>
-</div>
+<p>OpenShift Networking and NetworkPolicy</p>
 </div>
 <div class="paragraph">
-<p>Copy the above URL using the button to the right of the text and paste it into a new browser tab. This way you can keep the instructions and the workspace open at the same time.</p>
+<p>OpenShift Network Policy Based SDN
+OpenShift’s default software defined network (SDN) inside the platform is based on Open Virtual Network (OVN), and is called OVN-Kubernetes.</p>
 </div>
 <div class="paragraph">
-<p>Your username has already been given to you by the course facilitator. All users have the same password which is 'openshift'.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_command_line_interface"><a class="anchor" href="#_command_line_interface"></a>Command line interface</h3>
-<div class="paragraph">
-<p>The OpenShift command line utilities that you need for the workshop can be downloaded from the the web user interface of the cluster. However, many users are unable or hesitant to download and install additional software so a command line interface is made available within the web user interface of the cluster. Additionally, there are more command line tools used for the workshop than simply the OpenShift command line. For example, we use curl to interact with applications, and it is easier if these command line utilities are made available quickly and easily.</p>
+<p>Older versions of OpenShift may be running a different SDN, based on Open vSwitch called OpenShift SDN. As of OpenShift 4.12 OVN-Kubernetes has succeeded Openshift as the default SDN. To read more about OVN-Kubernetes, please read the official documentation.</p>
 </div>
 <div class="paragraph">
-<p>To access the web based command line interface simply press on the '&gt;_' icon in the top right of the screen as shown below.</p>
-</div>
-<div class="imageblock text-left">
-<div class="content">
-<img src="_images/index-02-web-terminal-launch.png" alt="Launching the web terminal" width="400">
-</div>
+<p>The SDN is used to provide connectivity between application components inside of the OpenShift environment. It comes with default network ranges pre-configured, although you can make changes to these should they conflict with your existing infrastructure, or for whatever other reason you may have.</p>
 </div>
 <div class="paragraph">
-<p>This will launch the command line terminal at the bottom of the screen. After a short wait you will see the following text :</p>
-</div>
-<div class="listingblock source">
-<div class="content">
-<pre>Welcome to the OpenShift Web Terminal. Type "help" for a list of installed CLI tools.
-bash-4.4 ~ $</pre>
-</div>
+<p>Kubernetes NetworkPolicy allows projects to truly isolate their network infrastructure inside OpenShift’s software defined network. While you have seen projects isolate resources through OpenShift’s RBAC, the network policy SDN plugin is able to isolate pods in projects using pod and namespace label selectors.</p>
 </div>
 <div class="paragraph">
-<p>To test out the web terminal try out these first couple of commands. Use the button on the right to copy the command and the paste into the command line window.</p>
-</div>
-<div class="listingblock console-input">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc whoami</code></pre>
-</div>
-</div>
-<div class="listingblock console-input">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc projects</code></pre>
-</div>
+<p>Switch Your Project
+Before continuing, make sure you are using a project that actually exists. If the last thing you did in the previous lab was delete a project, this will cause errors in the scripts in this lab.</p>
 </div>
 <div class="paragraph">
-<p>In the top right corner of the command line window there are three buttons.</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>The arrow pointing to top right will launch the command line window in a separate browser tab.</p>
-</li>
-<li>
-<p>The horizontal bar will minimize the terminal window, which is useful later when you are doing a web UI based task.</p>
-</li>
-<li>
-<p>The cross will close the terminal.</p>
-</li>
-</ul>
+<p>oc project default
+Execute the Creation Script
+Only users with project or cluster administration privileges can manipulate Project network policies.
+Execute a script that we have prepared for you. It will create two Projects and then deploy a Deployment with a Pod for you:</p>
 </div>
 <div class="paragraph">
-<p>That is all the setup work done - you are now ready to start experimenting in the next chapters.</p>
+<p>bash /opt/app-root/src/support/create-net-projects.sh
+Examine the created infrastructure
+Two Projects were created for you, netproj-a and netproj-b. Execute the following command to see the created resources:</p>
 </div>
 <div class="paragraph">
-<p>This is a test</p>
+<p>oc get pods -n netproj-a
+After a while you will see something like the following:</p>
 </div>
+<div class="paragraph">
+<p>NAME           READY   STATUS              RESTARTS   AGE
+ose-1-66dz2    0/1     ContainerCreating   0          7s
+ose-1-deploy   1/1     Running             0          16s
+Similarly:</p>
 </div>
+<div class="paragraph">
+<p>oc get pods -n netproj-b
+After a while you will see something like the following:</p>
 </div>
+<div class="paragraph">
+<p>NAME           READY   STATUS      RESTARTS   AGE
+ose-1-deploy   0/1     Completed   0          38s
+ose-1-vj2gn    1/1     Running     0          30s
+We will run commands inside the pod in the netproj-a Project that will connect to TCP port 5000 of the pod in the netproj-b Project.</p>
+</div>
+<div class="paragraph">
+<p>Test Connectivity (should work)
+Now that you have some projects and pods, let’s test the connectivity between the pod in the netproj-a Project and the pod in the netproj-b Project.</p>
+</div>
+<div class="paragraph">
+<p>To test connectivity between the two pods, run:</p>
+</div>
+<div class="paragraph">
+<p>bash /opt/app-root/src/support/test-connectivity.sh
+You will see something like the following:</p>
+</div>
+<div class="paragraph">
+<p>Getting Pod B&#8217;s IP&#8230;&#8203; 10.129.0.180
+Getting Pod A&#8217;s Name&#8230;&#8203; ose-1-66dz2
+Checking connectivity between Pod A and Pod B&#8230;&#8203; worked
+Note that the last line says worked. This means that the pod in the netproj-a Project was able to connect to the pod in the netproj-b Project.</p>
+</div>
+<div class="paragraph">
+<p>This worked because, by default, the networkpolicy lets all pods in all projects can connect to each other.</p>
+</div>
+<div class="paragraph">
+<p>Restricting Access
+With NetworkPolicy, it’s possible to restrict access in a project by creating a NetworkPolicy custom resource (CR).</p>
+</div>
+<div class="paragraph">
+<p>For example, the following restricts all access to all pods in a Project where this NetworkPolicy CR is applied. This is the equivalent of a DenyAll default rule on a firewall:</p>
+</div>
+<div class="paragraph">
+<p>kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: deny-by-default
+spec:
+  podSelector:
+  ingress: []
+Note that the podSelector is empty, which means that this will apply to all pods in this Project. Also note that the ingress list is empty, which means that there are no allowed ingress rules defined by this NetworkPolicy CR.</p>
+</div>
+<div class="paragraph">
+<p>To restrict access to the pod in the netproj-b Project simply apply the above NetworkPolicy CR with:</p>
+</div>
+<div class="paragraph">
+<p>oc create -n netproj-b -f /opt/app-root/src/support/network-policy-block-all.yaml
+Test Connectivity #2 (should fail)
+Since the "block all by default" NetworkPolicy CR has been applied, connectivity between the pod in the netproj-a Project and the pod in the netproj-b Project should now be blocked.</p>
+</div>
+<div class="paragraph">
+<p>Test by running:</p>
+</div>
+<div class="paragraph">
+<p>bash /opt/app-root/src/support/test-connectivity.sh
+You will see something like the following:</p>
+</div>
+<div class="paragraph">
+<p>Getting Pod B&#8217;s IP&#8230;&#8203; 10.129.0.180
+Getting Pod A&#8217;s Name&#8230;&#8203; ose-1-66dz2
+Checking connectivity between Pod A and Pod B&#8230;&#8203;&#8230;&#8203;&#8230;&#8203;&#8230;&#8203; FAILED!
+Note the last line that says FAILED!. This means that the pod in the netproj-a Project was unable to connect to the pod in the netproj-b Project (as expected).</p>
+</div>
+<div class="paragraph">
+<p>To list all the NetworkPolicy objects, run the following:</p>
+</div>
+<div class="paragraph">
+<p>oc get networkpolicy -n netproj-b
+You should see something like the following:</p>
+</div>
+<div class="paragraph">
+<p>NAME              POD-SELECTOR   AGE
+deny-by-default   &lt;none&gt;         3m19s
+Allow Access
+With NetworkPolicy, it’s possible to allow access to individual or groups of pods in a project by creating multiple NetworkPolicy CRs.</p>
+</div>
+<div class="paragraph">
+<p>The following allows access to port 5000 on TCP for all pods in the project with the label run: ose. The pod in the netproj-b project has this label.</p>
+</div>
+<div class="paragraph">
+<p>The ingress section specifically allows this access from all projects that have the label name: netproj-a.</p>
+</div>
+<h1 id="_allow_access_to_tcp_port_5000_for_pods_with_the_label_run_ose_specifically" class="sect0"><a class="anchor" href="#_allow_access_to_tcp_port_5000_for_pods_with_the_label_run_ose_specifically"></a>allow access to TCP port 5000 for pods with the label "run: ose" specifically</h1>
+
+<h1 id="_from_projects_with_the_label_name_netproj_a" class="sect0"><a class="anchor" href="#_from_projects_with_the_label_name_netproj_a"></a>from projects with the label "name: netproj-a".</h1>
+<div class="paragraph">
+<p>kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-tcp-5000-from-netproj-a-namespace
+spec:
+  podSelector:
+    matchLabels:
+      run: ose
+  ingress:
+  - ports:
+    - protocol: TCP
+      port: 5000
+    from:
+    - namespaceSelector:
+        matchLabels:
+          name: netproj-a
+Note that the podSelector is where the local project’s pods are matched using a specific label selector.</p>
+</div>
+<div class="paragraph">
+<p>All NetworkPolicy CRs in a project are combined to create the allowed ingress access for the pods in the project. In this specific case the "deny all" policy is combined with the "allow TCP 5000" policy.</p>
+</div>
+<div class="paragraph">
+<p>To allow access to the pod in the netproj-b Project from all pods in the netproj-a Project, apply the above NetworkPolicy CR with:</p>
+</div>
+<div class="paragraph">
+<p>oc create -n netproj-b -f /opt/app-root/src/support/network-policy-allow-all-from-netproj-a.yaml
+Listing the NetworkPolicies:</p>
+</div>
+<div class="paragraph">
+<p>oc get networkpolicy -n netproj-b
+This should show the new policy in place</p>
+</div>
+<div class="paragraph">
+<p>NAME                                      POD-SELECTOR   AGE
+allow-tcp-5000-from-netproj-a-namespace   run=ose        81s
+deny-by-default                           &lt;none&gt;         7m11s
+Test Connectivity #3 (should work again)
+Since the "allow access from netproj-a on port 5000" NetworkPolicy has been applied, connectivity between the pod in the netproj-a Project and the pod in the netproj-b Project should be allowed again.</p>
+</div>
+<div class="paragraph">
+<p>Test by running:</p>
+</div>
+<div class="paragraph">
+<p>bash /opt/app-root/src/support/test-connectivity.sh
+You will see something like the following:</p>
+</div>
+<div class="paragraph">
+<p>Getting Pod B&#8217;s IP&#8230;&#8203; 10.129.0.180
+Getting Pod A&#8217;s Name&#8230;&#8203; ose-1-66dz2
+Checking connectivity between Pod A and Pod B&#8230;&#8203; worked
+Note the last line that says worked. This means that the pod in the netproj-a Project was able to connect to the pod in the netproj-b Project (as expected).</p>
 </div>
 </article>
 <aside class="toc sidebar" data-title="Contents" data-levels="2">

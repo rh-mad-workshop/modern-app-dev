@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Analyze :: OpenShift Roadshow Workshop 2024</title>
-    <link rel="canonical" href="http://localhost:3000/rhs-openshift-starter-guides/index.html/ocp-roadshow-workshop/4.15/04-analyze.html">
+    <title>Untitled :: OpenShift Roadshow Workshop 2024</title>
+    <link rel="canonical" href="http://localhost:3000/rhs-openshift-starter-guides/index.html/ocp-roadshow-workshop/4.15/20-cluster-resource-quota.html">
     <meta name="generator" content="Antora 2.3.4">
     <link rel="stylesheet" href="../../_/css/site.css">
 <link rel="icon" href="../../_/img/favicon.ico" type="image/x-icon">
@@ -160,7 +160,7 @@
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="03-assessment.html"><strong>02</strong> - Migration Assessment</a>
   </li>
-  <li class="nav-item is-current-page" data-depth="2">
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="04-analyze.html"><strong>03</strong> - Migration Analysis</a>
   </li>
 </ul>
@@ -199,7 +199,7 @@
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="19-disable-self-project-provisioning.html"><strong>09</strong> - Disabling Project Self-Provisioning</a>
   </li>
-  <li class="nav-item" data-depth="2">
+  <li class="nav-item is-current-page" data-depth="2">
     <a class="nav-link" href="20-cluster-resource-quota.html"><strong>10</strong> - Cluster Resource Quotas</a>
   </li>
   <li class="nav-item" data-depth="2">
@@ -247,398 +247,300 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="index.html">OCP Roadshow Workshop</a></li>
-    <li><a href="01-modernisation-introduction.html">Application Migration &amp; Modernisation</a></li>
-    <li><a href="04-analyze.html"><strong>03</strong> - Migration Analysis</a></li>
+    <li><a href="10-application-management-basics.html">Administering Applications on OpenShift</a></li>
+    <li><a href="20-cluster-resource-quota.html"><strong>10</strong> - Cluster Resource Quotas</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="file:///Users/mkimberl/Documents/source/github/modern-app-dev/documentation/modules/ROOT/pages/04-analyze.adoc">Edit this Page</a></div>
+  <div class="edit-this-page"><a href="file:///Users/mkimberl/Documents/source/github/modern-app-dev/documentation/modules/ROOT/pages/20-cluster-resource-quota.adoc">Edit this Page</a></div>
 </div>
   <div class="content">
 <article class="doc">
-<h1 class="page">Analyze</h1>
-<div class="sect1">
-<h2 id="_goals_of_this_lab"><a class="anchor" href="#_goals_of_this_lab"></a>Goals of this lab</h2>
-<div class="sectionbody">
 <div class="paragraph">
-<p>As you have realized in the previous <strong>assessment</strong> exercise, you need to analyze the legacy applications in terms of identifying the actual lines of code for the modernization issues as well as estimating time and effort for the modernization project.</p>
+<p>Cluster Resource Quotas</p>
 </div>
 <div class="paragraph">
-<p>The goal of this exercise is to analyze the <em>customers</em> application by scanning its source code and properties using the <code>Analysis</code> capability in MTA. Then you&#8217;ll review the analysis report and get started with the actual code modification.</p>
+<p>Cluster resource quotas
+Before continuing, make sure you’ve done the LDAP lab.
+In a previous lab, you worked with quotas and saw how they could be applied to projects. You also set up default quotas, so anytime someone requests a new project; they get assigned the default quota. These project quotas are great for maintaining control over the resources in your cluster.</p>
 </div>
 <div class="paragraph">
-<p>MTA <em>Analysis</em> is used by organizations for:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Planning and work estimation</p>
-</li>
-<li>
-<p>Identifying migration issues and providing solutions</p>
-</li>
-<li>
-<p>Detailed reporting</p>
-</li>
-</ul>
+<p>But what if you want to apply a quota not to individual projects, but across projects?</p>
 </div>
 <div class="paragraph">
-<p>And has several capabilities such as:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Built-in rules and migration paths</p>
-</li>
-<li>
-<p>Rule extensibility and customization</p>
-</li>
-<li>
-<p>Ability to analyze source code or application archives</p>
-</li>
-</ul>
+<p>Use cases
+There are two primary usecases where you would use clusterresourcequota instead of a project based quota. One of which, is when you want to set quotas on a specific user. This is useful when you want users to create as much projects as they need (thus achiving great multitenancy), but you want to limit the amount of resource they can consume.</p>
 </div>
 <div class="paragraph">
-<p>Read more about it in the <a href="https://access.redhat.com/documentation/en-us/migration_toolkit_for_applications/6.0/html-single/introduction_to_the_migration_toolkit_for_applications/index#new-mta-features_getting-started-guide">MTA Features</a></p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_3_1_analyze_customers_application_using_mta"><a class="anchor" href="#_3_1_analyze_customers_application_using_mta"></a>3.1. Analyze Customers Application using MTA</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>First, you need to configure <strong>Git repositories</strong> to refer to your <a href="https://gitea.%SUBDOMAIN%/%USERID%/modern-app-dev" target="_blank" rel="noopener">Gitea repository</a> when you analyze your inventory and applications using MTA.</p>
+<p>The other use case is if you want to set a quota by application vertical. In this case, you want to set the quota on an application stack wholistically; as an application stack can span multiple OpenShift Projects.</p>
 </div>
 <div class="paragraph">
-<p>In <strong>Administration</strong> view, select <strong>Repositories &gt; Git</strong>. <code>Toggle</code> the <strong>Consume insecure Git repositories</strong> switch to the right.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/mta-admin-git.png" alt="admin git">
-</div>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>You can also log in to the Gitea repository with the following credentials.</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Username - <code>%USERID%</code></p>
-</li>
-<li>
-<p>Password - <code>{openshift-password}</code></p>
-</li>
-</ul>
-</div>
-</td>
-</tr>
-</table>
+<p>In this lab, we will be exploring both use cases.</p>
 </div>
 <div class="paragraph">
-<p>Go back to the <code>Application inventory</code> page in the <strong>Migration</strong> perspective. Click on pencil (edit) icon for the customers inventory.</p>
+<p>Setting quota per user
+In order to set a clusterresourcequota to a user you need to be kubeadmin</p>
 </div>
 <div class="paragraph">
-<p>Update application with the following source code information.</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Repository type - <code>Git</code></p>
-</li>
-<li>
-<p>Source Repository - <code><a href="https://gitea.%SUBDOMAIN%/%USERID%/modern-app-dev.git" class="bare">https://gitea.%SUBDOMAIN%/%USERID%/modern-app-dev.git</a></code></p>
-</li>
-<li>
-<p>Branch - <code>main</code></p>
-</li>
-<li>
-<p>Root path - <code>package-legacy</code></p>
-</li>
-</ul>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/application-update-git.png" alt="application-update-git">
-</div>
+<p>oc login -u kubeadmin -p 4nyNM-BZtvz-Btyng-dTexX
+Now, set a quota for the normaluser1. We will be using the annotation key of openshift.io/requester= to identify the projects that will have these quotas assigned to. For this exercise, we will set a hard quota against creating more than 10 pods. Please ignore any deprecation warnings.</p>
 </div>
 <div class="paragraph">
-<p>Select <code>Save</code>.</p>
+<p>oc create clusterquota for-user-normaluser1 \
+    --project-annotation-selector openshift.io/requester=normaluser1 \
+    --hard pods=10
+The syntax is openshift.io/requester=&lt;username&gt;.
+View the configuration.</p>
 </div>
 <div class="paragraph">
-<p>Select the <code>Analysis</code> tab. When you click on the <code>Customers</code> application, <code>Analyze</code> button will be enabled. Then, click on <strong>Analyze</strong>.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/application-analysis.png" alt="application-analysis">
-</div>
-</div>
-<div class="sect2">
-<h3 id="_3_1_1_analysis_mode"><a class="anchor" href="#_3_1_1_analysis_mode"></a>3.1.1. Analysis mode</h3>
-<div class="paragraph">
-<p>Select <code>Source dode</code> in Analysis mode popup.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/add-applications.png" alt="Add applications">
-</div>
+<p>oc get clusterresourcequotas for-user-normaluser1 -o yaml
+The configuration should look something like this:</p>
 </div>
 <div class="paragraph">
-<p>Click on <code>Next</code>.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_3_1_2_set_targets"><a class="anchor" href="#_3_1_2_set_targets"></a>3.1.2. Set targets</h3>
-<div class="paragraph">
-<p>You will now be presented with options for transformation targets. Here we will select several targets based on the technologies we are moving to:</p>
-</div>
-<div class="paragraph">
-<p>Since this is going to be a linux container, it makes sense to do a sanity check to avoid things like Windows filesystem paths and other non-container- or non-Linux-friendly issues. We also going to investigate removing our reliance on a proprietary JDK distribution, so we going to select OpenJDK as a target.</p>
-</div>
-<div class="paragraph">
-<p>Click on <code>Containers</code>, <code>Linux</code>, and <code>OpenJDK</code> as the targets.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/configure-analysis-checked.png" alt="Configure Analysis">
-</div>
-</div>
-<div class="paragraph">
-<p>Click on <code>Next</code>.</p>
+<p>apiVersion: quota.openshift.io/v1
+kind: ClusterResourceQuota
+metadata:
+  creationTimestamp: "2022-09-12T15:47:24Z"
+  generation: 1
+  name: for-user-normaluser1
+  resourceVersion: "786378"
+  uid: 575364ba-124d-4307-9bd2-f32dfe474389
+spec:
+  quota:
+    hard:
+      pods: "10"
+  selector:
+    annotations:
+      openshift.io/requester: normaluser1
+    labels: null
+This user, normaluser1, can create no more than 10 pods accross all the projects he creates. This applies only to projects that he as created (based on the openshift.io/requester: normaluser1 annotation), not any projects he has access to. More on this later.</p>
 </div>
 <div class="paragraph">
-<p>Select <code>Application and internal dependencies only</code> for the scope of dependencies.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/packages.png" alt="Select packages">
-</div>
+<p>Now, login as normaluser1</p>
 </div>
 <div class="paragraph">
-<p>Click on <code>Next</code>.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_3_1_3_advanced"><a class="anchor" href="#_3_1_3_advanced"></a>3.1.3. Advanced</h3>
-<div class="paragraph">
-<p>You will now be presented with options for custom rules.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/custom-rules.png" alt="Custom rules">
-</div>
+<p>oc login -u normaluser1 -p Op#nSh1ft
+List all your current projects</p>
 </div>
 <div class="paragraph">
-<p>MTA Analysis uses a custom rule engine for the analysis. It comes with many rules out of the box to support the different migration paths, but it can be extended. Custom rules can be developed with a very simple XML syntax and used as part of the analysis. We&#8217;ve provided some custom rules which will detect the usage of a specific library that we know has been used at Globex in the past and make suggestions for changes to be performed to remove it.</p>
+<p>oc get projects
+This user shouldn’t have any projects, and you should see output similar to this (don’t worry if you do though):</p>
 </div>
 <div class="paragraph">
-<p>Select <code>Repository</code> tab to refer to a custom rule (<code>corporate-framework-config.windup.xml</code>) in the <strong>customrules</strong> directory of your Gitea repository.</p>
+<p>No resources found.
+Create two projects welcome1 and welcome2.</p>
 </div>
 <div class="paragraph">
-<p>Key in the following information in the repository page.</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Repository type - <code>Git</code></p>
-</li>
-<li>
-<p>Source Repository - <code><a href="https://gitea.%SUBDOMAIN%/%USERID%/modern-app-dev.git" class="bare">https://gitea.%SUBDOMAIN%/%USERID%/modern-app-dev.git</a></code></p>
-</li>
-<li>
-<p>Branch - <code>main</code></p>
-</li>
-<li>
-<p>Root path - <code>customrules</code></p>
-</li>
-<li>
-<p>Associated credentials - <code>None</code></p>
-</li>
-</ul>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>In case you don&#8217;t see <code>None</code> in the <code>Associated credentials</code>, please leave it since the field is not mandatory.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/add-repository-customrules.png" alt="add-repository-customrules">
-</div>
+<p>oc new-project welcome1
+oc new-project welcome2
+You’ll be creating two applications. One in the welcome1 project and the other in the welcome2 project.</p>
 </div>
 <div class="paragraph">
-<p>Click on <code>Next</code>.</p>
+<p>oc new-app -n welcome1 --name=php1 quay.io/redhatworkshops/welcome-php:latest
+oc new-app -n welcome2 --name=php2 quay.io/redhatworkshops/welcome-php:latest
+After the deployment, you should have two running pods. One in each namespace. Check it with the oc get pods command (You may have to run this a few times before you see any output):</p>
 </div>
 <div class="paragraph">
-<p>Next, you will be presented with options to fine tune the analysis. For now we will stick with the default options.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/fine-tune.png" alt="Fine tuning">
-</div>
+<p>oc get pods -n welcome1 -l deployment=php1
+oc get pods -n welcome2 -l deployment=php2
+The output should look something like this:</p>
 </div>
 <div class="paragraph">
-<p>Click on <code>Next</code>.</p>
+<p>[~] $ oc get pods -n welcome1 -l deployment=php1
+NAME           READY   STATUS    RESTARTS   AGE
+php1-1-nww4m   1/1     Running   0          4m20s
+[~] $ oc get pods -n welcome2 -l deployment=php2
+NAME           READY   STATUS    RESTARTS   AGE
+php2-1-ljw9w   1/1     Running   0          4m20s
+Now we can check the quota by first becoming kubeadmin:</p>
 </div>
 <div class="paragraph">
-<p>Lastly, we are presented with a summary of the configuration for our analysis.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/finish-project.png" alt="Finish project">
-</div>
+<p>oc login -u kubeadmin -p 4nyNM-BZtvz-Btyng-dTexX
+Now run oc describe clusterresourcequotas for-user-normaluser1 to see the status of the quota:</p>
 </div>
 <div class="paragraph">
-<p>Click on <code>Run</code>.</p>
+<p>oc describe clusterresourcequotas for-user-normaluser1
+You should see the following output:</p>
 </div>
 <div class="paragraph">
-<p>The analysis begins, and once it is finished you will be able to access the reports. Stay on this view until the analysis is finished.</p>
+<p>Name:		for-user-normaluser1
+Created:	22 minutes ago
+Labels:		&lt;none&gt;
+Annotations:	&lt;none&gt;
+Namespace Selector: ["welcome1" "welcome2"]
+Label Selector:
+AnnotationSelector: map[openshift.io/requester:normaluser1]
+Resource	Used	Hard
+--------	----	----
+pods		2	10
+You see that not only that 2 out of 10 pods are being used, but that the namespaces the quota is being applied to. Check the namespace manifest for welcome1 to see the annotation the quota is looking for:</p>
 </div>
 <div class="paragraph">
-<p>Once it finishes, select <strong>Customers</strong> application. Then click on <code>Report</code> in the <strong>Reports</strong> tab on the right.</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>The analysis may take a few minutes as it must pull container images for Windup before executing the analysis.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/active-analysis.png" alt="Active analysis">
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_3_2_understanding_the_report"><a class="anchor" href="#_3_2_understanding_the_report"></a>3.2. Understanding the report</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>The Dashboard gives an overview of the entire application migration effort. It summarizes:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>The incidents and story points by category</p>
-</li>
-<li>
-<p>The incidents and story points by level of effort of the suggested changes</p>
-</li>
-<li>
-<p>The incidents by package</p>
-</li>
-</ul>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-Story points are an abstract metric commonly used in Agile software development to estimate the relative level of effort needed to implement a feature or change. Migration Toolkit for Application uses story points to express the level of effort needed to migrate particular application constructs, and the application as a whole. The level of effort will vary greatly depending on the size and complexity of the application(s) to migrate.
-</td>
-</tr>
-</table>
+<p>oc get namespace welcome1 -o yaml
+The output should look something like this. Take special note of the annotations:</p>
 </div>
 <div class="paragraph">
-<p>Once the report is finished, click on the link to access the report. Click on <code>customers-tomcat.war</code> application.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/report-view.png" alt="View report">
-</div>
-</div>
-<div class="paragraph">
-<p>The reports provide all kinds of information about the application, like the technologies it uses, dependencies, but most importantly issues that need to get fixed.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/report-dashboard.png" alt="report dashboard">
-</div>
-</div>
-<div class="paragraph">
-<p>Click on the <code>Issues</code> tab.</p>
-</div>
-<div class="paragraph">
-<p>This view shows us the list of issues that could prevent an application to successfully run on the target runtime. We can see that the application has a few mandatory issues that need to be addressed.</p>
-</div>
-<div class="paragraph">
-<p>Click on <code>Hard coded IP address</code>.</p>
-</div>
-<div class="paragraph">
-<p>By choosing the issue we can see where it was detected and view a hint on how to solve it.  It looks like the config files are pointing to some static IPs. That&#8217;s not good in a cloud / container environment!</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/report-hint.png" alt="report hint">
-</div>
+<p>apiVersion: v1
+kind: Namespace
+metadata:
+  annotations:
+    openshift.io/description: ""
+    openshift.io/display-name: ""
+    openshift.io/requester: normaluser1
+    openshift.io/sa.scc.mcs: s0:c27,c9
+    openshift.io/sa.scc.supplemental-groups: 1000720000/10000
+    openshift.io/sa.scc.uid-range: 1000720000/10000
+  creationTimestamp: "2022-02-15T00:18:30Z"
+  labels:
+    kubernetes.io/metadata.name: welcome1
+  name: welcome1
+  resourceVersion: "59245"
+  uid: 75612ea5-aa5d-4c99-a28c-0604efe0f457
+spec:
+  finalizers:
+  - kubernetes
+status:
+  phase: Active
+Now as normaluser1, try to scale your apps beyond 10 pods:</p>
 </div>
 <div class="paragraph">
-<p>Click on <code>File system issue</code>.</p>
+<p>oc login -u normaluser1 -p Op#nSh1ft
+oc scale deploy/php1 -n welcome1 --replicas=5
+oc scale deploy/php2 -n welcome2 --replicas=6
+Take a note of how many pods are running:</p>
 </div>
 <div class="paragraph">
-<p>It looks like a problem has been detected on some class coming from the config library. We are analyzing the binary, so the dependencies have been analyzed as well.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/report-hint-fs.png" alt="report hint file system">
-</div>
+<p>oc get pods --no-headers -n welcome1 -l deployment=php1 | wc -l
+oc get pods --no-headers -n welcome2 -l deployment=php2 | wc -l
+Both of these commands should return no more than 10 added up together. Check the events to see the quota in action!</p>
 </div>
 <div class="paragraph">
-<p>Click on <code>Legacy configuration issue</code>.</p>
+<p>oc get events -n welcome1 | grep "quota" | head -1
+oc get events -n welcome2 | grep "quota" | head -1
+You should see a message like the following.</p>
 </div>
 <div class="paragraph">
-<p>It looks like the custom rule got triggered and found some issues with the source code.  This rule detects the use of a custom configuration library and gives some hints about what needs to be done to fix it.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/report-hint-custom.png" alt="report hint custom rule">
-</div>
+<p>3m24s       Warning   FailedCreate        replicaset/php1-89fcb8d8b    Error creating: pods "php1-89fcb8d8b-spdw2" is forbid
+den: exceeded quota: for-user-normaluser1, requested: pods=1, used: pods=10, limited: pods=10
+To see the status, switch to the kubeadmin account and run the describe command from before:</p>
 </div>
 <div class="paragraph">
-<p>Click on the <code>io.konveyor.demo.ordermanagement.config.PersistenceConfig</code> file.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/report-code.png" alt="report code">
-</div>
+<p>oc login -u kubeadmin -p 4nyNM-BZtvz-Btyng-dTexX
+oc describe clusterresourcequotas for-user-normaluser1
+You should see that the hard pod limit has been reached</p>
 </div>
 <div class="paragraph">
-<p>You can now see exactly where the issue is located in the source code.</p>
+<p>Name:           for-user-normaluser1
+Created:        15 minutes ago
+Labels:         &lt;none&gt;
+Annotations:    &lt;none&gt;
+Namespace Selector: ["welcome1" "welcome2"]
+Label Selector:
+AnnotationSelector: map[openshift.io/requester:normaluser1]
+Resource        Used    Hard
+--------        ----    ----
+pods            10      10
+Setting quota by label
+In order to set a quota by application stacks that may span multiple projects, you’ll have to use labels to identify the project. First, make sure you’re kubeadmin</p>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_summary"><a class="anchor" href="#_summary"></a>Summary</h2>
-<div class="sectionbody">
 <div class="paragraph">
-<p>You have now successfully analyzed the legacy application to learn what migration issues you have. You&#8217;ll refactor the application to fix the issues in the next module. Then, you&#8217;ll deploy the modernized application to Red Hat OpenShift. Let&#8217;s go!</p>
+<p>oc login -u kubeadmin -p 4nyNM-BZtvz-Btyng-dTexX
+Now set a quota based on a label. For this lab we will use appstack=pricelist key/value based label to identify projects.</p>
 </div>
+<div class="paragraph">
+<p>oc create clusterresourcequota for-pricelist \
+    --project-label-selector=appstack=pricelist \
+    --hard=pods=5
+Now create two projects:</p>
 </div>
+<div class="paragraph">
+<p>oc adm new-project pricelist-frontend
+oc adm new-project pricelist-backend
+Assign the edit role to the user normaluser1 for these two projects:</p>
+</div>
+<div class="paragraph">
+<p>oc adm policy add-role-to-user edit normaluser1 -n pricelist-frontend
+oc adm policy add-role-to-user edit normaluser1 -n pricelist-backend
+To identify these two projects to belonging to the pricelist application stack, you will need to label the corresponding namespace:</p>
+</div>
+<div class="paragraph">
+<p>oc label namespace pricelist-frontend appstack=pricelist
+oc label namespace pricelist-backend appstack=pricelist
+Run the oc describe command for the for-pricelist cluster resource quota:</p>
+</div>
+<div class="paragraph">
+<p>oc describe clusterresourcequotas for-pricelist
+You should see that both of the projects are now being tracked:</p>
+</div>
+<div class="paragraph">
+<p>Name:           for-pricelist
+Created:        21 seconds ago
+Labels:         &lt;none&gt;
+Annotations:    &lt;none&gt;
+Namespace Selector: ["pricelist-frontend" "pricelist-backend"]
+Label Selector: appstack=pricelist
+AnnotationSelector: map[]
+Resource        Used    Hard
+--------        ----    ----
+pods            0       5
+Login as normaluser1 and create the applications in their respective projects:</p>
+</div>
+<div class="paragraph">
+<p>oc login -u normaluser1 -p Op#nSh1ft
+oc new-app -n pricelist-frontend --name frontend quay.io/redhatworkshops/pricelist:frontend
+oc new-app -n pricelist-backend --name backend quay.io/redhatworkshops/pricelist:backend
+Check the status of the quota by logging in as kubeadmin and running the describe command:</p>
+</div>
+<div class="paragraph">
+<p>oc login -u kubeadmin -p 4nyNM-BZtvz-Btyng-dTexX
+oc describe clusterresourcequotas for-pricelist
+You should see that 2 out of 5 pods are being used against this quota:</p>
+</div>
+<div class="paragraph">
+<p>Name:           for-pricelist
+Created:        About a minute ago
+Labels:         &lt;none&gt;
+Annotations:    &lt;none&gt;
+Namespace Selector: ["pricelist-frontend" "pricelist-backend"]
+Label Selector: appstack=pricelist
+AnnotationSelector: map[]
+Resource        Used    Hard
+--------        ----    ----
+pods            2       5
+The user normaluser1 can create more pods because pricelist-frontend and pricelist-backend were assigned to the user by kubeadmin. They don’t have the openshift.io/requester=normaluser1 annotation since normaluser1 didn’t create them. You can already see how you can mix and match quota polices to fit your envrionment.
+Test this by logging back in as normaluser1 and try to scale the applications beyond 5 pods total.</p>
+</div>
+<div class="paragraph">
+<p>oc login -u normaluser1 -p Op#nSh1ft
+oc scale -n pricelist-frontend deploy/frontend --replicas=3
+oc scale -n pricelist-backend deploy/backend --replicas=3
+Just like before, you should see an error about not being able to scale:</p>
+</div>
+<div class="paragraph">
+<p>oc get events -n pricelist-frontend | grep "quota" | head -1
+oc get events -n pricelist-backend | grep "quota" | head -1
+The output should be like the other exercise:</p>
+</div>
+<div class="paragraph">
+<p>39s         Warning   FailedCreate        replicaset/backend-577cf89b68   Error creating: pods "backend-577cf89b68-l5svw" is
+ forbidden: exceeded quota: for-pricelist, requested: pods=1, used: pods=5, limited: pods=5
+Clean Up
+Clean up the work you did by first becoming kubeadmin:</p>
+</div>
+<div class="paragraph">
+<p>oc login -u kubeadmin -p 4nyNM-BZtvz-Btyng-dTexX
+These quotas may interfere with other labs; so delete both of the clusterresourcequota we created in this lab:</p>
+</div>
+<div class="paragraph">
+<p>oc delete clusterresourcequotas for-pricelist for-user-normaluser1
+Also delete the projects we created for this lab:</p>
+</div>
+<div class="paragraph">
+<p>oc delete projects pricelist-backend pricelist-frontend welcome1 welcome2
+Make sure you login as kubeadmin in an existing project for the next lab.</p>
+</div>
+<div class="paragraph">
+<p>oc login -u kubeadmin -p 4nyNM-BZtvz-Btyng-dTexX
+oc project default</p>
 </div>
 </article>
 <aside class="toc sidebar" data-title="Contents" data-levels="2">

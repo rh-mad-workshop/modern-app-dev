@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Analyze :: OpenShift Roadshow Workshop 2024</title>
-    <link rel="canonical" href="http://localhost:3000/rhs-openshift-starter-guides/index.html/ocp-roadshow-workshop/4.15/04-analyze.html">
+    <title>Untitled :: OpenShift Roadshow Workshop 2024</title>
+    <link rel="canonical" href="http://localhost:3000/rhs-openshift-starter-guides/index.html/ocp-roadshow-workshop/4.15/23-devsecops-acs.html">
     <meta name="generator" content="Antora 2.3.4">
     <link rel="stylesheet" href="../../_/css/site.css">
 <link rel="icon" href="../../_/img/favicon.ico" type="image/x-icon">
@@ -160,7 +160,7 @@
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="03-assessment.html"><strong>02</strong> - Migration Assessment</a>
   </li>
-  <li class="nav-item is-current-page" data-depth="2">
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="04-analyze.html"><strong>03</strong> - Migration Analysis</a>
   </li>
 </ul>
@@ -208,7 +208,7 @@
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="22-vulnerability-scanning-acs.html"><strong>12</strong> - Vulnerability Scanning with ACS</a>
   </li>
-  <li class="nav-item" data-depth="2">
+  <li class="nav-item is-current-page" data-depth="2">
     <a class="nav-link" href="23-devsecops-acs.html"><strong>13</strong> - DevSecOps with ACS</a>
   </li>
   <li class="nav-item" data-depth="2">
@@ -247,74 +247,71 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="index.html">OCP Roadshow Workshop</a></li>
-    <li><a href="01-modernisation-introduction.html">Application Migration &amp; Modernisation</a></li>
-    <li><a href="04-analyze.html"><strong>03</strong> - Migration Analysis</a></li>
+    <li><a href="10-application-management-basics.html">Administering Applications on OpenShift</a></li>
+    <li><a href="23-devsecops-acs.html"><strong>13</strong> - DevSecOps with ACS</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="file:///Users/mkimberl/Documents/source/github/modern-app-dev/documentation/modules/ROOT/pages/04-analyze.adoc">Edit this Page</a></div>
+  <div class="edit-this-page"><a href="file:///Users/mkimberl/Documents/source/github/modern-app-dev/documentation/modules/ROOT/pages/23-devsecops-acs.adoc">Edit this Page</a></div>
 </div>
   <div class="content">
 <article class="doc">
-<h1 class="page">Analyze</h1>
-<div class="sect1">
-<h2 id="_goals_of_this_lab"><a class="anchor" href="#_goals_of_this_lab"></a>Goals of this lab</h2>
-<div class="sectionbody">
 <div class="paragraph">
-<p>As you have realized in the previous <strong>assessment</strong> exercise, you need to analyze the legacy applications in terms of identifying the actual lines of code for the modernization issues as well as estimating time and effort for the modernization project.</p>
+<p>DevSecOps with ACS</p>
 </div>
 <div class="paragraph">
-<p>The goal of this exercise is to analyze the <em>customers</em> application by scanning its source code and properties using the <code>Analysis</code> capability in MTA. Then you&#8217;ll review the analysis report and get started with the actual code modification.</p>
+<p>Using OpenShift Pipelines to Automate Red Hat Advanced Cluster Security for Kubernetes
+Introduction
+This workshop will discuss how OpenShift Pipelines, based on the Tekton open source project, can be used to automate the execution of Red Hat Advanced Cluster Security for Kubernetes as part of a more comprehensive continuous integration solution. The objective is to bring into the continuous integration process the validation of Kubernetes resources such that any violations against defined policy can be addressed earlier in the development life cycle.</p>
 </div>
 <div class="paragraph">
-<p>MTA <em>Analysis</em> is used by organizations for:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Planning and work estimation</p>
-</li>
-<li>
-<p>Identifying migration issues and providing solutions</p>
-</li>
-<li>
-<p>Detailed reporting</p>
-</li>
-</ul>
+<p>Pipeline Requirements and Necessary Features
+RHACS Command Line Interface
+Red Hat Advanced Cluster Security for Kubernetes has a command line interface (roxctl) for evaluating images and resources against policy definitions held on the RHACS server. The command line interface may be downloaded from the RHACS web user interface for ad-hoc use, and in the automation steps presented here, roxctl is downloaded from the RHACS server during each execution of the analysis. This ensures that the correct version matching the server is always used.</p>
 </div>
 <div class="paragraph">
-<p>And has several capabilities such as:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Built-in rules and migration paths</p>
-</li>
-<li>
-<p>Rule extensibility and customization</p>
-</li>
-<li>
-<p>Ability to analyze source code or application archives</p>
-</li>
-</ul>
+<p>roxctl Analysis Options
+The roxctl command line interface has several options for resource and image analysis. Of particular interest in this blog is the "deployment" option, which is traditionally used to check for deployment readiness of Kubernetes resources. By using this option during the build phase of development, teams can get a much earlier indication of deployment issues rather than waiting until deployment time. This enables teams to fix the problems during development, lowering costs and leading to smoother deployments.</p>
 </div>
 <div class="paragraph">
-<p>Read more about it in the <a href="https://access.redhat.com/documentation/en-us/migration_toolkit_for_applications/6.0/html-single/introduction_to_the_migration_toolkit_for_applications/index#new-mta-features_getting-started-guide">MTA Features</a></p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_3_1_analyze_customers_application_using_mta"><a class="anchor" href="#_3_1_analyze_customers_application_using_mta"></a>3.1. Analyze Customers Application using MTA</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>First, you need to configure <strong>Git repositories</strong> to refer to your <a href="https://gitea.%SUBDOMAIN%/%USERID%/modern-app-dev" target="_blank" rel="noopener">Gitea repository</a> when you analyze your inventory and applications using MTA.</p>
+<p>Continuous Integration and roxctl Process
+The CI process in the example below takes advantage of the tasks, skeleton pipeline, and pipeline run resources that users can build into their own wider OpenShift Pipelines process. The resources and their interaction are shown in figure 1:</p>
 </div>
 <div class="paragraph">
-<p>In <strong>Administration</strong> view, select <strong>Repositories &gt; Git</strong>. <code>Toggle</code> the <strong>Consume insecure Git repositories</strong> switch to the right.</p>
+<p>tekton 1
+Figure 1: OpenShift Pipeline process</p>
 </div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/mta-admin-git.png" alt="admin git">
+<div class="paragraph">
+<p>Pipeline Run Resource
+The OpenShift Pipelines "pipeline run" resource calls the pipeline resource, passing with it the required parameters. Some of the parameters are highlighted in figure 1 above, and all are described in the table below. The pipeline run defines a workspace on a 10 Mb persistent volume claim called "files," to which the source assets are cloned, and the results files are written. If you wish to add the tasks described here to an existing OpenShift Pipelines process, add the parameter definitions and the workspace volume to your existing pipeline run.</p>
 </div>
+<div class="paragraph">
+<p>Parameter	Description	Used by task
+acs_central_endpoint
+The name of a secret that contains the URL of the RHACS central server.
+Resource deployment check
+acs_api_token
+The name of a secret that contains the access token generated within the RHACS web user interface. This is a continuous integration access token as described here.
+Resource deployment check
+The above two parameters can reference a single secret containing both data items.
+git-url
+The URL of the GitHub repository that contains the resources to be validated.
+Git clone workspace
+git-revision
+The identifier to be used to check out the content. (branch, tag, sha, ref…)
+Git clone workspace
+file-location-in-git-repo
+The directory containing the resources to be examined.
+Resource deployment check
+recursive-search
+If 'true,' the above path will be searched recursively for all files with the extension yaml or yml.
+Resource deployment check
+Pipeline Resource
+The OpenShift Pipelines "pipeline" resource in the GitHub repository mentioned above orchestrates the execution of the tasks and the passing of parameters between tasks. Further information on the pipeline use is given in the section "Making a decision based on the scan result."</p>
+</div>
+<div class="paragraph">
+<p>Workshop Setup
+Deploy the Pipeline Assets
+The assets described below are available in a public GitHub repository <a href="https://github.com/mfosterrox/demo.git" class="bare">https://github.com/mfosterrox/demo.git</a>. To deploy the assets, run the following:</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -323,322 +320,137 @@
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-<div class="paragraph">
-<p>You can also log in to the Gitea repository with the following credentials.</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Username - <code>%USERID%</code></p>
-</li>
-<li>
-<p>Password - <code>{openshift-password}</code></p>
-</li>
-</ul>
-</div>
+Skip the git clone command if you have the existing folder ready, But you will need to the commands after to ensure all of the resources are available.
+git clone <a href="https://github.com/openshiftdemos/openshift-ops-workshops" class="bare">https://github.com/openshiftdemos/openshift-ops-workshops</a> acs-workshop
+export TUTORIAL_HOME="$(pwd)/acs-workshop"
+kubectl apply -f $TUTORIAL_HOME/workshop/demo-apps/configuration --recursive
+kubectl apply -f $TUTORIAL_HOME/workshop/demo-apps/ --recursive
+NOTE This command applies a plethora of manifests to your environment. The important part is that the deployments are up and running.
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>Go back to the <code>Application inventory</code> page in the <strong>Migration</strong> perspective. Click on pencil (edit) icon for the customers inventory.</p>
+<p>Run the following command and ensure that the applications are up and running
+kubectl get deployments -l demo=acs -A
+Output</p>
 </div>
 <div class="paragraph">
-<p>Update application with the following source code information.</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Repository type - <code>Git</code></p>
-</li>
-<li>
-<p>Source Repository - <code><a href="https://gitea.%SUBDOMAIN%/%USERID%/modern-app-dev.git" class="bare">https://gitea.%SUBDOMAIN%/%USERID%/modern-app-dev.git</a></code></p>
-</li>
-<li>
-<p>Branch - <code>main</code></p>
-</li>
-<li>
-<p>Root path - <code>package-legacy</code></p>
-</li>
-</ul>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/application-update-git.png" alt="application-update-git">
-</div>
+<p>NAMESPACE      NAME               READY   UP-TO-DATE   AVAILABLE   AGE
+backend        api-server         1/1     1            1           0d
+frontend       asset-cache        1/1     1            1           0d
+log4shell      log4shell-app      3/3     3            3           0d
+medical        reporting          1/1     1            1           0d
+operations     jump-host          1/1     1            1           0d
+payments       visa-processor     1/1     1            1           0d
+spring4shell   spring4shell-app   3/3     3            3           0d
+Image Scan Pod Task
+The first of two tasks in the pipeline is the image scan test task. The task starts by asking the user for an image to scan. Next, the roxctl CLI will send this information to central and ask for an analysis. ACS Central will send back all the fixable and nonfixable vulnerabilities associated with the image. The image scan file will show you the necessary variables, the steps required to complete the scan, and the script itself.</p>
 </div>
 <div class="paragraph">
-<p>Select <code>Save</code>.</p>
+<p>To see the image scan task, run the following on the command line;</p>
 </div>
 <div class="paragraph">
-<p>Select the <code>Analysis</code> tab. When you click on the <code>Customers</code> application, <code>Analyze</code> button will be enabled. Then, click on <strong>Analyze</strong>.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/application-analysis.png" alt="application-analysis">
-</div>
-</div>
-<div class="sect2">
-<h3 id="_3_1_1_analysis_mode"><a class="anchor" href="#_3_1_1_analysis_mode"></a>3.1.1. Analysis mode</h3>
-<div class="paragraph">
-<p>Select <code>Source dode</code> in Analysis mode popup.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/add-applications.png" alt="Add applications">
-</div>
+<p>cat $TUTORIAL_HOME/workshop/demo-apps/pipelines/tasks/rox-image-scan-task.yml
+After the scan is completed, we must check if the container violates specific policies.</p>
 </div>
 <div class="paragraph">
-<p>Click on <code>Next</code>.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_3_1_2_set_targets"><a class="anchor" href="#_3_1_2_set_targets"></a>3.1.2. Set targets</h3>
-<div class="paragraph">
-<p>You will now be presented with options for transformation targets. Here we will select several targets based on the technologies we are moving to:</p>
+<p>Image Check Test Task
+The image check test will tell ACS central to check the scanned image against the policies enabled in ACS. The file is extremely similar to the image scan test with the roxctl command being the main difference in the file.</p>
 </div>
 <div class="paragraph">
-<p>Since this is going to be a linux container, it makes sense to do a sanity check to avoid things like Windows filesystem paths and other non-container- or non-Linux-friendly issues. We also going to investigate removing our reliance on a proprietary JDK distribution, so we going to select OpenJDK as a target.</p>
+<p>To see the image check task, run the following on the command line;</p>
 </div>
 <div class="paragraph">
-<p>Click on <code>Containers</code>, <code>Linux</code>, and <code>OpenJDK</code> as the targets.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/configure-analysis-checked.png" alt="Configure Analysis">
-</div>
+<p>cat $TUTORIAL_HOME/workshop/demo-apps/pipelines/tasks/rox-image-check-task.yml
+Two variables are missing in both files: the ROX_CENTRAL_ENDPOINT and the ROX_API_TOKEN. Any automated check need to be given the correct access so that the pipeline, and cluster, cannot be breached by an external source.</p>
 </div>
 <div class="paragraph">
-<p>Click on <code>Next</code>.</p>
+<p>In the next step, access will be granted to the pipeline to be able to run these commands.</p>
 </div>
 <div class="paragraph">
-<p>Select <code>Application and internal dependencies only</code> for the scope of dependencies.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/packages.png" alt="Select packages">
-</div>
+<p>Authorizing the CI Process
+First, we will need to create a token to access ACS central.</p>
 </div>
 <div class="paragraph">
-<p>Click on <code>Next</code>.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_3_1_3_advanced"><a class="anchor" href="#_3_1_3_advanced"></a>3.1.3. Advanced</h3>
-<div class="paragraph">
-<p>You will now be presented with options for custom rules.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/custom-rules.png" alt="Custom rules">
-</div>
+<p>Access the RHACS web user interface, select "Platform Configuration" from the left-hand side menu, and then select integrations. Scroll down to the section for authentication tokens and select "StackRox API Token."</p>
 </div>
 <div class="paragraph">
-<p>MTA Analysis uses a custom rule engine for the analysis. It comes with many rules out of the box to support the different migration paths, but it can be extended. Custom rules can be developed with a very simple XML syntax and used as part of the analysis. We&#8217;ve provided some custom rules which will detect the usage of a specific library that we know has been used at Globex in the past and make suggestions for changes to be performed to remove it.</p>
+<p>ci 1
+Press the Generate Token button in the top right corner and select the token role of "Continuous Integration." Give the token a name and press the button titled "Generate".</p>
 </div>
 <div class="paragraph">
-<p>Select <code>Repository</code> tab to refer to a custom rule (<code>corporate-framework-config.windup.xml</code>) in the <strong>customrules</strong> directory of your Gitea repository.</p>
+<p>ci 2
+Create a token name and click the 'Continuous Integration' role.</p>
 </div>
 <div class="paragraph">
-<p>Key in the following information in the repository page.</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Repository type - <code>Git</code></p>
-</li>
-<li>
-<p>Source Repository - <code><a href="https://gitea.%SUBDOMAIN%/%USERID%/modern-app-dev.git" class="bare">https://gitea.%SUBDOMAIN%/%USERID%/modern-app-dev.git</a></code></p>
-</li>
-<li>
-<p>Branch - <code>main</code></p>
-</li>
-<li>
-<p>Root path - <code>customrules</code></p>
-</li>
-<li>
-<p>Associated credentials - <code>None</code></p>
-</li>
-</ul>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>In case you don&#8217;t see <code>None</code> in the <code>Associated credentials</code>, please leave it since the field is not mandatory.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/add-repository-customrules.png" alt="add-repository-customrules">
-</div>
+<p>Make sure to copy the token as we need to add it to the rox-secrets-mad.yml file.</p>
 </div>
 <div class="paragraph">
-<p>Click on <code>Next</code>.</p>
+<p>Next, edit the rox-secrets-mad.yml file in the demo directory. Use vi/vim/nano/your favorite command line editor to add the API token to the following file.</p>
 </div>
 <div class="paragraph">
-<p>Next, you will be presented with options to fine tune the analysis. For now we will stick with the default options.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/fine-tune.png" alt="Fine tuning">
-</div>
+<p>$TUTORIAL_HOME/acs-workshop/workshop/demo-apps/pipelines/pipeline/rox-secrets-mad.yml
+NOTE: make sure to only alter the line that says rox_api_token: "YOUR_API_TOKEN_HERE"
+Then apply the changes.</p>
 </div>
 <div class="paragraph">
-<p>Click on <code>Next</code>.</p>
+<p>kubectl apply -f $TUTORIAL_HOME/workshop/demo-apps/pipelines/pipeline/rox-secrets-mad.yml
+NOTE: If you’re unfamiliar with text editors, you can also edit this via the OpenShift console. Go to Workloads → Secrets, click on ‘roxsecrets’, switch to the YAML tab and make your changes there and save them.
+You are now ready to run your pipeline!</p>
 </div>
 <div class="paragraph">
-<p>Lastly, we are presented with a summary of the configuration for our analysis.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/finish-project.png" alt="Finish project">
-</div>
+<p>Executing the Pipeline
+First, head to the OpenShift console to execute the pipeline. Then click on the Pipelines tab to select the Pipelines dropdown.</p>
 </div>
 <div class="paragraph">
-<p>Click on <code>Run</code>.</p>
+<p>pipeline 1
+You should see a pipeline labeled rox-pipeline. Let’s run one.</p>
 </div>
 <div class="paragraph">
-<p>The analysis begins, and once it is finished you will be able to access the reports. Stay on this view until the analysis is finished.</p>
+<p>To run a pipeline, you can click the three dots to the left of the pipeline and click start, OR you can click on the rox-pipeline to be brought to a details page where you can select actions → start</p>
 </div>
 <div class="paragraph">
-<p>Once it finishes, select <strong>Customers</strong> application. Then click on <code>Report</code> in the <strong>Reports</strong> tab on the right.</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>The analysis may take a few minutes as it must pull container images for Windup before executing the analysis.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/active-analysis.png" alt="Active analysis">
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_3_2_understanding_the_report"><a class="anchor" href="#_3_2_understanding_the_report"></a>3.2. Understanding the report</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>The Dashboard gives an overview of the entire application migration effort. It summarizes:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>The incidents and story points by category</p>
-</li>
-<li>
-<p>The incidents and story points by level of effort of the suggested changes</p>
-</li>
-<li>
-<p>The incidents by package</p>
-</li>
-</ul>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-Story points are an abstract metric commonly used in Agile software development to estimate the relative level of effort needed to implement a feature or change. Migration Toolkit for Application uses story points to express the level of effort needed to migrate particular application constructs, and the application as a whole. The level of effort will vary greatly depending on the size and complexity of the application(s) to migrate.
-</td>
-</tr>
-</table>
+<p>pipeline 2
+pipeline 3
+You will need to add the image you wish to scan (quay.io/mfoster/log4shell-demo:0.1.0). In this case, we want to look at the image we know has the log4shell vulnerability.</p>
 </div>
 <div class="paragraph">
-<p>Once the report is finished, click on the link to access the report. Click on <code>customers-tomcat.war</code> application.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/report-view.png" alt="View report">
-</div>
+<p>pipeline 4
+Click start and ensure that the pipeline is in its running phase. It should look like the pictures below.</p>
 </div>
 <div class="paragraph">
-<p>The reports provide all kinds of information about the application, like the technologies it uses, dependencies, but most importantly issues that need to get fixed.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/report-dashboard.png" alt="report dashboard">
-</div>
+<p>pipeline 5
+pipeline 6
+Since this image is designed to fail, we should only have 1 of the tasks pass. Therefore the outcome will look like the following.</p>
 </div>
 <div class="paragraph">
-<p>Click on the <code>Issues</code> tab.</p>
+<p>pipeline 7
+pipeline 8
+From the image above, the log snippet shows that 5 policies have been violated.</p>
 </div>
 <div class="paragraph">
-<p>This view shows us the list of issues that could prevent an application to successfully run on the target runtime. We can see that the application has a few mandatory issues that need to be addressed.</p>
+<p>Click on the Logs tab to view the total output of the pipeline.</p>
 </div>
 <div class="paragraph">
-<p>Click on <code>Hard coded IP address</code>.</p>
+<p>If you expand the log snippet, you will get an output like the following.</p>
 </div>
 <div class="paragraph">
-<p>By choosing the issue we can see where it was detected and view a hint on how to solve it.  It looks like the config files are pointing to some static IPs. That&#8217;s not good in a cloud / container environment!</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/report-hint.png" alt="report hint">
-</div>
+<p>pipeline 9
+Congratulations! The log shows that the policy log4shell policy has been violated, breaking the pipeline.</p>
 </div>
 <div class="paragraph">
-<p>Click on <code>File system issue</code>.</p>
+<p>If this check was added to other builds/deploy pipelines, it could halt the deployment of vulnerable apps moving forward.</p>
 </div>
 <div class="paragraph">
-<p>It looks like a problem has been detected on some class coming from the config library. We are analyzing the binary, so the dependencies have been analyzed as well.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/report-hint-fs.png" alt="report hint file system">
-</div>
+<p>Extra Challenge
+Suppose you are looking for a challenge. Try the following.</p>
 </div>
 <div class="paragraph">
-<p>Click on <code>Legacy configuration issue</code>.</p>
+<p>Create a policy that will target a specific CVE deployed in the cluster (i.e., the Apache Struts violation=CVE-2013-1965) and run the pipeline again with a new container to see if the policy is triggered.</p>
 </div>
 <div class="paragraph">
-<p>It looks like the custom rule got triggered and found some issues with the source code.  This rule detects the use of a custom configuration library and gives some hints about what needs to be done to fix it.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/report-hint-custom.png" alt="report hint custom rule">
-</div>
-</div>
-<div class="paragraph">
-<p>Click on the <code>io.konveyor.demo.ordermanagement.config.PersistenceConfig</code> file.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/report-code.png" alt="report code">
-</div>
-</div>
-<div class="paragraph">
-<p>You can now see exactly where the issue is located in the source code.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_summary"><a class="anchor" href="#_summary"></a>Summary</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>You have now successfully analyzed the legacy application to learn what migration issues you have. You&#8217;ll refactor the application to fix the issues in the next module. Then, you&#8217;ll deploy the modernized application to Red Hat OpenShift. Let&#8217;s go!</p>
-</div>
-</div>
+<p>Hint: Find a container with a critical vulnerability first, create the policy, and alter the pipeline.</p>
 </div>
 </article>
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
