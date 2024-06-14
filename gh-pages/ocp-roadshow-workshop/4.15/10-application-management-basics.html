@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Untitled :: OpenShift Roadshow Workshop 2024</title>
+    <title>Application Management Basics :: OpenShift Roadshow Workshop 2024</title>
     <link rel="canonical" href="http://localhost:3000/rhs-openshift-starter-guides/index.html/ocp-roadshow-workshop/4.15/10-application-management-basics.html">
     <meta name="generator" content="Antora 2.3.4">
     <link rel="stylesheet" href="../../_/css/site.css">
@@ -165,54 +165,57 @@
   </li>
 </ul>
   </li>
-  <li class="nav-item is-current-page" data-depth="1">
+  <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="10-application-management-basics.html">Administering Applications on OpenShift</a>
+    <a class="nav-link" href="#08-ocp-ops-intro">MAD Roadshow Ops Track</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="09-installation-and-verification.html"><strong>01</strong> - Installation and Verificiation</a>
   </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="11-application-storage-basics.html"><strong>02</strong> - Application Storage Basics</a>
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="10-application-management-basics.html"><strong>02</strong> - Application Management Basics</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="12-machinesets-machines-nodes.html"><strong>02</strong> - MachineSets, Machines, and Nodes</a>
+    <a class="nav-link" href="11-application-storage-basics.html"><strong>03</strong> - Application Storage Basics</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="13-infrastructure-nodes-and-operators.html"><strong>03</strong> - Infrastructure Nodes and Operators</a>
+    <a class="nav-link" href="12-machinesets-machines-nodes.html"><strong>04</strong> - MachineSets, Machines, and Nodes</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="14-openshift-logging-wth-loki.html"><strong>04</strong> - OpenShift Logging with Loki</a>
+    <a class="nav-link" href="13-infrastructure-nodes-and-operators.html"><strong>05</strong> - Infrastructure Nodes and Operators</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="15-external-authentication.html"><strong>05</strong> - External (LDAP) Authentication Providers, Users, and Groups</a>
+    <a class="nav-link" href="14-openshift-logging-wth-loki.html"><strong>06</strong> - OpenShift Logging with Loki</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="16-openshift-monitoring.html"><strong>06</strong> - OpenShift Monitoring with Prometheus</a>
+    <a class="nav-link" href="15-external-authentication.html"><strong>07</strong> - External (LDAP) Authentication Providers, Users, and Groups</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="17-project-template-quota-limits.html"><strong>07</strong> - Project Request Template, Quotas, Limits</a>
+    <a class="nav-link" href="16-openshift-monitoring.html"><strong>08</strong> - OpenShift Monitoring with Prometheus</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="18-openshift-networking-networkpolicy.html"><strong>08</strong> - OpenShift Networking and NetworkPolicy</a>
+    <a class="nav-link" href="17-project-template-quota-limits.html"><strong>09</strong> - Project Request Template, Quotas, Limits</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="19-disable-self-project-provisioning.html"><strong>09</strong> - Disabling Project Self-Provisioning</a>
+    <a class="nav-link" href="18-openshift-networking-networkpolicy.html"><strong>10</strong> - OpenShift Networking and NetworkPolicy</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="20-cluster-resource-quota.html"><strong>10</strong> - Cluster Resource Quotas</a>
+    <a class="nav-link" href="19-disable-self-project-provisioning.html"><strong>11</strong> - Disabling Project Self-Provisioning</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="21-taints-tolerations.html"><strong>11</strong> - Taints and Tolerations</a>
+    <a class="nav-link" href="20-cluster-resource-quota.html"><strong>12</strong> - Cluster Resource Quotas</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="22-vulnerability-scanning-acs.html"><strong>12</strong> - Vulnerability Scanning with ACS</a>
+    <a class="nav-link" href="21-taints-tolerations.html"><strong>13</strong> - Taints and Tolerations</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="23-devsecops-acs.html"><strong>13</strong> - DevSecOps with ACS</a>
+    <a class="nav-link" href="22-vulnerability-scanning-acs.html"><strong>14</strong> - Vulnerability Scanning with ACS</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="24-multicluster-with-acm.html"><strong>14</strong> - Multicluster management with ACM</a>
+    <a class="nav-link" href="23-devsecops-acs.html"><strong>15</strong> - DevSecOps with ACS</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="24-multicluster-with-acm.html"><strong>16</strong> - Multicluster management with ACM</a>
   </li>
 </ul>
   </li>
@@ -247,73 +250,100 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="index.html">OCP Roadshow Workshop</a></li>
-    <li><a href="10-application-management-basics.html">Administering Applications on OpenShift</a></li>
+    <li>MAD Roadshow Ops Track</li>
+    <li><a href="10-application-management-basics.html"><strong>02</strong> - Application Management Basics</a></li>
   </ul>
 </nav>
   <div class="edit-this-page"><a href="file:///Users/mkimberl/Documents/source/github/modern-app-dev/documentation/modules/ROOT/pages/10-application-management-basics.adoc">Edit this Page</a></div>
 </div>
   <div class="content">
 <article class="doc">
+<h1 class="page">Application Management Basics</h1>
+<div class="sect2">
+<h3 id="_application_management_basics"><a class="anchor" href="#_application_management_basics"></a>Application Management Basics</h3>
 <div class="paragraph">
-<p>Application Management Basics</p>
+<p>In this module, you will deploy a sample application using the oc tool and learn about some of the core concepts, fundamental objects, and basics of application management on OpenShift Container Platform.</p>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_core_openshift_concepts"><a class="anchor" href="#_core_openshift_concepts"></a>Core OpenShift Concepts</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>As a future administrator of OpenShift, it is important to understand several core building blocks as it relates to applications. Understanding these building blocks will help you better see the big picture of application management on the platform.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_projects"><a class="anchor" href="#_projects"></a>Projects</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A <strong>Project</strong> is a "bucket" of sorts. It’s a meta construct where all of a user’s resources live. From an administrative perspective, each <strong>Project</strong> can be thought of like a tenant. <strong>Projects</strong> may have multiple users who can access them, and users may be able to access multiple <strong>Projects</strong>. Technically speaking, a user doesn’t own the resources, the <strong>Project</strong> does. Deleting the user doesn’t affect any of the created resources.</p>
 </div>
 <div class="paragraph">
-<p>Application Management Basics
-In this module, you will deploy a sample application using the oc tool and learn about some of the core concepts, fundamental objects, and basics of application management on OpenShift Container Platform.</p>
+<p>For this exercise, first create a <strong>Project</strong> to hold some resources:</p>
 </div>
-<div class="paragraph">
-<p>Core OpenShift Concepts
-As a future administrator of OpenShift, it is important to understand several core building blocks as it relates to applications. Understanding these building blocks will help you better see the big picture of application management on the platform.</p>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc new-project app-management</code></pre>
 </div>
-<div class="paragraph">
-<p>Projects
-A Project is a "bucket" of sorts. It’s a meta construct where all of a user’s resources live. From an administrative perspective, each Project can be thought of like a tenant. Projects may have multiple users who can access them, and users may be able to access multiple Projects. Technically speaking, a user doesn’t own the resources, the Project does. Deleting the user doesn’t affect any of the created resources.</p>
 </div>
-<div class="paragraph">
-<p>For this exercise, first create a Project to hold some resources:</p>
 </div>
+</div>
+<div class="sect1">
+<h2 id="_deploy_a_sample_application"><a class="anchor" href="#_deploy_a_sample_application"></a>Deploy a Sample Application</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>oc new-project app-management
-Deploy a Sample Application
-The new-app command provides a very simple way to tell OpenShift to run things. You simply provide it with one of a wide array of inputs, and it figures out what to do. Users will commonly use this command to get OpenShift to launch existing images, to create builds of source code and ultimately deploy them, to instantiate templates, and so on.</p>
+<p>The new-app command provides a very simple way to tell OpenShift to run things. You simply provide it with one of a wide array of inputs, and it figures out what to do. Users will commonly use this command to get OpenShift to launch existing images, to create builds of source code and ultimately deploy them, to instantiate templates, and so on.</p>
 </div>
 <div class="paragraph">
 <p>You will now launch a specific image that exists on Quay</p>
 </div>
-<div class="paragraph">
-<p>oc new-app quay.io/openshiftroadshow/mapit
-The output will look like:</p>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc new-app quay.io/openshiftroadshow/mapit</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>-&#8594; Found container image 7ce7ade (3 years old) from quay.io for "quay.io/openshiftroadshow/mapit"</p>
+<p>The output will look like:</p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>An image stream tag will be created as "mapit:latest" that will track this image</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>-&#8594; Creating resources &#8230;&#8203;
+<div class="listingblock console">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">--&gt; Found container image 7ce7ade (3 years old) from quay.io for "quay.io/openshiftroadshow/mapit"
+
+    * An image stream tag will be created as "mapit:latest" that will track this image
+
+--&gt; Creating resources ...
     imagestream.image.openshift.io "mapit" created
     deployment.apps "mapit" created
     service "mapit" created
--&#8594; Success
+--&gt; Success
     Application is not exposed. You can expose services to the outside world by executin
 g one or more of the commands below:
      'oc expose service/mapit'
-    Run 'oc status' to view your app.
-You can see that OpenShift automatically created several resources as the output of this command. We will take some time to explore the resources that were created.</p>
+    Run 'oc status' to view your app.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can see that OpenShift automatically created several resources as the output of this command. We will take some time to explore the resources that were created.</p>
 </div>
 <div class="paragraph">
 <p>For more information on the capabilities of new-app, take a look at its help message by running oc new-app -h.</p>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_pods"><a class="anchor" href="#_pods"></a>Pods</h2>
+<div class="sectionbody">
+<div class="imageblock">
+<div class="content">
+<img src="_images/openshift_pod.png" alt="OpenShift Pod">
+</div>
+</div>
 <div class="paragraph">
-<p>Pods
-openshift pod
-Figure 1. OpenShift Pods
-Pods are one or more containers deployed together on a host. A pod is the smallest compute unit you can define, deploy and manage in OpenShift. Each pod is allocated its own internal IP address on the SDN and owns the entire port range. The containers within pods can share local storage space and networking resources.</p>
+<p>Figure 1. OpenShift Pods</p>
+</div>
+<div class="paragraph">
+<p>Pods are one or more containers deployed together on a host. A pod is the smallest compute unit you can define, deploy and manage in OpenShift. Each pod is allocated its own internal IP address on the SDN and owns the entire port range. The containers within pods can share local storage space and networking resources.</p>
 </div>
 <div class="paragraph">
 <p>Pods are treated as static objects by OpenShift, i.e., one cannot change the pod definition while running.</p>
@@ -321,23 +351,62 @@ Pods are one or more containers deployed together on a host. A pod is the smalle
 <div class="paragraph">
 <p>You can get a list of pods:</p>
 </div>
-<div class="paragraph">
-<p>oc get pods
-And you will see something like the following:</p>
+<div class="listingblock console-input">
+<div class="content">
+<pre>oc get pods</pre>
+</div>
 </div>
 <div class="paragraph">
-<p>NAME                     READY   STATUS    RESTARTS   AGE
-mapit-764c5bf8b8-l49z7   1/1     Running   0          2m53s
-NOTE	Pod names are dynamically generated as part of the deployment process, which you will learn about shortly. Your name will be slightly different.
-The describe command will give you more information on the details of a pod. In the case of the pod name above:</p>
+<p>And you will see something like the following:</p>
+</div>
+<div class="listingblock console">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">NAME                     READY   STATUS    RESTARTS   AGE
+mapit-764c5bf8b8-l49z7   1/1     Running   0          2m53s</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Pod names are dynamically generated as part of the deployment process, which you will learn about shortly. Your name will be slightly different.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
-<p>oc describe pod -l deployment=mapit
-NOTE	The -l deployment=mapit selects the pod that is related to the Deployment which will be discussed later.
-And you will see output similar to the following:</p>
+<p>The describe command will give you more information on the details of a pod. In the case of the pod name above:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre>oc describe pod -l deployment=mapit</pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The -l deployment=mapit selects the pod that is related to the Deployment which will be discussed later.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
-<p>Name:         mapit-764c5bf8b8-l49z7
+<p>And you will see output similar to the following:</p>
+</div>
+<div class="listingblock console">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">Name:         mapit-764c5bf8b8-l49z7
 Namespace:    app-management
 Priority:     0
 Node:         ip-10-0-128-29.us-west-2.compute.internal/10.0.128.29
@@ -415,43 +484,82 @@ Events:
 horaxe/mapit@sha256:8c7e0349b6a016e3436416f3c54debda4594ba09fd34b8a0dee0c4497102590d" in
  16.762028989s
   Normal  Created         6m31s  kubelet            Created container mapit
-  Normal  Started         6m31s  kubelet            Started container mapit
-This is a more detailed description of the pod that is running. You can see what node the pod is running on, the internal IP address of the pod, various labels, and other information about what is going on.</p>
+  Normal  Started         6m31s  kubelet            Started container mapit</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>Services
-openshift service
-Figure 2. OpenShift Service
-Services provide a convenient abstraction layer inside OpenShift to find a group of like Pods. They also act as an internal proxy/load balancer between those Pods and anything else that needs to access them from inside the OpenShift environment. For example, if you needed more mapit instances to handle the load, you could spin up more Pods. OpenShift automatically maps them as endpoints to the Service, and the incoming requests would not notice anything different except that the Service was now doing a better job handling the requests.</p>
+<p>This is a more detailed description of the pod that is running. You can see what node the pod is running on, the internal IP address of the pod, various labels, and other information about what is going on.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_services"><a class="anchor" href="#_services"></a>Services</h2>
+<div class="sectionbody">
+<div class="imageblock">
+<div class="content">
+<img src="_images/openshift_service.png" alt="OpenShift Service">
+</div>
 </div>
 <div class="paragraph">
-<p>When you asked OpenShift to run the image, the new-app command automatically created a Service for you. Remember that services are an internal construct. They are not available to the "outside world", or anything that is outside the OpenShift environment. That’s OK, as you will learn later.</p>
+<p>Figure 2. OpenShift Service</p>
 </div>
 <div class="paragraph">
-<p>The way that a Service maps to a set of Pods is via a system of Labels and Selectors. Services are assigned a fixed IP address and many ports and protocols can be mapped.</p>
+<p><strong>Services</strong> provide a convenient abstraction layer inside OpenShift to find a group of like <strong>Pods</strong>. They also act as an internal proxy/load balancer between those <strong>Pods</strong> and anything else that needs to access them from inside the OpenShift environment. For example, if you needed more mapit instances to handle the load, you could spin up more <strong>Pods</strong>. OpenShift automatically maps them as endpoints to the <strong>Service</strong>, and the incoming requests would not notice anything different except that the <strong>Service</strong> was now doing a better job handling the requests.</p>
 </div>
 <div class="paragraph">
-<p>There is a lot more information about Services, including the YAML format to make one by hand, in the official documentation.</p>
+<p>When you asked OpenShift to run the image, the new-app command automatically created a <strong>Service</strong> for you. Remember that <strong>services</strong> are an internal construct. They are not available to the "outside world", or anything that is outside the OpenShift environment. That’s OK, as you will learn later.</p>
+</div>
+<div class="paragraph">
+<p>The way that a <strong>Service</strong> maps to a set of <strong>Pods</strong> is via a system of Labels and Selectors. <strong>Services</strong> are assigned a fixed IP address and many ports and protocols can be mapped.</p>
+</div>
+<div class="paragraph">
+<p>There is a lot more information about <strong>Services</strong>, including the YAML format to make one by hand, in the official documentation.</p>
 </div>
 <div class="paragraph">
 <p>You can see the current list of services in a project with:</p>
 </div>
-<div class="paragraph">
-<p>oc get services
-You will see something like the following:</p>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc get services</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>NAME    TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)                      AGE
-mapit   ClusterIP   172.30.167.160   &lt;none&gt;        8080/TCP,8778/TCP,9779/TCP   26
-NOTE	Service IP addresses are dynamically assigned on creation and are immutable. The IP of a service will never change, and the IP is reserved until the service is deleted. Your service IP will likely be different.
-Just like with pods, you can describe services, too. In fact, you can describe most objects in OpenShift:</p>
+<p>You will see something like the following:</p>
+</div>
+<div class="listingblock console">
+<div class="content">
+<pre>NAME    TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)                      AGE
+mapit   ClusterIP   172.30.167.160   &lt;none&gt;        8080/TCP,8778/TCP,9779/TCP   26</pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Service IP addresses are dynamically assigned on creation and are immutable. The IP of a service will never change, and the IP is reserved until the service is deleted. Your service IP will likely be different.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
-<p>oc describe service mapit
-You will see something like the following:</p>
+<p>Just like with pods, you can describe services, too. In fact, you can describe most objects in OpenShift:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc describe service mapit</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>Name:              mapit
+<p>You will see something like the following:</p>
+</div>
+<div class="listingblock source">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">Name:              mapit
 Namespace:         app-management
 Labels:            app=mapit
                    app.kubernetes.io/component=mapit
@@ -470,18 +578,26 @@ Port:              9779-tcp  9779/TCP
 TargetPort:        9779/TCP
 Endpoints:         10.129.2.99:9779
 Session Affinity:  None
-Events:            &lt;none&gt;
-Information about all objects (their definition, their state, and so forth) is stored in the etcd datastore. etcd stores data as key/value pairs, and all of this data can be represented as serializable data objects (JSON, YAML).</p>
+Events:            &lt;none&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Information about all objects (their definition, their state, and so forth) is stored in the etcd datastore. etcd stores data as key/value pairs, and all of this data can be represented as serializable data objects (JSON, YAML).</p>
 </div>
 <div class="paragraph">
 <p>Take a look at the YAML output for the service:</p>
 </div>
-<div class="paragraph">
-<p>oc get service mapit -o yaml
-You will see something like the following:</p>
+<div class="listingblock console-input">
+<div class="content">
+<pre>oc get service mapit -o yaml</pre>
+</div>
 </div>
 <div class="paragraph">
-<p>apiVersion: v1
+<p>You will see something like the following:</p>
+</div>
+<div class="listingblock console">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">apiVersion: v1
 kind: Service
 metadata:
   annotations:
@@ -558,32 +674,60 @@ spec:
   sessionAffinity: None
   type: ClusterIP
 status:
-  loadBalancer: {}
-Take note of the selector stanza. Remember it.</p>
+  loadBalancer: {}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Take note of the selector stanza. Remember it.</p>
 </div>
 <div class="paragraph">
 <p>It is also of interest to view the YAML of the Pod to understand how OpenShift wires components together. Go back and find the name of your mapit Pod, and then execute the following:</p>
 </div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc get pod -l deployment=mapit -o jsonpath='{.items[*].metadata.labels}' | jq -r</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
 <div class="paragraph">
-<p>oc get pod -l deployment=mapit -o jsonpath='{.items[*].metadata.labels}' | jq -r
-NOTE	The -o jsonpath selects a specific field. In this case we are asking for the labels section in the manifest.
-The output should look something like this:</p>
+<p>The -o jsonpath selects a specific field. In this case we are asking for the labels section in the manifest.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
-<p>{
+<p>The output should look something like this:</p>
+</div>
+<div class="listingblock console">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
   "deployment": "mapit",
   "pod-template-hash": "764c5bf8b8"
-}
-The Service has a selector stanza that refers to deployment: mapit.</p>
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The Service has a selector stanza that refers to deployment: mapit.</p>
 </div>
 <div class="paragraph">
 <p>The Pod has multiple Labels:</p>
 </div>
-<div class="paragraph">
+<div class="ulist">
+<ul>
+<li>
 <p>deployment: mapit</p>
-</div>
-<div class="paragraph">
+</li>
+<li>
 <p>pod-template-hash: 764c5bf8b8</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
 <p>Labels are just key/value pairs. Any Pod in this Project that has a Label that matches the Selector will be associated with the Service. If you look at the describe output again, you will see that there is one endpoint for the service: the existing mapit Pod.</p>
@@ -591,35 +735,68 @@ The Service has a selector stanza that refers to deployment: mapit.</p>
 <div class="paragraph">
 <p>The default behavior of new-app is to create just one instance of the item requested. We will see how to modify/adjust this in a moment, but there are a few more concepts to learn first.</p>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_background_deployments_and_replicasets_in_openshift"><a class="anchor" href="#_background_deployments_and_replicasets_in_openshift"></a>Background: Deployments and ReplicaSets in OpenShift</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>Background: Deployments and ReplicaSets in OpenShift
-While Services provide routing and load balancing for Pods, which may go in and out of existence, ReplicaSets (RS) are used to specify and then ensure the desired number of Pods (replicas) are in existence. For example, if you always want an application to be scaled to 3 Pods (instances), a ReplicaSet is needed. Without an RS, any Pods that are killed or somehow die/exit are not automatically restarted. ReplicaSets are how OpenShift "self heals".</p>
+<p>While <strong>Services</strong> provide routing and load balancing for <strong>Pods</strong>, which may go in and out of existence, ReplicaSets (RS) are used to specify and then ensure the desired number of <strong>Pods</strong> (replicas) are in existence. For example, if you always want an application to be scaled to 3 <strong>Pods</strong> (instances), a ReplicaSet is needed. Without an RS, any <strong>Pods</strong> that are killed or somehow die/exit are not automatically restarted. ReplicaSets are how OpenShift "self heals".</p>
 </div>
 <div class="paragraph">
-<p>A Deployment (deploy) defines how something in OpenShift should be deployed. From the deployments documentation:</p>
+<p>A <strong>Deployment</strong> (deploy) defines how something in OpenShift should be deployed. From the deployments documentation:</p>
 </div>
-<div class="paragraph">
-<p>Deployments describe the desired state of a particular component of an
+<div class="listingblock">
+<div class="content">
+<pre>Deployments describe the desired state of a particular component of an
 application as a Pod template. Deployments create ReplicaSets, which
-orchestrate Pod lifecycles.
-In almost all cases, you will end up using the Pod, Service, ReplicaSet and Deployment resources together. And, in almost all of those cases, OpenShift will create all of them for you.</p>
+orchestrate Pod lifecycles.</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In almost all cases, you will end up using the Pod, Service, ReplicaSet and Deployment resources together. And, in almost all of those cases, OpenShift will create all of them for you.</p>
 </div>
 <div class="paragraph">
 <p>There are some edge cases where you might want some Pods and an RS without a Deployments or a Service, and others, but these are advanced topics not covered in these exercises.</p>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
 <div class="paragraph">
-<p>NOTE	Earlier versions of OpenShift used something called a DeploymentConfig. While still a valid deployment mechanism, moving forward the Deployment will be what will be created with oc new-app. See the official documentation for more details.
-Exploring Deployment-related Objects
-Now that we know the background of what a ReplicaSet and Deployment are, we can explore how they work and are related. Take a look at the Deployment (deploy) that was created for you when you told OpenShift to stand up the mapit image:</p>
+<p>Earlier versions of OpenShift used something called a DeploymentConfig. While still a valid deployment mechanism, moving forward the Deployment will be what will be created with oc new-app. See the official documentation for more details.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_exploring_deployment_related_objects"><a class="anchor" href="#_exploring_deployment_related_objects"></a>Exploring Deployment-related Objects</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Now that we know the background of what a ReplicaSet and Deployment are, we can explore how they work and are related. Take a look at the Deployment (deploy) that was created for you when you told OpenShift to stand up the mapit image:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc get deployment</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>oc get deployment
-You will see something like the following:</p>
+<p>You will see something like the following:</p>
+</div>
+<div class="listingblock console">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">NAME    READY   UP-TO-DATE   AVAILABLE   AGE
+mapit   1/1     1            1           76m</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>NAME    READY   UP-TO-DATE   AVAILABLE   AGE
-mapit   1/1     1            1           76m
-you can also shorten the command to oc get deploy.</p>
+<p>you can also shorten the command to oc get deploy.</p>
 </div>
 <div class="paragraph">
 <p>To get more details, we can look into the ReplicaSet (RS).</p>
@@ -627,57 +804,94 @@ you can also shorten the command to oc get deploy.</p>
 <div class="paragraph">
 <p>Take a look at the ReplicaSet (RS) that was created for you when you told OpenShift to stand up the mapit image:</p>
 </div>
-<div class="paragraph">
-<p>oc get replicaset
-You will see something like the following:</p>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc get replicaset</code></pre>
 </div>
-<div class="paragraph">
-<p>NAME               DESIRED   CURRENT   READY   AGE
-mapit-7bf4f447ff   0         0         0       18m
-mapit-85fdb44576   1         1         1       18m
-you can also shorten the command to oc get rs.</p>
-</div>
-<div class="paragraph">
-<p>This lets us know that, right now, we expect one Pod to be deployed (Desired), and we have one Pod actually deployed (Current). By changing the desired number, we can tell OpenShift that we want more or less Pods.</p>
-</div>
-<div class="paragraph">
-<p>Scaling the Application
-Let’s scale our mapit "application" up to 2 instances. We can do this with the scale command.</p>
-</div>
-<div class="paragraph">
-<p>oc scale --replicas=2 deploy/mapit
-To verify that we changed the number of replicas, issue the following command:</p>
-</div>
-<div class="paragraph">
-<p>oc get replicaset
-You will see something like the following:</p>
-</div>
-<div class="paragraph">
-<p>NAME               DESIRED   CURRENT   READY   AGE
-mapit-764c5bf8b8   2         2         2       79m
-mapit-8695cb9c67   0         0         0       79m
-NOTE	The "older" version was kept. This is to we can "rollback" to a previous version of the application.
-You can see that we now have 2 replicas. Let’s verify the number of pods with the oc get pods command:</p>
-</div>
-<div class="paragraph">
-<p>oc get pods
-You will see something like the following:</p>
-</div>
-<div class="paragraph">
-<p>NAME                     READY   STATUS    RESTARTS   AGE
-mapit-764c5bf8b8-b4vpn   1/1     Running   0          112s
-mapit-764c5bf8b8-l49z7   1/1     Running   0          81m
-And lastly, let’s verify that the Service that we learned about in the previous lab accurately reflects two endpoints:</p>
-</div>
-<div class="paragraph">
-<p>oc describe service mapit
-you can also shorten the command to oc describe svc mapit.</p>
 </div>
 <div class="paragraph">
 <p>You will see something like the following:</p>
 </div>
+<div class="listingblock console">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">NAME               DESIRED   CURRENT   READY   AGE
+mapit-7bf4f447ff   0         0         0       18m
+mapit-85fdb44576   1         1         1       18m</code></pre>
+</div>
+</div>
 <div class="paragraph">
-<p>Name:              mapit
+<p>you can also shorten the command to oc get rs.</p>
+</div>
+<div class="paragraph">
+<p>This lets us know that, right now, we expect one Pod to be deployed (Desired), and we have one Pod actually deployed (Current). By changing the desired number, we can tell OpenShift that we want more or less Pods.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_scaling_the_application"><a class="anchor" href="#_scaling_the_application"></a>Scaling the Application</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Let’s scale our mapit "application" up to 2 instances. We can do this with the scale command.</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc scale --replicas=2 deploy/mapit</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To verify that we changed the number of replicas, issue the following command:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc get replicaset</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You will see something like the following:</p>
+</div>
+<div class="listingblock console">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">NAME               DESIRED   CURRENT   READY   AGE
+mapit-764c5bf8b8   2         2         2       79m
+mapit-8695cb9c67   0         0         0       79m</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>NOTE	The "older" version was kept. This is to we can "rollback" to a previous version of the application.
+You can see that we now have 2 replicas. Let’s verify the number of pods with the oc get pods command:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc get pods</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You will see something like the following:</p>
+</div>
+<div class="listingblock console">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">NAME                     READY   STATUS    RESTARTS   AGE
+mapit-764c5bf8b8-b4vpn   1/1     Running   0          112s
+mapit-764c5bf8b8-l49z7   1/1     Running   0          81m</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And lastly, let’s verify that the Service that we learned about in the previous lab accurately reflects two endpoints:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc describe service mapit</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>you can also shorten the command to oc describe svc mapit.</p>
+</div>
+<div class="paragraph">
+<p>You will see something like the following:</p>
+</div>
+<div class="listingblock console">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">Name:              mapit
 Namespace:         app-management
 Labels:            app=mapit
                    app.kubernetes.io/component=mapit
@@ -696,17 +910,28 @@ Port:              9779-tcp  9779/TCP
 TargetPort:        9779/TCP
 Endpoints:         10.128.2.19:9779,10.129.2.99:9779
 Session Affinity:  None
-Events:            &lt;none&gt;
-Another way to look at a Service&#8217;s endpoints is with the following:</p>
+Events:            &lt;none&gt;</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>oc get endpoints mapit
-And you will see something like the following:</p>
+<p>Another way to look at a Service&#8217;s endpoints is with the following:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc get endpoints mapit</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>NAME    ENDPOINTS                                                        AGE
-mapit   10.128.2.19:8080,10.129.2.99:8080,10.128.2.19:9779 + 3 more&#8230;&#8203;   81m
-Your IP addresses will likely be different, as each pod receives a unique IP within the OpenShift environment. The endpoint list is a quick way to see how many pods are behind a service.</p>
+<p>And you will see something like the following:</p>
+</div>
+<div class="listingblock console">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">NAME    ENDPOINTS                                                        AGE
+mapit   10.128.2.19:8080,10.129.2.99:8080,10.128.2.19:9779 + 3 more...   81m</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Your IP addresses will likely be different, as each pod receives a unique IP within the OpenShift environment. The endpoint list is a quick way to see how many pods are behind a service.</p>
 </div>
 <div class="paragraph">
 <p>Overall, that’s how simple it is to scale an application (Pods in a Service). Application scaling can happen extremely quickly because OpenShift is just launching new instances of an existing image, especially if that image is already cached on the node.</p>
@@ -720,73 +945,129 @@ Your IP addresses will likely be different, as each pod receives a unique IP wit
 <div class="paragraph">
 <p>In this mapit case, the image we ran has several EXPOSE statements in the Dockerfile, so OpenShift automatically created ports on the service and mapped them into the Pods.</p>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_application_self_healing"><a class="anchor" href="#_application_self_healing"></a>Application "Self Healing"</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>Application "Self Healing"
-Because OpenShift’s RSs are constantly monitoring to see that the desired number of Pods are actually running, you might also expect that OpenShift will "fix" the situation if it is ever not right. You would be correct!</p>
+<p>Because OpenShift’s RSs are constantly monitoring to see that the desired number of Pods are actually running, you might also expect that OpenShift will "fix" the situation if it is ever not right. You would be correct!</p>
 </div>
 <div class="paragraph">
 <p>Now that we have two Pods running right now, let’s see what happens when we delete them. Frist, run the oc get pods command, and make note of the Pod names:</p>
 </div>
-<div class="paragraph">
-<p>oc get pods
-You will see something like the following:</p>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc get pods</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>NAME                     READY   STATUS    RESTARTS   AGE
+<p>You will see something like the following:</p>
+</div>
+<div class="listingblock console">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">NAME                     READY   STATUS    RESTARTS   AGE
 mapit-764c5bf8b8-lxnvw   1/1     Running   0          2m28s
-mapit-764c5bf8b8-rscss   1/1     Running   0          2m54s
-Now, delete the pods that belong to the Deployment mapit:</p>
+mapit-764c5bf8b8-rscss   1/1     Running   0          2m54s</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>oc delete pods -l deployment=mapit --wait=false
-Run the oc get pods command once again:</p>
+<p>Now, delete the pods that belong to the Deployment mapit:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc delete pods -l deployment=mapit --wait=false</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>oc get pods
-Did you notice anything? There are new containers already running!</p>
+<p>Run the oc get pods command once again:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc get pods</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Did you notice anything? There are new containers already running!</p>
 </div>
 <div class="paragraph">
 <p>The Pods has a different name. That’s because OpenShift almost immediately detected that the current state (0 Pods, because they were deleted) didn’t match the desired state (2 Pods), and it fixed it by scheduling the Pods.</p>
 </div>
-<div class="paragraph">
-<p>Background: Routes
-openshift route
-Figure 3. OpenShift Route
-While Services provide internal abstraction and load balancing within an OpenShift environment, sometimes clients (users, systems, devices, etc.) outside of OpenShift need to access an application. The way that external clients are able to access applications running in OpenShift is through the OpenShift routing layer. And the data object behind that is a Route.</p>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_background_routes"><a class="anchor" href="#_background_routes"></a>Background: Routes</h2>
+<div class="sectionbody">
+<div class="imageblock">
+<div class="content">
+<img src="_images/openshift_route.png" alt="OpenShift Routes">
+</div>
 </div>
 <div class="paragraph">
-<p>The default OpenShift router (HAProxy) uses the HTTP header of the incoming request to determine where to proxy the connection. You can optionally define security, such as TLS, for the Route. If you want your Services (and by extension, your Pods) to be accessible to the outside world, then you need to create a Route.</p>
+<p>Figure 3. OpenShift Route</p>
+</div>
+<div class="paragraph">
+<p>While <strong>Services</strong> provide internal abstraction and load balancing within an OpenShift environment, sometimes clients (users, systems, devices, etc.) outside of OpenShift need to access an application. The way that external clients are able to access applications running in OpenShift is through the OpenShift routing layer. And the data object behind that is a <strong>Route</strong>.</p>
+</div>
+<div class="paragraph">
+<p>The default OpenShift router (HAProxy) uses the HTTP header of the incoming request to determine where to proxy the connection. You can optionally define security, such as TLS, for the Route. If you want your <strong>Services</strong> (and by extension, your Pods) to be accessible to the outside world, then you need to create a <strong>Route</strong>.</p>
 </div>
 <div class="paragraph">
 <p>Do you remember setting up the router? You probably don’t. That’s because the installation deployed an Operator for the router, and the operator created a router for you! The router lives in the openshift-ingress Project, and you can see information about it with the following command:</p>
 </div>
-<div class="paragraph">
-<p>oc describe deployment router-default -n openshift-ingress
-You will explore the Operator for the router more in a subsequent exercise.</p>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc describe deployment router-default -n openshift-ingress</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>Creating a Route
-Creating a Route is a pretty straight-forward process. You simply expose the Service via the command line. If you remember from earlier, your Service name is mapit. With the Service name, creating a Route is a simple one-command task:</p>
+<p>You will explore the Operator for the router more in a subsequent exercise.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_creating_a_route"><a class="anchor" href="#_creating_a_route"></a>Creating a Route</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Creating a Route is a pretty straight-forward process. You simply expose the Service via the command line. If you remember from earlier, your Service name is mapit. With the Service name, creating a Route is a simple one-command task:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc expose service mapit</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>oc expose service mapit
-You will see:</p>
+<p>You will see:</p>
+</div>
+<div class="listingblock console">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">route.route.openshift.io/mapit exposed</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>route.route.openshift.io/mapit exposed
-Verify the Route was created with the following command:</p>
+<p>Verify the Route was created with the following command:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc get route</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>oc get route
-You will see something like:</p>
+<p>You will see something like:</p>
+</div>
+<div class="listingblock console">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">NAME    HOST/PORT                                             PATH   SERVICES   PORT       TERMINATION   WILDCARD
+mapit   mapit-app-management.apps.cluster-kswh5.kswh5.sandbox1208.opentlc.com                   mapit      8080-tcp                 None</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>NAME    HOST/PORT                                             PATH   SERVICES   PORT       TERMINATION   WILDCARD
-mapit   mapit-app-management.apps.cluster-kswh5.kswh5.sandbox1208.opentlc.com                   mapit      8080-tcp                 None
-If you take a look at the HOST/PORT column, you’ll see a familiar looking FQDN. The default behavior of OpenShift is to expose services on a formulaic hostname:</p>
+<p>If you take a look at the HOST/PORT column, you’ll see a familiar looking FQDN. The default behavior of OpenShift is to expose services on a formulaic hostname:</p>
 </div>
-<div class="paragraph">
-<p>{SERVICENAME}-{PROJECTNAME}.{ROUTINGSUBDOMAIN}</p>
+<div class="listingblock">
+<div class="content">
+<pre>{SERVICENAME}-{PROJECTNAME}.{ROUTINGSUBDOMAIN}</pre>
+</div>
 </div>
 <div class="paragraph">
 <p>In the subsequent router Operator labs we’ll explore this and other configuration options.</p>
@@ -803,106 +1084,172 @@ If you take a look at the HOST/PORT column, you’ll see a familiar looking FQDN
 <div class="paragraph">
 <p>If you take a step back to examine everything you’ve done so far, in three commands you deployed an application, scaled it, and made it accessible to the outside world:</p>
 </div>
-<div class="paragraph">
-<p>oc new-app quay.io/openshiftroadshow/mapit
+<div class="listingblock">
+<div class="content">
+<pre>oc new-app quay.io/openshiftroadshow/mapit
 oc scale --replicas=2 deploy/mapit
-oc expose service mapit
-Scale Down
-Before we continue, go ahead and scale your application down to a single instance:</p>
+oc expose service mapit</pre>
 </div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_scale_down"><a class="anchor" href="#_scale_down"></a>Scale Down</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>oc scale --replicas=1 deploy/mapit
-Application Probes
-OpenShift provides rudimentary capabilities around checking the liveness and/or readiness of application instances. If the basic checks are insufficient, OpenShift also allows you to run a command inside the Pod/container in order to perform the check. That command could be a complicated script that uses any language already installed inside the container image.</p>
+<p>Before we continue, go ahead and scale your application down to a single instance:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc scale --replicas=1 deploy/mapit</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_application_probes"><a class="anchor" href="#_application_probes"></a>Application Probes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>OpenShift provides rudimentary capabilities around checking the liveness and/or readiness of application instances. If the basic checks are insufficient, OpenShift also allows you to run a command inside the Pod/container in order to perform the check. That command could be a complicated script that uses any language already installed inside the container image.</p>
 </div>
 <div class="paragraph">
 <p>There are two types of application probes that can be defined:</p>
 </div>
-<div class="paragraph">
-<p>Liveness Probe</p>
-</div>
+<div class="sect2">
+<h3 id="_liveness_probe"><a class="anchor" href="#_liveness_probe"></a>Liveness Probe</h3>
 <div class="paragraph">
 <p>A liveness probe checks if the container in which it is configured is still running. If the liveness probe fails, the container is killed, which will be subjected to its restart policy.</p>
 </div>
-<div class="paragraph">
-<p>Readiness Probe</p>
 </div>
+<div class="sect2">
+<h3 id="_readiness_probe"><a class="anchor" href="#_readiness_probe"></a>Readiness Probe</h3>
 <div class="paragraph">
 <p>A readiness probe determines if a container is ready to service requests. If the readiness probe fails, the endpoint’s controller ensures the container has its IP address removed from the endpoints of all services that should match it. A readiness probe can be used to signal to the endpoint’s controller that even though a container is running, it should not receive any traffic.</p>
 </div>
 <div class="paragraph">
 <p>More information on probing applications is available in the Application Health section of the documentation.</p>
 </div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_add_probes_to_the_application"><a class="anchor" href="#_add_probes_to_the_application"></a>Add Probes to the Application</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>Add Probes to the Application
-The oc set command can be used to perform several different functions, one of which is creating and/or modifying probes. The mapit application exposes an endpoint which we can check to see if it is alive and ready to respond. You can test it using curl:</p>
+<p>The oc set command can be used to perform several different functions, one of which is creating and/or modifying probes. The mapit application exposes an endpoint which we can check to see if it is alive and ready to respond. You can test it using curl:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">curl mapit-app-management.apps.cluster-kswh5.kswh5.sandbox1208.opentlc.com/health</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>curl mapit-app-management.apps.cluster-kswh5.kswh5.sandbox1208.opentlc.com/health
-You will get some JSON as a response:</p>
+<p>You will get some JSON as a response:</p>
+</div>
+<div class="listingblock console">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{"status":"UP","diskSpace":{"status":"UP","total":10724835328,"free":10257825792,"threshold":10485760}}</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>{"status":"UP","diskSpace":{"status":"UP","total":10724835328,"free":10257825792,"threshold":10485760}}
-We can ask OpenShift to probe this endpoint for liveness with the following command:</p>
+<p>We can ask OpenShift to probe this endpoint for liveness with the following command:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc set probe deploy/mapit --liveness --get-url=http://:8080/health --initial-delay-seconds=30</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>oc set probe deploy/mapit --liveness --get-url=http://:8080/health --initial-delay-seconds=30
-You can then see that this probe is defined in the oc describe output:</p>
+<p>You can then see that this probe is defined in the oc describe output:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc describe deployment mapit</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>oc describe deployment mapit
-You will see a section like:</p>
+<p>You will see a section like:</p>
 </div>
-<div class="paragraph">
-<p>&#8230;&#8203;
+<div class="listingblock console">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">...
   Containers:
    mapit:
     Image:        quay.io/openshiftroadshow/mapit@sha256:8c7e0349b6a016e3436416f3c54debda
 4594ba09fd34b8a0dee0c4497102590d
     Ports:        9779/TCP, 8080/TCP, 8778/TCP
     Host Ports:   0/TCP, 0/TCP, 0/TCP
-    Liveness:     http-get <a href="http://:8080/health" class="bare">http://:8080/health</a> delay=30s timeout=1s period=10s
+    Liveness:     http-get http://:8080/health delay=30s timeout=1s period=10s
 #success=1 #failure=3
     Environment:  &lt;none&gt;
     Mounts:       &lt;none&gt;
   Volumes:        &lt;none&gt;
-&#8230;&#8203;
-Similarly, you can set a readiness probe in the same manner:</p>
+...</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>oc set probe deploy/mapit --readiness --get-url=http://:8080/health --initial-delay-seconds=30
-Examining Deployments and ReplicaSets
-Each change to the Deployment is counted as a configuration change, which triggers a new deployment. The Deployment is in charge of which ReplicaSet to deploy. The newest is always deployed.</p>
+<p>Similarly, you can set a readiness probe in the same manner:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc set probe deploy/mapit --readiness --get-url=http://:8080/health --initial-delay-seconds=30</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_examining_deployments_and_replicasets"><a class="anchor" href="#_examining_deployments_and_replicasets"></a>Examining Deployments and ReplicaSets</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Each change to the Deployment is counted as a configuration change, which triggers a new deployment. The Deployment is in charge of which ReplicaSet to deploy. The newest is always deployed.</p>
 </div>
 <div class="paragraph">
 <p>Execute the following:</p>
 </div>
-<div class="paragraph">
-<p>oc get deployments
-You should see something like:</p>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc get deployments</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>NAME    READY   UP-TO-DATE   AVAILABLE   AGE
-mapit   1/1     1            1           131m
-You made two material configuration changes (plus a scale), after the initial deployment, thus you are now on the fourth revision of the Deployment.</p>
+<p>You should see something like:</p>
+</div>
+<div class="listingblock console">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">NAME    READY   UP-TO-DATE   AVAILABLE   AGE
+mapit   1/1     1            1           131m</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You made two material configuration changes (plus a scale), after the initial deployment, thus you are now on the fourth revision of the Deployment.</p>
 </div>
 <div class="paragraph">
 <p>Execute the following:</p>
 </div>
-<div class="paragraph">
-<p>oc get replicasets
-You should see something like:</p>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc get replicasets</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>NAME               DESIRED   CURRENT   READY   AGE
+<p>You should see something like:</p>
+</div>
+<div class="listingblock console">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">NAME               DESIRED   CURRENT   READY   AGE
 mapit-5f695ff4b8   1         1         1       4m19s
 mapit-668f69cdd5   0         0         0       6m18s
 mapit-764c5bf8b8   0         0         0       133m
-mapit-8695cb9c67   0         0         0       133m
-Each time a new deployment is triggered, the deployer pod creates a new ReplicaSet which then is responsible for ensuring that pods exist. Notice that the old RSs have a desired scale of zero, and the most recent RS has a desired scale of 1.</p>
+mapit-8695cb9c67   0         0         0       133m</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Each time a new deployment is triggered, the deployer pod creates a new ReplicaSet which then is responsible for ensuring that pods exist. Notice that the old RSs have a desired scale of zero, and the most recent RS has a desired scale of 1.</p>
 </div>
 <div class="paragraph">
 <p>If you oc describe each of these RSs you will see how earlier versions have no probes, and the latest running RS has the new probes.</p>
+</div>
+</div>
 </div>
 </article>
 <aside class="toc sidebar" data-title="Contents" data-levels="2">

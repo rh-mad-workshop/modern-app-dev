@@ -1,40 +1,49 @@
-Infrastructure Nodes and Operators
+= Infrastructure Nodes and Operators
 
-OpenShift Infrastructure Nodes
+== OpenShift Infrastructure Nodes
 OpenShift components that fall into the infrastructure categorization include:
 
-kubernetes and OpenShift control plane services ("masters")
+* kubernetes and OpenShift control plane services ("masters")
 
-router
+* router
 
-container image registry
+* container image registry
 
-cluster metrics collection ("monitoring")
+* cluster metrics collection ("monitoring")
 
-cluster aggregated logging
+* cluster aggregated logging
 
-service brokers
+* service brokers
 
 Any node running a container/pod/component not described above is considered a worker and must be covered by a subscription.
 
-More MachineSet Details
+== More MachineSet Details
 In the MachineSets exercises you explored using MachineSets and scaling the cluster by changing their replica count. In the case of an infrastructure node, we want to create additional Machines that have specific Kubernetes labels. Then, we can configure the various infrastructure components to run specifically on nodes with those labels.
 
+[NOTE]
+====
 Currently the operators that are used to control infrastructure components do not all support the use of taints and tolerations. This means that infrastructure workload will go onto the infrastructure nodes, but other workload is not specifically prevented from running on the infrastructure nodes. In other words, user workload may commingle with infrastructure workload until full taint/toleration support is implemented in all operators.
 
 Taints and tolerations work in tandem to ensure that workloads are not scheduled onto certian nodes. They’ll be explored later on.
+====
 To accomplish this, you will create additional MachineSets.
 
 In order to understand how MachineSets work, run the following.
 
 This will allow you to follow along with some of the following discussion.
 
+[.console-input]
+[source, bash]
+----
 CLUSTERNAME=$(oc get  infrastructures.config.openshift.io cluster  -o jsonpath='{.status.infrastructureName}')
 ZONENAME=$(oc get nodes -L topology.kubernetes.io/zone  --no-headers  | awk '{print $NF}' | tail -1)
 oc get machineset -n openshift-machine-api -o yaml ${CLUSTERNAME}-worker-${ZONENAME}
-Metadata
+----
+== Metadata
 The metadata on the MachineSet itself includes information like the name of the MachineSet and various labels.
-
+[.console]
+[source,yaml]
+----
 metadata:
   creationTimestamp: 2019-01-25T16:00:34Z
   generation: 1
@@ -47,21 +56,28 @@ metadata:
   resourceVersion: "9027"
   selfLink: /apis/cluster.k8s.io/v1alpha1/namespaces/openshift-machine-api/machinesets/190125-3-worker-us-east-1b
   uid: 591b4d06-20ba-11e9-a880-068acb199400
+----
 You might see some annotations on your MachineSet if you dumped one that had a MachineAutoScaler defined.
 Selector
 The MachineSet defines how to create Machines, and the Selector tells the operator which machines are associated with the set:
-
+[.console]
+[source,yaml]
+----
 spec:
   replicas: 2
   selector:
     matchLabels:
       machine.openshift.io/cluster-api-cluster: 190125-3
       machine.openshift.io/cluster-api-machineset: 190125-3-worker-us-east-1b
+----
 In this case, the cluster name is 190125-3 and there is an additional label for the whole set.
 
-Template Metadata
+== Template Metadata
 The template is the part of the MachineSet that templates out the Machine. The template itself can have metadata associated, and we need to make sure that things match here when we make changes:
 
+[.console]
+[source,yaml]
+----
   template:
     metadata: {}
       labels:
@@ -69,11 +85,15 @@ The template is the part of the MachineSet that templates out the Machine. The t
         machine.openshift.io/cluster-api-machine-role: worker
         machine.openshift.io/cluster-api-machine-type: worker
         machine.openshift.io/cluster-api-machineset: 190125-3-worker-us-east-1b
-Template Spec
+----
+== Template Spec
 The template needs to specify how the Machine/Node should be created. You will notice that the spec and, more specifically, the providerSpec contains all of the important AWS data to help get the Machine created correctly and bootstrapped.
 
 In our case, we want to ensure that the resulting node inherits one or more specific labels. As you’ve seen in the examples above, labels go in metadata sections:
 
+[.console]
+[source, yaml]
+----
   spec:
       metadata:
         creationTimestamp: null
@@ -82,41 +102,57 @@ In our case, we want to ensure that the resulting node inherits one or more spec
           ami:
             id: ami-08871aee06d13e584
 ...
+----
 By default the MachineSets that the installer creates do not apply any additional labels to the node.
 
-Defining a Custom MachineSet
+== Defining a Custom MachineSet
 Now that you’ve analyzed an existing MachineSet it’s time to go over the rules for creating one, at least for a simple change like we’re making:
 
-Don’t change anything in the providerSpec
+. Don’t change anything in the providerSpec
 
-Don’t change any instances of machine.openshift.io/cluster-api-cluster: <clusterid>
+. Don’t change any instances of machine.openshift.io/cluster-api-cluster: <clusterid>
 
-Give your MachineSet a unique name
+. Give your MachineSet a unique name
 
-Make sure any instances of machine.openshift.io/cluster-api-machineset match the name
+. Make sure any instances of machine.openshift.io/cluster-api-machineset match the name
 
-Add labels you want on the nodes to .spec.template.spec.metadata.labels
+. Add labels you want on the nodes to .spec.template.spec.metadata.labels
 
-Even though you’re changing MachineSet name references, be sure not to change the subnet.
+. Even though you’re changing MachineSet name references, be sure not to change the subnet.
 
 This sounds complicated, but we have a little script and some steps that will do the hard work for you:
 
+[.console-input]
+[source, bash]
+----
 bash /opt/app-root/src/support/machineset-generator.sh 1 infra 0 | oc create -f -
 export MACHINESET=$(oc get machineset -n openshift-machine-api -l machine.openshift.io/cluster-api-machine-role=infra -o jsonpath='{.items[0].metadata.name}')
 oc patch machineset $MACHINESET -n openshift-machine-api --type='json' -p='[{"op": "add", "path": "/spec/template/spec/metadata/labels", "value":{"node-role.kubernetes.io/worker":"", "node-role.kubernetes.io/infra":""} }]'
 oc scale machineset $MACHINESET -n openshift-machine-api --replicas=3
+----
 Then go ahead and run:
 
+[.console-input]
+[source, bash]
+----
 oc get machineset -n openshift-machine-api
+----
 You should see the new infra set listed with a name similar to the following:
-
+----
 ...
 cluster-city-56f8-mc4pf-infra-us-east-2a    1         1                             13s
 ...
+----
 We don’t yet have any ready or available machines in the set because the instances are still coming up and bootstrapping. You can check oc get machine -n openshift-machine-api to see when the instance finally starts running. Then, you can use oc get node to see when the actual node is joined and ready.
 
 It can take several minutes for a Machine to be prepared and added as a Node.
+
+[.console-input]
+[source, bash]
+----
 oc get nodes
+----
+----
 NAME                                         STATUS   ROLES          AGE     VERSION
 ip-10-0-133-134.us-east-2.compute.internal   Ready    infra,worker   8m     v1.16.2
 ip-10-0-133-191.us-east-2.compute.internal   Ready    worker         61m    v1.16.2
@@ -127,66 +163,97 @@ ip-10-0-152-132.us-east-2.compute.internal   Ready    worker         61m    v1.1
 ip-10-0-157-139.us-east-2.compute.internal   Ready    master         67m    v1.16.2
 ip-10-0-167-9.us-east-2.compute.internal     Ready    worker         61m    v1.16.2
 ip-10-0-169-121.us-east-2.compute.internal   Ready    master         67m    v1.16.2
+----
 If you’re having trouble figuring out which node is the new one, take a look at the AGE column. It will be the youngest! Also, in the ROLES column you will notice that the new node has both a worker and an infra role.
 
 Alternatively you can list the node by role.
 
+[.console-input]
+[source, bash]
+----
 oc get nodes -l node-role.kubernetes.io/infra
-Check the Labels
+----
+== Check the Labels
 In our case, the youngest node was named ip-10-0-128-138.us-east-1.compute.internal, so we can ask what its labels are:
 
+[.console-input]
+[source, bash]
+----
 YOUNG_INFRA_NODE=$(oc get nodes -l node-role.kubernetes.io/infra  --sort-by=.metadata.creationTimestamp -o jsonpath='{.items[0].metadata.name}')
 oc get nodes ${YOUNG_INFRA_NODE} --show-labels | grep --color node-role
+----
 And, in the LABELS column we see:
-
+----
 beta.kubernetes.io/arch=amd64,beta.kubernetes.io/instance-type=m5.2xlarge,beta.kubernetes.io/os=linux,failure-domain.beta.kubernetes.io/region=us-east-2,failure-domain.beta.kubernetes.io/zone=us-east-2a,kubernetes.io/arch=amd64,kubernetes.io/hostname=ip-10-0-140-3,kubernetes.io/os=linux,node-role.kubernetes.io/infra=,node-role.kubernetes.io/worker=,node.openshift.io/os_id=rhcos
+----
 It’s hard to see, but our node-role.kubernetes.io/infra label is there.
 
-Add More Machinesets (or scale, or both)
+== Add More Machinesets (or scale, or both)
 In a realistic production deployment, you would want at least 3 MachineSets to hold infrastructure components. Both the logging aggregation solution and the service mesh will deploy ElasticSearch, and ElasticSearch really needs 3 instances spread across 3 discrete nodes. Why 3 MachineSets? Well, in theory, having multiple MachineSets in different AZs ensures that you don’t go completely dark if AWS loses an AZ.
 
 The MachineSet you created with the scriptlet already created 3 replicas for you, so you don’t have to do anything for now. Don’t create any additional ones yourself, either — the AWS limits on the account you are using are purposefully small.
 
-Extra Credit
+== Extra Credit
 In the openshift-machine-api project are several Pods. One of them has a name like machine-api-controllers-56bdc6874f-86jnb. If you use oc logs on the various containers in that Pod, you will see the various operator bits that actually make the nodes come into existence.
 
-Quick Operator Background
+== Quick Operator Background
 Operators are just Pods. But they are special Pods. They are software that understands how to deploy and manage applications in a Kubernetes environment. The power of Operators relies on a Kubernetes feature called CustomResourceDefinitions (CRD). A CRD is exactly what it sounds like. They are a way to define a custom resource which is essentially extending the Kubernetes API with new objects.
 
 If you wanted to be able to create/read/update/delete Foo objects in Kubernetes, you would create a CRD that defines what a Foo resource is and how it works. You can then create CustomResources (CRs) — instances of your CRD.
 
 With Operators, the general pattern is that an Operator looks at CRs for its configuration, and then it operates on the Kubernetes environment to do whatever the configuration specifies. Now you will take a look at how some of the infrastructure operators in OpenShift do their thing.
 
-Moving Infrastructure Components
+== Moving Infrastructure Components
 Now that you have some special nodes, it’s time to move various infrastructure components onto them.
 
-Router
+=== Router
 The OpenShift router is managed by an Operator called openshift-ingress-operator. Its Pod lives in the openshift-ingress-operator project:
 
+
+[.console-input]
+[source, bash]
+----
 oc get pod -n openshift-ingress-operator
+----
 The actual default router instance lives in the openshift-ingress project. Take a look at the Pods.
 
+[.console-input]
+[source, bash]
+----
 oc get pods -n openshift-ingress -o wide
+----
 And you will see something like:
-
+----
 NAME                              READY   STATUS    RESTARTS   AGE   IP           NODE                                        NOMINATED NODE
 router-default-7bc4c9c5cd-clwqt   1/1     Running   0          9h    10.128.2.7   ip-10-0-144-70.us-east-2.compute.internal   <none>
 router-default-7bc4c9c5cd-fq7m2   1/1     Running   0          9h    10.131.0.7   ip-10-0-138-38.us-east-2.compute.internal   <none>
+----
 Review a Node on which a router is running:
 
+[.console-input]
+[source, bash]
+----
 ROUTER_POD_NODE=$(oc get pods -n openshift-ingress -o jsonpath='{.items[0].spec.nodeName}')
 oc get node ${ROUTER_POD_NODE}
+----
 You will see that it has the role of worker.
-
+----
 NAME                                        STATUS   ROLES    AGE   VERSION
 ip-10-0-144-70.us-east-2.compute.internal   Ready    worker   9h    v1.12.4+509916ce1
+----
 The default configuration of the router operator is to pick nodes with the role of worker. But, now that we have created dedicated infrastructure nodes, we want to tell the operator to put the router instances on nodes with the role of infra.
 
 The OpenShift router operator uses a custom resource definition (CRD) called ingresses.config.openshift.io to define the default routing subdomain for the cluster:
 
+[.console-input]
+[source, bash]
+----
 oc get ingresses.config.openshift.io cluster -o yaml
+----
 The cluster object is observed by the router operator as well as the master. Yours likely looks something like:
-
+[.console]
+[source, yaml]
+----
 apiVersion: config.openshift.io/v1
 kind: Ingress
 metadata:
@@ -199,11 +266,17 @@ metadata:
 spec:
   domain: apps.cluster-kswh5.kswh5.sandbox1208.opentlc.com
 status: {}
+----
 Individual router deployments are managed via the ingresscontrollers.operator.openshift.io CRD. There is a default one created in the openshift-ingress-operator namespace:
 
+[.console-input]
+[source, bash]
+----
 oc get ingresscontrollers.operator.openshift.io default -n openshift-ingress-operator -o yaml
+----
 Yours looks something like:
-
+[.console]
+[source,yaml]
 apiVersion: operator.openshift.io/v1
 kind: IngressController
 metadata:
@@ -227,22 +300,40 @@ status:
   endpointPublishingStrategy:
     type: LoadBalancerService
   selector: ingress.operator.openshift.io/ingress-controller-deployment=default
+----
 To specify a nodeSelector that tells the router pods to hit the infrastructure nodes, we can apply the following configuration:
 
+[.console-input]
+[source, bash]
+----
 oc apply -f /opt/app-root/src/support/ingresscontroller.yaml
+----
 You may see an error that says Warning: resource is missing the kubectl.kubernetes.io/last-applied-config. This is normal, an apply envokes a "3 way diff merge" on the resource. Since the ingress controller was only just created on install, there was no "last applied" configuration for it. If you run that command again, you shouldn’t see that warning.
 Run:
 
+[.console-input]
+[source, bash]
+----
 oc get pod -n openshift-ingress -o wide
+----
+[NOTE]
+====
 Your session may timeout during the router move. Please refresh the page to get your session back. You will not lose your terminal session but may have to navigate back to this page manually.
+====
 If you’re quick enough, you might catch either Terminating or ContainerCreating pods. The Terminating pod was running on one of the worker nodes. The Running pods eventually are on one of our nodes with the infra role.
 
-Registry
+== Registry
 The registry uses a similar CRD mechanism to configure how the operator deploys the actual registry pods. That CRD is configs.imageregistry.operator.openshift.io. You will edit the cluster CR object in order to add the nodeSelector. First, take a look at it:
 
+[.console-input]
+[source, bash]
+----
 oc get configs.imageregistry.operator.openshift.io/cluster -o yaml
+----
 You will see something like:
-
+[.console]
+[souorce,yaml]
+----
 apiVersion: imageregistry.operator.openshift.io/v1
 kind: Config
 metadata:
@@ -283,15 +374,27 @@ spec:
       regionEndpoint: ""
 status:
 ...
+----
 If you run the following command:
 
+[.console-input]
+[source, bash]
+----
 oc patch configs.imageregistry.operator.openshift.io/cluster -p '{"spec":{"nodeSelector":{"node-role.kubernetes.io/infra": ""}}}' --type=merge
+----
 It will modify the .spec of the registry CR in order to add the desired nodeSelector.
 
+[NOTE]
+====
 At this time the image registry is not using a separate project for its operator. Both the operator and the operand are housed in the openshift-image-registry project.
+====
 After you run the patch command you should see the registry pod being moved to the infra node. The registry is in the openshift-image-registry project. If you execute the following quickly enough:
 
+[.console-input]
+[source, bash]
+----
 oc get pod -n openshift-image-registry
+----
 You might see the old registry pod terminating and the new one starting. Since the registry is being backed by an S3 bucket, it doesn’t matter what node the new registry pod instance lands on. It’s talking to an object store via an API, so any existing images stored there will remain accessible.
 
 Also note that the default replica count is 1. In a real-world environment you might wish to scale that up for better availability, network throughput, or other reasons.
@@ -300,11 +403,13 @@ If you look at the node on which the registry landed (see the section on the rou
 
 Lastly, notice that the CRD for the image registry’s configuration is not namespaced — it is cluster scoped. There is only one internal/integrated registry per OpenShift cluster.
 
-Monitoring
+== Monitoring
 The Cluster Monitoring operator is responsible for deploying and managing the state of the Prometheus+Grafana+AlertManager cluster monitoring stack. It is installed by default during the initial cluster installation. Its operator uses a ConfigMap in the openshift-monitoring project to set various tunables and settings for the behavior of the monitoring stack.
 
 The following ConfigMap definition will configure the monitoring solution to be redeployed onto infrastructure nodes.
-
+[.console]
+[source,yaml]
+----
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -333,22 +438,44 @@ data:
     telemeterClient:
       nodeSelector:
         node-role.kubernetes.io/infra: ""
+----
 There is no ConfigMap created as part of the installation. Without one, the operator will assume default settings. Verify the ConfigMap is not defined in your cluster:
 
+[.console-input]
+[source, bash]
+----
 oc get configmap cluster-monitoring-config -n openshift-monitoring
+----
 You should see:
-
+----
 Error from server (NotFound): configmaps "cluster-monitoring-config" not found
+----
 The operator will, in turn, create several ConfigMap objects for the various monitoring stack components, and you can see them, too:
 
+[.console-input]
+[source, bash]
+----
 oc get configmap -n openshift-monitoring
+----
 You can create the new monitoring config with the following command:
 
+[.console-input]
+[source, bash]
+----
 oc create -f /opt/app-root/src/support/cluster-monitoring-configmap.yaml
+----
 Watch the monitoring pods move from worker to infra Nodes with:
 
+[.console-input]
+[source, bash]
+----
 watch 'oc get pod -n openshift-monitoring'
+----
 or:
 
+[.console-input]
+[source, bash]
+----
 oc get pod -w -n openshift-monitoring
+----
 You can exit by pressing kbd:[Ctrl+C].

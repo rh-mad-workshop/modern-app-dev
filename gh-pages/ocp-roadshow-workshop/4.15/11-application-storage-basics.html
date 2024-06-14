@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Untitled :: OpenShift Roadshow Workshop 2024</title>
+    <title>Application Storage Basics :: OpenShift Roadshow Workshop 2024</title>
     <link rel="canonical" href="http://localhost:3000/rhs-openshift-starter-guides/index.html/ocp-roadshow-workshop/4.15/11-application-storage-basics.html">
     <meta name="generator" content="Antora 2.3.4">
     <link rel="stylesheet" href="../../_/css/site.css">
@@ -167,52 +167,55 @@
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="10-application-management-basics.html">Administering Applications on OpenShift</a>
+    <a class="nav-link" href="#08-ocp-ops-intro">MAD Roadshow Ops Track</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="09-installation-and-verification.html"><strong>01</strong> - Installation and Verificiation</a>
   </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="10-application-management-basics.html"><strong>02</strong> - Application Management Basics</a>
+  </li>
   <li class="nav-item is-current-page" data-depth="2">
-    <a class="nav-link" href="11-application-storage-basics.html"><strong>02</strong> - Application Storage Basics</a>
+    <a class="nav-link" href="11-application-storage-basics.html"><strong>03</strong> - Application Storage Basics</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="12-machinesets-machines-nodes.html"><strong>02</strong> - MachineSets, Machines, and Nodes</a>
+    <a class="nav-link" href="12-machinesets-machines-nodes.html"><strong>04</strong> - MachineSets, Machines, and Nodes</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="13-infrastructure-nodes-and-operators.html"><strong>03</strong> - Infrastructure Nodes and Operators</a>
+    <a class="nav-link" href="13-infrastructure-nodes-and-operators.html"><strong>05</strong> - Infrastructure Nodes and Operators</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="14-openshift-logging-wth-loki.html"><strong>04</strong> - OpenShift Logging with Loki</a>
+    <a class="nav-link" href="14-openshift-logging-wth-loki.html"><strong>06</strong> - OpenShift Logging with Loki</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="15-external-authentication.html"><strong>05</strong> - External (LDAP) Authentication Providers, Users, and Groups</a>
+    <a class="nav-link" href="15-external-authentication.html"><strong>07</strong> - External (LDAP) Authentication Providers, Users, and Groups</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="16-openshift-monitoring.html"><strong>06</strong> - OpenShift Monitoring with Prometheus</a>
+    <a class="nav-link" href="16-openshift-monitoring.html"><strong>08</strong> - OpenShift Monitoring with Prometheus</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="17-project-template-quota-limits.html"><strong>07</strong> - Project Request Template, Quotas, Limits</a>
+    <a class="nav-link" href="17-project-template-quota-limits.html"><strong>09</strong> - Project Request Template, Quotas, Limits</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="18-openshift-networking-networkpolicy.html"><strong>08</strong> - OpenShift Networking and NetworkPolicy</a>
+    <a class="nav-link" href="18-openshift-networking-networkpolicy.html"><strong>10</strong> - OpenShift Networking and NetworkPolicy</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="19-disable-self-project-provisioning.html"><strong>09</strong> - Disabling Project Self-Provisioning</a>
+    <a class="nav-link" href="19-disable-self-project-provisioning.html"><strong>11</strong> - Disabling Project Self-Provisioning</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="20-cluster-resource-quota.html"><strong>10</strong> - Cluster Resource Quotas</a>
+    <a class="nav-link" href="20-cluster-resource-quota.html"><strong>12</strong> - Cluster Resource Quotas</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="21-taints-tolerations.html"><strong>11</strong> - Taints and Tolerations</a>
+    <a class="nav-link" href="21-taints-tolerations.html"><strong>13</strong> - Taints and Tolerations</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="22-vulnerability-scanning-acs.html"><strong>12</strong> - Vulnerability Scanning with ACS</a>
+    <a class="nav-link" href="22-vulnerability-scanning-acs.html"><strong>14</strong> - Vulnerability Scanning with ACS</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="23-devsecops-acs.html"><strong>13</strong> - DevSecOps with ACS</a>
+    <a class="nav-link" href="23-devsecops-acs.html"><strong>15</strong> - DevSecOps with ACS</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="24-multicluster-with-acm.html"><strong>14</strong> - Multicluster management with ACM</a>
+    <a class="nav-link" href="24-multicluster-with-acm.html"><strong>16</strong> - Multicluster management with ACM</a>
   </li>
 </ul>
   </li>
@@ -247,44 +250,86 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="index.html">OCP Roadshow Workshop</a></li>
-    <li><a href="10-application-management-basics.html">Administering Applications on OpenShift</a></li>
-    <li><a href="11-application-storage-basics.html"><strong>02</strong> - Application Storage Basics</a></li>
+    <li>MAD Roadshow Ops Track</li>
+    <li><a href="11-application-storage-basics.html"><strong>03</strong> - Application Storage Basics</a></li>
   </ul>
 </nav>
   <div class="edit-this-page"><a href="file:///Users/mkimberl/Documents/source/github/modern-app-dev/documentation/modules/ROOT/pages/11-application-storage-basics.adoc">Edit this Page</a></div>
 </div>
   <div class="content">
 <article class="doc">
+<h1 class="page">Application Storage Basics</h1>
+<div class="sect1">
+<h2 id="_application_storage_basics"><a class="anchor" href="#_application_storage_basics"></a>Application Storage Basics</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>Application Storage Basics</p>
+<p>If a pod in OpenShift needs reliable storage, for example, to host a database, we would need to supply a persistent volume to the pod. This type of storage outlives the container, i.e. it persists when the pod dies. It typically comes from an external storage system.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Doing these exercises requires that you already have deployed the application featured in the Application Management Basics exercises. You should do those exercises now before continuing.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
-<p>Application Storage Basics
-If a pod in OpenShift needs reliable storage, for example, to host a database, we would need to supply a persistent volume to the pod. This type of storage outlives the container, i.e. it persists when the pod dies. It typically comes from an external storage system.</p>
-</div>
-<div class="paragraph">
-<p>Doing these exercises requires that you already have deployed the application featured in the Application Management Basics exercises. You should do those exercises now before continuing.
-The mapit application currently doesn’t leverage any persistent storage. If the pod dies, so does all the content inside the container.</p>
+<p>The mapit application currently doesn’t leverage any persistent storage. If the pod dies, so does all the content inside the container.</p>
 </div>
 <div class="paragraph">
 <p>We will talk about this concept in more detail later. But let’s imagine for a moment, the mapit application needs persistent storage available under the /app-storage directory inside the container.</p>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
 <div class="paragraph">
-<p>The directories that make up the container’s internal filesystem are a blend of the read-only layers of the container image and the top-most writable layer that is added as soon as a container instance is started from the image. The writable layer is disposed of once the container is deleted which can happen regularly in a dynamic container orchestration environment.
-You should be in the app-management project from the previous lab. To make sure, run the following command:</p>
+<p>The directories that make up the container’s internal filesystem are a blend of the read-only layers of the container image and the top-most writable layer that is added as soon as a container instance is started from the image. The writable layer is disposed of once the container is deleted which can happen regularly in a dynamic container orchestration environment.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
-<p>oc project app-management
-Adding Persistent Volume Claims
-Here’s how you would instruct OpenShift to create a PersistentVolume object, which represents external, persistent storage, and have it mounted inside the container’s filesystem:</p>
+<p>You should be in the app-management project from the previous lab. To make sure, run the following command:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc project app-management</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_adding_persistent_volume_claims"><a class="anchor" href="#_adding_persistent_volume_claims"></a>Adding Persistent Volume Claims</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Here’s how you would instruct OpenShift to create a PersistentVolume object, which represents external, persistent storage, and have it mounted inside the container’s filesystem:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc set volume deploy/mapit --add --name=mapit-storage -t pvc --claim-mode=ReadWriteOnce --claim-size=1Gi --claim-name=mapit-storage --mount-path=/app-storage</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>oc set volume deploy/mapit --add --name=mapit-storage -t pvc --claim-mode=ReadWriteOnce --claim-size=1Gi --claim-name=mapit-storage --mount-path=/app-storage
-The output looks like this:</p>
+<p>The output looks like this:</p>
+</div>
+<div class="listingblock console">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">deployment.apps/mapit volume updated</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>deployment.apps/mapit volume updated
-In the first step a PersistentVolumeClaim was created. This object represents a request for storage of a certain kind, with a certain capacity from the user to OpenShift.</p>
+<p>In the first step a PersistentVolumeClaim was created. This object represents a request for storage of a certain kind, with a certain capacity from the user to OpenShift.</p>
 </div>
 <div class="paragraph">
 <p>Next the Deployment of mapit is updated to reference this storage and make it available under the /app-storage directory inside the pod.</p>
@@ -292,29 +337,50 @@ In the first step a PersistentVolumeClaim was created. This object represents a 
 <div class="paragraph">
 <p>You can see the new Deployment like this:</p>
 </div>
-<div class="paragraph">
-<p>oc get deployment mapit
-The output will show when the deployment was created by inspecting the AGE column. Since we did not create a new deployment, it shows the original deployment age:</p>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc get deployment mapit</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>NAME    READY   UP-TO-DATE   AVAILABLE   AGE
-mapit   1/1     1            1           14m
-Likely, depending when you ran the command, you may or may not see that the new pod is still being spawned. You will see pod age here, the smallest AGE is the new pod attached to the storage:</p>
+<p>The output will show when the deployment was created by inspecting the AGE column. Since we did not create a new deployment, it shows the original deployment age:</p>
+</div>
+<div class="listingblock console">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">NAME    READY   UP-TO-DATE   AVAILABLE   AGE
+mapit   1/1     1            1           14m</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>oc get pod
-NAME             READY     STATUS              RESTARTS   AGE
+<p>Likely, depending when you ran the command, you may or may not see that the new pod is still being spawned. You will see pod age here, the smallest AGE is the new pod attached to the storage:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc get pod</code></pre>
+</div>
+</div>
+<div class="listingblock console">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">NAME             READY     STATUS              RESTARTS   AGE
 mapit-3-ntd9w    1/1       Running             0          9m
 mapit-4-d872b    0/1       ContainerCreating   0          5s
-mapit-4-deploy   1/1       Running             0          10s
-Take a look at the Deployment now:</p>
+mapit-4-deploy   1/1       Running             0          10s</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>oc describe deployment mapit
-You will see there is now both Mounts and Volumes details about the new storage:</p>
+<p>Take a look at the Deployment now:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc describe deployment mapit</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>&#8230;&#8203;
+<p>You will see there is now both Mounts and Volumes details about the new storage:</p>
+</div>
+<div class="listingblock console">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">...
     Mounts:
       /app-storage from mapit-storage (rw)
   Volumes:
@@ -322,78 +388,143 @@ You will see there is now both Mounts and Volumes details about the new storage:
     Type:       PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
     ClaimName:  mapit-storage
     ReadOnly:   false
-&#8230;&#8203;
-But what is happening under the covers?</p>
+...</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>Storage Classes
-When OpenShift 4 was first installed, a dynamic storage provider for AWS EBS was configured. You can see this StorageClass with the following:</p>
+<p>But what is happening under the covers?</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_storage_classes"><a class="anchor" href="#_storage_classes"></a>Storage Classes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>When OpenShift 4 was first installed, a dynamic storage provider for AWS EBS was configured. You can see this StorageClass with the following:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc get storageclass</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>oc get storageclass
-And you will see something like:</p>
+<p>And you will see something like:</p>
 </div>
-<div class="paragraph">
-<p>NAME                PROVISIONER       RECLAIMPOLICY   VOLUMEBINDINGMODE      ALLOWVOLUMEEXPANSION   AGE
+<div class="listingblock console">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">NAME                PROVISIONER       RECLAIMPOLICY   VOLUMEBINDINGMODE      ALLOWVOLUMEEXPANSION   AGE
 gp2-csi             ebs.csi.aws.com   Delete          WaitForFirstConsumer   true                   88m
-gp3-csi (default)   ebs.csi.aws.com   Delete          WaitForFirstConsumer   true                   88m
-Any time a request for a volume is made (PersistentVolumeClaim) that doesn’t specify a StorageClass, the default will be used. In this case, the default is an EBS provisioner that will create an EBS GP2 volume of the requested size (in our example, 1Gi).</p>
+gp3-csi (default)   ebs.csi.aws.com   Delete          WaitForFirstConsumer   true                   88m</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>You’ll note that there is also a gp3-csi. This implements the CSI interface, which stands for "Container Storage Interface". This specification enables storage vendors to develop their plugins once, and have it work across various container orchestration systems.
-Persistent Volume (Claims)
-The command you ran earlier referenced a claim. Storage in a Kubernetes environment uses a system of volume claims and volumes. A user makes a PersistentVolumeClaim and Kubernetes tries to find a PersistentVolume that matches. In the case where a volume does not already exist, if there is a dynamic provisioner that satisfies the claim, a PersistentVolume is created.</p>
+<p>Any time a request for a volume is made (PersistentVolumeClaim) that doesn’t specify a StorageClass, the default will be used. In this case, the default is an EBS provisioner that will create an EBS GP2 volume of the requested size (in our example, 1Gi).</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>You’ll note that there is also a gp3-csi. This implements the CSI interface, which stands for "Container Storage Interface". This specification enables storage vendors to develop their plugins once, and have it work across various container orchestration systems.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_persistent_volume_claims"><a class="anchor" href="#_persistent_volume_claims"></a>Persistent Volume (Claims)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The command you ran earlier referenced a claim. Storage in a Kubernetes environment uses a system of volume claims and volumes. A user makes a PersistentVolumeClaim and Kubernetes tries to find a PersistentVolume that matches. In the case where a volume does not already exist, if there is a dynamic provisioner that satisfies the claim, a PersistentVolume is created.</p>
 </div>
 <div class="paragraph">
 <p>Execute the following:</p>
 </div>
-<div class="paragraph">
-<p>oc get persistentvolume
-You will see something like the following:</p>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc get persistentvolume</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                          STORAGECLASS   REASON   AGE
-pvc-4397c6be-9f53-490e-960d-c1b77de6000c   1Gi        RWO            Delete           Bound    app-management/mapit-storage   gp3-csi                     12m
-This is the volume that was created as a result of your earlier claim. Note that the volume is bound to the claim that exists in the app-management project.</p>
+<p>You will see something like the following:</p>
+</div>
+<div class="listingblock console">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                          STORAGECLASS   REASON   AGE
+pvc-4397c6be-9f53-490e-960d-c1b77de6000c   1Gi        RWO            Delete           Bound    app-management/mapit-storage   gp3-csi                     12m</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This is the volume that was created as a result of your earlier claim. Note that the volume is bound to the claim that exists in the app-management project.</p>
 </div>
 <div class="paragraph">
 <p>Now, execute:</p>
 </div>
-<div class="paragraph">
-<p>oc get persistentvolumeclaim -n app-management
-You will see something like:</p>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc get persistentvolumeclaim -n app-management</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>NAME            STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
-mapit-storage   Bound    pvc-4397c6be-9f53-490e-960d-c1b77de6000c   1Gi        RWO            gp3-csi        14m
-A rollout is taking place, since the pod needs to mount the created storage.</p>
+<p>You will see something like:</p>
+</div>
+<div class="listingblock console">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">NAME            STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+mapit-storage   Bound    pvc-4397c6be-9f53-490e-960d-c1b77de6000c   1Gi        RWO            gp3-csi        14m</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>oc rollout status deployment mapit -n app-management
-Testing Persistent Storage
-Log on to the pod using the remote-shell capability of the oc client:</p>
+<p>A rollout is taking place, since the pod needs to mount the created storage.</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc rollout status deployment mapit -n app-management</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_testing_persistent_storage"><a class="anchor" href="#_testing_persistent_storage"></a>Testing Persistent Storage</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Log on to the pod using the remote-shell capability of the oc client:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc rsh $(oc get pods -l deployment=mapit -o name)</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>oc rsh $(oc get pods -l deployment=mapit -o name)
-Being in the container’s shell session, list the content of the root directory from the perspective of the container’s namespace:</p>
+<p>Being in the container’s shell session, list the content of the root directory from the perspective of the container’s namespace:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">ls -ahl /</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>ls -ahl /
-You will see a directory there called /app-storage:</p>
+<p>You will see a directory there called /app-storage:</p>
 </div>
-<div class="paragraph">
-<p>total 20K
+<div class="listingblock console">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">total 20K
 drwxr-xr-x.   1 root  root         81 Apr 12 19:11 .
 drwxr-xr-x.   1 root  root         81 Apr 12 19:11 ..
--rw-r&#8212;&#8203;r--.   1 root  root        16K Dec 14  2016 anaconda-post.log
+-rw-r--r--.   1 root  root        16K Dec 14  2016 anaconda-post.log
 drwxrwsr-x.   3 root  1000570000 4.0K Apr 12 19:10 app-storage (1)
-lrwxrwxrwx.   1 root  root          7 Dec 14  2016 bin &#8594; usr/bin
+lrwxrwxrwx.   1 root  root          7 Dec 14  2016 bin -&gt; usr/bin
 drwxrwxrwx.   1 jboss root         45 Aug  4  2017 deployments
 drwxr-xr-x.   5 root  root        360 Apr 12 19:11 dev
 drwxr-xr-x.   1 root  root         93 Jan 18  2017 etc
 drwxr-xr-x.   2 root  root          6 Nov  5  2016 home
-lrwxrwxrwx.   1 root  root          7 Dec 14  2016 lib &#8594; usr/lib
-lrwxrwxrwx.   1 root  root          9 Dec 14  2016 lib64 &#8594; usr/lib64
+lrwxrwxrwx.   1 root  root          7 Dec 14  2016 lib -&gt; usr/lib
+lrwxrwxrwx.   1 root  root          9 Dec 14  2016 lib64 -&gt; usr/lib64
 drwx------.   2 root  root          6 Dec 14  2016 lost+found
 drwxr-xr-x.   2 root  root          6 Nov  5  2016 media
 drwxr-xr-x.   2 root  root          6 Nov  5  2016 mnt
@@ -401,13 +532,21 @@ drwxr-xr-x.   1 root  root         19 Jan 18  2017 opt
 dr-xr-xr-x. 183 root  root          0 Apr 12 19:11 proc
 dr-xr-x---.   2 root  root        114 Dec 14  2016 root
 drwxr-xr-x.   1 root  root         21 Apr 12 19:11 run
-lrwxrwxrwx.   1 root  root          8 Dec 14  2016 sbin &#8594; usr/sbin
+lrwxrwxrwx.   1 root  root          8 Dec 14  2016 sbin -&gt; usr/sbin
 drwxr-xr-x.   2 root  root          6 Nov  5  2016 srv
 dr-xr-xr-x.  13 root  root          0 Apr 10 14:34 sys
 drwxrwxrwt.   1 root  root         92 Apr 12 19:11 tmp
 drwxr-xr-x.   1 root  root         69 Dec 16  2016 usr
-drwxr-xr-x.   1 root  root         41 Dec 14  2016 var
-&lt;1&gt; This is where the persistent storage appears inside the container</p>
+drwxr-xr-x.   1 root  root         41 Dec 14  2016 var</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>This is where the persistent storage appears inside the container</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>Amazon EBS volumes are read-write-once. In other words, because they are block storage, they may only be attached to one EC2 instance at a time, which means that only one container can use an EBS-based PersistentVolume at a time. In other words: read-write-once.</p>
@@ -415,29 +554,51 @@ drwxr-xr-x.   1 root  root         41 Dec 14  2016 var
 <div class="paragraph">
 <p>Execute the following inside the remote shell session:</p>
 </div>
-<div class="paragraph">
-<p>echo "Hello World from OpenShift" &gt; /app-storage/hello.txt
-exit
-Then, make sure your file is present:</p>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">echo "Hello World from OpenShift" &gt; /app-storage/hello.txt
+exit</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>oc rsh $(oc get pods -l deployment=mapit -o name) cat /app-storage/hello.txt
-Now, to verify that persistent storage really works, delete your pod:</p>
+<p>Then, make sure your file is present:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc rsh $(oc get pods -l deployment=mapit -o name) cat /app-storage/hello.txt</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>oc delete pods -l deployment=mapit &amp;&amp; oc rollout status deployment/mapit
-The deployment automatically rollsout a new pod:</p>
+<p>Now, to verify that persistent storage really works, delete your pod:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc delete pods -l deployment=mapit &amp;&amp; oc rollout status deployment/mapit</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>oc get pods
-Your new pod is ready and running. Now that it’s running, check the file:</p>
+<p>The deployment automatically rollsout a new pod:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc get pods</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>oc rsh $(oc get pods -l deployment=mapit -o name) cat /app-storage/hello.txt
-It’s still there. In fact, the new pod may not even be running on the same node as the old pod, which means that, under the covers, Kubernetes and OpenShift automatically attached the real, external storage to the right place at the right time.</p>
+<p>Your new pod is ready and running. Now that it’s running, check the file:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc rsh $(oc get pods -l deployment=mapit -o name) cat /app-storage/hello.txt</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>It’s still there. In fact, the new pod may not even be running on the same node as the old pod, which means that, under the covers, Kubernetes and OpenShift automatically attached the real, external storage to the right place at the right time.</p>
 </div>
 <div class="paragraph">
 <p>If you needed read-write-many storage, file-based storage solutions can provide it. OpenShift Container Storage is a hyperconverged storage solution that can run inside OpenShift and provide file, block and even object storage by turning locally attached storage devices into storage pools and then creating volumes out of them.</p>
+</div>
+</div>
 </div>
 </article>
 <aside class="toc sidebar" data-title="Contents" data-levels="2">

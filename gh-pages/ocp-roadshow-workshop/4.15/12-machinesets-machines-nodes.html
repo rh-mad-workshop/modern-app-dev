@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Untitled :: OpenShift Roadshow Workshop 2024</title>
+    <title>MachineSets, Machines, and Nodes :: OpenShift Roadshow Workshop 2024</title>
     <link rel="canonical" href="http://localhost:3000/rhs-openshift-starter-guides/index.html/ocp-roadshow-workshop/4.15/12-machinesets-machines-nodes.html">
     <meta name="generator" content="Antora 2.3.4">
     <link rel="stylesheet" href="../../_/css/site.css">
@@ -167,52 +167,55 @@
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="10-application-management-basics.html">Administering Applications on OpenShift</a>
+    <a class="nav-link" href="#08-ocp-ops-intro">MAD Roadshow Ops Track</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="09-installation-and-verification.html"><strong>01</strong> - Installation and Verificiation</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="11-application-storage-basics.html"><strong>02</strong> - Application Storage Basics</a>
+    <a class="nav-link" href="10-application-management-basics.html"><strong>02</strong> - Application Management Basics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="11-application-storage-basics.html"><strong>03</strong> - Application Storage Basics</a>
   </li>
   <li class="nav-item is-current-page" data-depth="2">
-    <a class="nav-link" href="12-machinesets-machines-nodes.html"><strong>02</strong> - MachineSets, Machines, and Nodes</a>
+    <a class="nav-link" href="12-machinesets-machines-nodes.html"><strong>04</strong> - MachineSets, Machines, and Nodes</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="13-infrastructure-nodes-and-operators.html"><strong>03</strong> - Infrastructure Nodes and Operators</a>
+    <a class="nav-link" href="13-infrastructure-nodes-and-operators.html"><strong>05</strong> - Infrastructure Nodes and Operators</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="14-openshift-logging-wth-loki.html"><strong>04</strong> - OpenShift Logging with Loki</a>
+    <a class="nav-link" href="14-openshift-logging-wth-loki.html"><strong>06</strong> - OpenShift Logging with Loki</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="15-external-authentication.html"><strong>05</strong> - External (LDAP) Authentication Providers, Users, and Groups</a>
+    <a class="nav-link" href="15-external-authentication.html"><strong>07</strong> - External (LDAP) Authentication Providers, Users, and Groups</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="16-openshift-monitoring.html"><strong>06</strong> - OpenShift Monitoring with Prometheus</a>
+    <a class="nav-link" href="16-openshift-monitoring.html"><strong>08</strong> - OpenShift Monitoring with Prometheus</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="17-project-template-quota-limits.html"><strong>07</strong> - Project Request Template, Quotas, Limits</a>
+    <a class="nav-link" href="17-project-template-quota-limits.html"><strong>09</strong> - Project Request Template, Quotas, Limits</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="18-openshift-networking-networkpolicy.html"><strong>08</strong> - OpenShift Networking and NetworkPolicy</a>
+    <a class="nav-link" href="18-openshift-networking-networkpolicy.html"><strong>10</strong> - OpenShift Networking and NetworkPolicy</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="19-disable-self-project-provisioning.html"><strong>09</strong> - Disabling Project Self-Provisioning</a>
+    <a class="nav-link" href="19-disable-self-project-provisioning.html"><strong>11</strong> - Disabling Project Self-Provisioning</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="20-cluster-resource-quota.html"><strong>10</strong> - Cluster Resource Quotas</a>
+    <a class="nav-link" href="20-cluster-resource-quota.html"><strong>12</strong> - Cluster Resource Quotas</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="21-taints-tolerations.html"><strong>11</strong> - Taints and Tolerations</a>
+    <a class="nav-link" href="21-taints-tolerations.html"><strong>13</strong> - Taints and Tolerations</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="22-vulnerability-scanning-acs.html"><strong>12</strong> - Vulnerability Scanning with ACS</a>
+    <a class="nav-link" href="22-vulnerability-scanning-acs.html"><strong>14</strong> - Vulnerability Scanning with ACS</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="23-devsecops-acs.html"><strong>13</strong> - DevSecOps with ACS</a>
+    <a class="nav-link" href="23-devsecops-acs.html"><strong>15</strong> - DevSecOps with ACS</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="24-multicluster-with-acm.html"><strong>14</strong> - Multicluster management with ACM</a>
+    <a class="nav-link" href="24-multicluster-with-acm.html"><strong>16</strong> - Multicluster management with ACM</a>
   </li>
 </ul>
   </li>
@@ -247,24 +250,28 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="index.html">OCP Roadshow Workshop</a></li>
-    <li><a href="10-application-management-basics.html">Administering Applications on OpenShift</a></li>
-    <li><a href="12-machinesets-machines-nodes.html"><strong>02</strong> - MachineSets, Machines, and Nodes</a></li>
+    <li>MAD Roadshow Ops Track</li>
+    <li><a href="12-machinesets-machines-nodes.html"><strong>04</strong> - MachineSets, Machines, and Nodes</a></li>
   </ul>
 </nav>
   <div class="edit-this-page"><a href="file:///Users/mkimberl/Documents/source/github/modern-app-dev/documentation/modules/ROOT/pages/12-machinesets-machines-nodes.adoc">Edit this Page</a></div>
 </div>
   <div class="content">
 <article class="doc">
+<h1 class="page">MachineSets, Machines, and Nodes</h1>
+<div class="sect1">
+<h2 id="_machinesets_machines_and_nodes"><a class="anchor" href="#_machinesets_machines_and_nodes"></a>MachineSets, Machines, and Nodes</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>MachineSets, Machines, and Nodes</p>
+<p>Kubernetes Nodes are where containers are orchestrated and run in Pods. OpenShift 4 is fundamentally different than OpenShift 3 with respect to its focus on automated operations through the use of Operators. With respect to Nodes, there is a set of Operators and controllers that are focused on maintaining the state of the cluster size — including creating and destroying Nodes!</p>
 </div>
-<div class="paragraph">
-<p>MachineSets, Machines, and Nodes
-Kubernetes Nodes are where containers are orchestrated and run in Pods. OpenShift 4 is fundamentally different than OpenShift 3 with respect to its focus on automated operations through the use of Operators. With respect to Nodes, there is a set of Operators and controllers that are focused on maintaining the state of the cluster size — including creating and destroying Nodes!</p>
 </div>
+</div>
+<div class="sect1">
+<h2 id="_machinesets_and_machines"><a class="anchor" href="#_machinesets_and_machines"></a>MachineSets and Machines</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>MachineSets and Machines
-As you saw in the application management exercises, there is a basic fundamental relationship between a ReplicaSet/ReplicationController and the Pods it creates. Similarly, there is a relationship between a MachineSet and a Machine.</p>
+<p>As you saw in the application management exercises, there is a basic fundamental relationship between a ReplicaSet/ReplicationController and the Pods it creates. Similarly, there is a relationship between a MachineSet and a Machine.</p>
 </div>
 <div class="paragraph">
 <p>The MachineSet defines a desired state for a set of Machine objects. When using IPI installations, then, there is an Operator whose job it is to make sure that there is actually an underlying instance for each Machine and, finally, that every Machine becomes a Node.</p>
@@ -272,89 +279,160 @@ As you saw in the application management exercises, there is a basic fundamental
 <div class="paragraph">
 <p>Execute the following:</p>
 </div>
-<div class="paragraph">
-<p>oc get machineset -n openshift-machine-api
-You will see something like:</p>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc get machineset -n openshift-machine-api</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>NAME                                    DESIRED   CURRENT   READY   AVAILABLE   AGE
+<p>You will see something like:</p>
+</div>
+<div class="listingblock console">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">NAME                                    DESIRED   CURRENT   READY   AVAILABLE   AGE
 cluster-6ljsd-9b8vz-worker-us-east-2a   1         1         1       1           167m
 cluster-6ljsd-9b8vz-worker-us-east-2b   1         1         1       1           167m
-cluster-6ljsd-9b8vz-worker-us-east-2c   0         0                             167m
-When OpenShift was installed, the installer interrogated the cloud provider to learn about the available AZs (since this is on AWS). It then ultimately created a MachineSet for each AZ and then scaled those sets, in order, until it reached the desired number of Machines. Since the default installation has 2 workers, the first 2 AZs got one worker each. The rest got zero.</p>
+cluster-6ljsd-9b8vz-worker-us-east-2c   0         0                             167m</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>oc get machine -n openshift-machine-api
-You will see something like:</p>
+<p>When OpenShift was installed, the installer interrogated the cloud provider to learn about the available AZs (since this is on AWS). It then ultimately created a MachineSet for each AZ and then scaled those sets, in order, until it reached the desired number of Machines. Since the default installation has 2 workers, the first 2 AZs got one worker each. The rest got zero.</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc get machine -n openshift-machine-api</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>NAME                                         INSTANCE              STATE     TYPE         REGION      ZONE         AGE
+<p>You will see something like:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>NAME                                         INSTANCE              STATE     TYPE         REGION      ZONE         AGE
 cluster-f4a3-lpxbs-master-0                  i-04280885cafad3130   running   m4.xlarge    us-east-2   us-east-2a   47h
 cluster-f4a3-lpxbs-master-1                  i-0def910edcae51d11   running   m4.xlarge    us-east-2   us-east-2b   47h
 cluster-f4a3-lpxbs-master-2                  i-0beb5e40214d706fc   running   m4.xlarge    us-east-2   us-east-2c   47h
 cluster-f4a3-lpxbs-worker-us-east-2a-b94pr   i-0a922c0fe765caa3c   running   m5.2xlarge   us-east-2   us-east-2a   47h
 cluster-f4a3-lpxbs-worker-us-east-2b-m8gbx   i-0fb8d960b8a3a3343   running   m5.2xlarge   us-east-2   us-east-2b   47h
-cluster-f4a3-lpxbs-worker-us-east-2c-5tmg7   i-0151c72cd85f85038   running   m5.2xlarge   us-east-2   us-east-2c   47h
-Each Machine has a corresponding INSTANCE. Do those IDs look familiar? They are AWS EC2 instance IDs. You also see Machines for the OpenShift masters. They are not part of a MachineSet because they are somewhat stateful and their management is handled by different operators and through a different process. If you have a different number of worker machines, it doesn’t matter as we will be adding more later.</p>
+cluster-f4a3-lpxbs-worker-us-east-2c-5tmg7   i-0151c72cd85f85038   running   m5.2xlarge   us-east-2   us-east-2c   47h</pre>
+</div>
 </div>
 <div class="paragraph">
-<p>There is currently no protection for the master Machines. Do not accidentally or intentionally delete them, as this will potentially break your cluster. It is repairable, but it is not fun.
-Lastly, execute:</p>
+<p>Each Machine has a corresponding INSTANCE. Do those IDs look familiar? They are AWS EC2 instance IDs. You also see Machines for the OpenShift masters. They are not part of a MachineSet because they are somewhat stateful and their management is handled by different operators and through a different process. If you have a different number of worker machines, it doesn’t matter as we will be adding more later.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>There is currently no protection for the master Machines. Do not accidentally or intentionally delete them, as this will potentially break your cluster. It is repairable, but it is not fun.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
-<p>oc get nodes
-You will see something like:</p>
+<p>Lastly, execute:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc get nodes</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>NAME                                         STATUS   ROLES    AGE     VERSION
+<p>You will see something like:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>NAME                                         STATUS   ROLES    AGE     VERSION
 ip-10-0-186-197.us-east-2.compute.internal   Ready    master   4h5m    v1.22.3+e790d7f
 ip-10-0-190-214.us-east-2.compute.internal   Ready    master   4h6m    v1.22.3+e790d7f
 ip-10-0-199-60.us-east-2.compute.internal    Ready    worker   3h53m   v1.22.3+e790d7f
 ip-10-0-216-121.us-east-2.compute.internal   Ready    worker   3h53m   v1.22.3+e790d7f
 ip-10-0-231-224.us-east-2.compute.internal   Ready    worker   3h53m   v1.22.3+e790d7f
-ip-10-0-244-159.us-east-2.compute.internal   Ready    master   4h6m    v1.22.3+e790d7f
-Each Machine ends up corresponding to a Node. With IPI, there is a bootstrap process where the machine operator will create an EC2 instance and then Ignition inside the RHEL CoreOS operating system will receive initial instructions from the operator. This results in the EC2 instance being configured as an OpenShift node and joining the cluster.</p>
+ip-10-0-244-159.us-east-2.compute.internal   Ready    master   4h6m    v1.22.3+e790d7f</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Each Machine ends up corresponding to a Node. With IPI, there is a bootstrap process where the machine operator will create an EC2 instance and then Ignition inside the RHEL CoreOS operating system will receive initial instructions from the operator. This results in the EC2 instance being configured as an OpenShift node and joining the cluster.</p>
 </div>
 <div class="paragraph">
 <p>If you spend some time using oc describe and the various Machine and Node objects, you will figure out which ones correlate with which.</p>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_cluster_scaling"><a class="anchor" href="#_cluster_scaling"></a>Cluster Scaling</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>Cluster Scaling
-Because of the magic of Operators and the way in which OpenShift uses them to manage Machines and Nodes, scaling your cluster in OpenShift 4 is extremely trivial.</p>
+<p>Because of the magic of Operators and the way in which OpenShift uses them to manage Machines and Nodes, scaling your cluster in OpenShift 4 is extremely trivial.</p>
 </div>
 <div class="paragraph">
 <p>Look at the list of MachineSets again:</p>
 </div>
-<div class="paragraph">
-<p>oc get machineset -n openshift-machine-api
-Within that list, we will scale one of the MachineSet objects with the oc scale command. Run:</p>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc get machineset -n openshift-machine-api</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>CLUSTERNAME=$(oc get  infrastructures.config.openshift.io cluster  -o jsonpath='{.status.infrastructureName}')
+<p>Within that list, we will scale one of the MachineSet objects with the oc scale command. Run:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">CLUSTERNAME=$(oc get  infrastructures.config.openshift.io cluster  -o jsonpath='{.status.infrastructureName}')
 ZONENAME=$(oc get nodes -L topology.kubernetes.io/zone  --no-headers  | awk '{print $NF}' | tail -1)
-oc scale machineset ${CLUSTERNAME}-worker-${ZONENAME} -n openshift-machine-api --replicas=2
-Take special note the MachineSet scaled is likely different from the one that is shown in the lab guide. You should see a note that the MachineSet was successfully scaled. Now, look at the list of Machines:</p>
+oc scale machineset ${CLUSTERNAME}-worker-${ZONENAME} -n openshift-machine-api --replicas=2</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>oc get machines -n openshift-machine-api
-You probably already have new entries for 2 new Machine with a STATE of Pending. After a few moments, both will have a corresponding EC2 instance ID and will look something like:</p>
+<p>Take special note the MachineSet scaled is likely different from the one that is shown in the lab guide. You should see a note that the MachineSet was successfully scaled. Now, look at the list of Machines:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc get machines -n openshift-machine-api</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>cluster-f4a3-lpxbs-worker-us-east-2c-h7gdt   i-0b9208ec47f0e206b   running   m5.2xlarge     us-east-2   us-east-2c   47s
-At this point, in the background, the bootstrap process is happening automatically. After several minutes (up to five or so), take a look at the output of:</p>
+<p>You probably already have new entries for 2 new Machine with a STATE of Pending. After a few moments, both will have a corresponding EC2 instance ID and will look something like:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>cluster-f4a3-lpxbs-worker-us-east-2c-h7gdt   i-0b9208ec47f0e206b   running   m5.2xlarge     us-east-2   us-east-2c   47s</pre>
+</div>
 </div>
 <div class="paragraph">
-<p>oc get nodes
-You should see your fresh and happy new nodes. They are the ones with a very young age:</p>
+<p>At this point, in the background, the bootstrap process is happening automatically. After several minutes (up to five or so), take a look at the output of:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc get nodes</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>ip-10-0-166-103.us-east-2.compute.internal   Ready    worker   1m   v1.16.2
-It can take several minutes for a Machine to be prepared and added as a Node. You can follow the process by running a watch against oc get nodes if you wish.
+<p>You should see your fresh and happy new nodes. They are the ones with a very young age:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>ip-10-0-166-103.us-east-2.compute.internal   Ready    worker   1m   v1.16.2</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>It can take several minutes for a Machine to be prepared and added as a Node. You can follow the process by running a watch against oc get nodes if you wish.
 Scale the MachineSet from two back down to one before continuing.</p>
 </div>
 <div class="paragraph">
-<p>Make sure you’ve set the ${CLUSTERNAME} and ${ZONENAME} varaible from when you scaled up, a few steps ago.
-oc scale machineset ${CLUSTERNAME}-worker-${ZONENAME} -n openshift-machine-api --replicas=1</p>
+<p>Make sure you’ve set the ${CLUSTERNAME} and ${ZONENAME} varaible from when you scaled up, a few steps ago.</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc scale machineset ${CLUSTERNAME}-worker-${ZONENAME} -n openshift-machine-api --replicas=1</code></pre>
+</div>
+</div>
+</div>
 </div>
 </article>
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
