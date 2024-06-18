@@ -10,7 +10,7 @@ spec:
   project: default
   source:
     repoURL: http://gitea.gitea.svc:3000/{{ .Values.user }}/modern-app-dev.git
-    targetRevision: patch-postgres
+    targetRevision: ocp-4.15
     path: helm/orders
   destination:
     server: https://kubernetes.default.svc
