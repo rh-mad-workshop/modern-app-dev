@@ -7,7 +7,7 @@ user: user1
 # Password for the customer Database
 customerDatabase:
   hostname: postgresql-db-database
-  user: redhat
+  user: customer
   password: ""
 
 # Hostname or IP of the customers service
