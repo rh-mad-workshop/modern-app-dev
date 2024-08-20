@@ -1,0 +1,47 @@
+- category: mandatory
+  customVariables: []
+  description: Legacy configuration with io.konveyor.demo.config.ApplicationConfiguration
+  effort: 1
+  labels:
+  - konveyor.io/source=java
+  - konveyor.io/source=java-ee
+  - konveyor.io/target=cloud-readiness
+  links:
+  - title: Spring Documentation - PropertySource javadoc
+    url: https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/context/annotation/PropertySource.html
+  - title: Mkyong - Spring @PropertySource example
+    url: https://mkyong.com/spring/spring-propertysources-example/
+  - title: Baeldung - Properties with Spring and Spring Boot
+    url: https://www.baeldung.com/properties-with-spring
+  message: |-
+    The legacy ApplicationConfiguration class is being used in this application. This is discouraged by the migration
+     guidelines, and should be replaced by a more standard approach using Spring's @PropertySource annotation and Environment class:
+
+
+     ```java
+     @PropertySource("classpath:persistence.properties")
+     public class PersistenceConfig {
+       @Autowired
+       private Environment env;
+
+       @Bean
+       public DataSource dataSource() {
+         final DriverManagerDataSource ds = new DriverManagerDataSource();
+         ds.setDriverClassName(env.getProperty("jdbc.dcn"));
+         ds.setUrl(env.getProperty("jdbc.url"));
+         ds.setUsername(env.getProperty("jdbc.user"));
+         ds.setPassword(env.getProperty("jdbc.password"));
+         return ds;
+       }
+     }
+     ```
+
+
+
+     This allows externalizing the configuration in Kubernetes by injecting it as a ConfigMap or a Secret in the lib directory from the
+     container running the Tomcat instance.
+  ruleID: corporate-config-01000
+  when:
+    java.referenced:
+      location: VARIABLE_DECLARATION
+      pattern: io.konveyor.demo.config.ApplicationConfiguration
