@@ -4,6 +4,7 @@
 # Log file
 *.log
 .DS_Store
+.idea
 
 # BlueJ files
 *.ctxt
