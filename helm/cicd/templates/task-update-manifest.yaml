@@ -51,6 +51,6 @@ spec:
 
       sed -i "/^\([[:space:]]*version: \).*/s//\1$SHORT_COMMIT_HASH/" $(params.config-subdirectory)/values.yaml
 
-      git add --a
+      git add --all
       git commit -m "Automatically updated manifest to point to image tag $SHORT_COMMIT_HASH"
       git push origin $(params.target-branch)
